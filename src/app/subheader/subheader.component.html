@@ -1,0 +1,264 @@
+<section class="container-fluid mt-5">
+    <div class="row">
+        <div class="shadow rounded col-sm-3 py-2 violet">
+            <p class=" p-0 m-0">Operatore</p>
+            <h3 class="my-auto operatore" style="text-transform: uppercase;">{{nome_operatore}} {{cognome_operatore}}</h3>
+        </div>
+        <div class="col"></div>
+        <div class="shadow-sm p-3 mr-0 rounded col-sm-6">
+            <div class="row d-flex justify-content-end">
+                <div class="col-lg-4 align-self-center">
+                    <app-upload-contatti></app-upload-contatti>
+                </div>
+                <div class="col-lg-3 align-self-center">
+                    <button type="button" (click)="openFormModal()" class="btn btn-dark"
+                        class="btn btn-primary btn-sm my-auto">
+                        Aggiungi contatto
+                    </button>
+                </div>
+                <div class="col-lg-3 align-self-center">
+                    <form class="d-flex" [formGroup]="formSearchResult" (ngSubmit)="loadContattiFiltrati()">
+                        <input class="form-control mr-2" type="search" placeholder="Cerca" aria-label="cerca" formControlName="termine">
+                        <button class="btn btn-primary btn-sm" type="submit" (click)="openSearchModal()">Cerca</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--form modal-->
+<div class="modal fade" id="newContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content violet_bck">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Inserisci nuovo contatto</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body col-6 mx-auto">
+                <form class="" (ngSubmit)="addNewContact()" [formGroup]="formAddContact">
+                    <input type="hidden" class="form-control rounded-left" formControlName="operatore">
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control rounded-left" placeholder="Nome"
+                                formControlName="nome">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control rounded-left" placeholder="Cognome"
+                                formControlName="cognome">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control rounded-left" placeholder="Email"
+                                formControlName="email">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control rounded-left" placeholder="Telefono"
+                                formControlName="telefono">
+                        </div>
+                        <div class="form-floating col-lg-6">
+                            <select name="provincia" id="provincia" formControlName="provincia"
+                                class="form-select form-select-sm">
+                                <option value="0">Seleziona Provincia</option>
+                                <option *ngFor="let provincia of province" value="{{provincia.sigla_province}}">
+                                    {{provincia.nome_province}}</option>
+                            </select><label for="provincia">Provincia:</label>
+                        </div>
+                        <div class="form-floating col-lg-6">
+                            <select name="figura_professionale" id="figura_professionale"
+                                formControlName="figura_professionale" class="form-select form-select-sm">
+                                <option value="">Seleziona</option>
+                                <option value="Sono un privato">Sono un privato</option>
+                                <option value="Sono un installatore">Sono un installatore</option>
+                                <option value="Sono uno studio tecnico">Sono uno studio tecnico</option>
+                                <option value="Sono un impresa edile">Sono un'impresa edile</option>
+                            </select><label for="figura_professionale">Sono un:</label>
+                        </div>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control rounded-left" placeholder="Azienda"
+                                formControlName="azienda">
+                        </div>
+                        <hr style="color:#fff">
+                        <div class="col-lg-12" style="color:#fff">
+                            <p>Interessato a:</p>
+                            <div *ngFor="let data of Data; let i=index">
+                                <label>
+                                    <input type="checkbox" [value]="data.value" (change)="onCheckboxChange($event)" />
+                                    {{data.name}}
+                                </label>
+                            </div>
+
+                            <p class="error" *ngIf="this.formAddContact.controls['interesse'].errors?.['required']">
+                                Checkbox is required, select atleast one value.
+                            </p>
+
+                        </div>
+                        <hr style="color:#fff">
+                        <div class="col-lg-12" style="color:#fff">
+                            <label for="exampleFormControlTextarea1">Messaggio</label>
+                            <textarea class="form-control" id="messaggio" name="messaggio" rows=" 3"
+                                formControlName="messaggio"></textarea>
+                        </div>
+                        <hr style="color:#fff">
+                        <div class="col-lg-12" style="color:#fff">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="privacy" name="privacy"
+                                    formControlName="privacy">
+                                <label class="form-check-label" for="privacy">
+                                    Autorizzo al trattamento dei dati personali secondo il Regolamento (UE) 2016/679
+                                    (GDPR).
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" (click)="addNewContact()">
+                    Salva contatto
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--search modal-->
+<div class="modal fade" id="searchResult" tabindex="-1" aria-labelledby="risultato" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content violet_bck">
+            <div class="modal-header">
+                <h2 class="modal-title" id="risultato">Risultato della ricerca per {{searchTerm}}  </h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body col-12 mx-auto">
+                <div id="load" class="min-vw-100 min-vh-100 violet p-0 m-0 position-fixed top-0
+  start-0 d-flex opacity-75" style="z-index:99999" *ngIf="loading">
+                    <div class="spinner-border text-light m-auto" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="row d-flex mb-5" *ngIf="searchtable">
+                    <div class="col-12">
+                        <div class="mat-elevation-z8">
+                            <table mat-table [dataSource]="dataSource" matSort>
+                                <!-- ID Column -->
+                                <ng-container matColumnDef="numero">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="display:none"> ID </th>
+                                    <td mat-cell *matCellDef="let row" style="display:none"> {{validateTD(row.id)}}
+                                    </td>
+                                </ng-container>
+                               
+                                <!-- Progress Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Quick edit</th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}" style=" white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;"><a
+                                            href="../vCard/VCard.php?id_dettaglio={{row.id
+                                }}&nome={{row.nome }}&cognome={{row.cognome
+                                }}&telefono={{row.telefono
+                                }}&telefono_2={{row.telefono2}}&email={{row.email}}&indirizzo=${{row.indirizzo}}&cap={{row.cap}}&provincia={{row.provincia}}&note={{row.landing}}\"><i
+                                                class="fa-solid fa-credit-card p-1"></i></a>
+                                        <a class="btn p-0 m-0 small" (click)="spegniContatto( row.id )">
+                                            <i class="fa-solid fa-power-off p-1"></i></a>
+                                        <a class="btn p-0 m-0 small" (click)="eliminaContatto( row.id)">
+                                            <i class="fa-solid fa-trash p-1"></i></a>
+                                           
+                                    </td>
+                                </ng-container>
+
+                                <!-- Contatto Column -->
+                                <ng-container matColumnDef="contatto">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatto</th>
+                                    <td mat-cell *matCellDef="let row; let i=index" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}">
+                                       <!--<a href="{{url_global}}/dettaglio-contatto/{{row.id}}">{{row.cognome
+                                        }} {{row.nome }}</a>-->
+                                        <a href="{{url_global}}/dettaglio-contatto/{{row.id}}"><i *ngIf="row.facebook_id!='0' && row.interesse!='Partner'" class="fa-brands fa-facebook"></i>
+                                            <i *ngIf="row.facebook_id!='0' && row.interesse=='Partner'" class="fa-solid fa-handshake"></i>  {{ row.cognome }} {{ row.nome }}</a>
+                                        <!-- <a *ngIf="!dev"
+                                            href="https://gestionalecero.it/dettaglio_contatto.php?id_dettaglio={{row.id}}">{{row.cognome
+                                            }} {{row.nome }}</a>
+                                       <a *ngIf="dev" href="javascript:void(0)" data-bs-dismiss="modal"
+                                            [routerLink]="['/dettaglio-contatto',row.id]">{{row.cognome }} {{row.nome
+                                            }}</a>
+                                        <a  href="javascript:void(0)" data-bs-dismiss="modal"
+                                            (click)="goToContactDetail(row.id)">{{row.cognome }} {{row.nome
+                                            }}</a> -->
+                                    </td>
+                                </ng-container>
+
+                                <!-- Numero contatti Column -->
+                                <ng-container matColumnDef="n_contatto">
+                                    <th mat-header-cell *matHeaderCellDef>N. contatti </th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}"> {{row.n_cont}} </td>
+                                </ng-container>
+
+                                <!-- interesse Column -->
+                                <ng-container matColumnDef="interesse">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Interesse </th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}"> {{validateTD(row.interesse)}} </td>
+                                </ng-container>
+
+                                <!-- richiama chi Column -->
+                                <ng-container matColumnDef="richiama_chi">
+                                    <th mat-header-cell *matHeaderCellDef> Richiama chi</th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}"> <span
+                                            *ngFor="let amministratore of amministratori"> <span *ngIf="amministratore.id
+                                  == row.richiama_chi">{{amministratore.nome}}</span> </span>
+                                    </td>
+                                </ng-container>
+
+                                <!-- telefono Column -->
+                                <ng-container matColumnDef="telefono">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}">{{validateTD(row.telefono)}}</td>
+                                </ng-container>
+
+                                <!-- provincia Column -->
+                                <ng-container matColumnDef="provincia">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Prov.</th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}">{{validateTD(row.provincia)}}</td>
+                                </ng-container>
+
+                                <!-- data contatto Column -->
+                                <ng-container matColumnDef="data_contatto">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}" style=" white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">{{validDateFormat(row.data_contatto) | date:
+                                        'dd-MMM-yyyy'}}</td>
+                                </ng-container>
+
+                                <!-- data appuntamento Column -->
+                                <ng-container matColumnDef="data_appuntamento">
+                                    <th mat-header-cell *matHeaderCellDef>Appuntamento</th>
+                                    <td mat-cell *matCellDef="let row" [ngClass]="{'assegnato_idraulico' : row.id_idraulico!='0'}" style=" white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;">{{validDateFormat(row.appuntamento) | date: 'dd-MMM-yyyy
+                                        HH:mm:ss'}}</td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+                            </table>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>

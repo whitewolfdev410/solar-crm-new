@@ -1,0 +1,142 @@
+
+
+
+<div class="container-fluid mx-0 px-0" *ngIf="headerShow">
+     <!-- NAVBAR-->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow px-2">
+            <a class="navbar-brand" href="javascript:void(0)" [routerLink]="['/home']">C.E.R.O. System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <span *ngFor="let menuitem of menuitems; let i=index">
+                        <span *ngIf="menuitem.id_menu!=53">
+                        <li *ngIf="menuitem.sottomenu!=1" class="nav-item">
+                            <span *ngIf="!dev">
+                                <a class="nav-link" aria-current="page"
+                                href="{{menuitem.link}}" >{{menuitem.testo}}</a>
+                            </span>
+                            <span *ngIf="dev">
+                                <a class="nav-link" aria-current="page"
+                                *ngIf="dev"  href="{{menuitem.link_dev}}">{{menuitem.testo}}</a>
+                                 </span>
+                            </li>
+                       
+                        <li *ngIf="menuitem.sottomenu==1" class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" aria-current="page" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">{{menuitem.testo}}</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <span *ngFor="let submenuitem of menuitem.submenu; let i=index">
+                                    <span *ngIf="!dev">
+                                    <li><a class="dropdown-item"
+                                            href="{{submenuitem.link}}">{{submenuitem.testo}}</a>
+                                    </li>
+                                </span>
+                                <span *ngIf="dev">
+                                    <li><a class="dropdown-item"
+                                            href="{{submenuitem.link_dev}}">{{submenuitem.testo}}</a>
+                                    </li>
+                                </span>
+                                </span>
+                            </ul>
+                        </li>
+                    </span>
+                    </span>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" aria-current="page" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">{{anno_globale}}</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <span *ngFor="let anno of anni; let i=index">
+                                <li><a class="dropdown-item"
+                                    href="javascript:void(0)" (click)="setAnnoGlobale(anno)">{{anno}}</a>
+                            </li>
+                                </span>
+                                </ul>
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-end">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 mat-small">
+
+                        <li class="nav-item dropdown mat-small">
+                            <a mat-icon-button class="nav-link dropdown-toggle mat-small" aria-current="page" role="button"
+                                  data-bs-toggle="dropdown" aria-expanded="false"><span class="mat-small"><mat-icon class="icon">notifications</mat-icon></span>
+                                  <span class="badge" *ngIf="badgeCount > 0">&nbsp;</span></a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <span *ngFor="let notifica of notifiche; let i=index">
+                             
+                                  <li class="mat-small">
+                                          <a class="dropdown-item mat-small" href="javascript:void(0)" [routerLink]="['/dettaglio-contatto',
+                                          notifica.user_id]">
+                                          <span class="mat-small"><mat-icon color="warn" class="icon bulb" style="font-size:10px;">phone_callback</mat-icon></span>
+                                          
+                                          <span class="mat-small">{{notifica.cognome}} {{notifica.nome}}</span></a>
+                                  </li>
+                                  <mat-divider></mat-divider>
+                              </span>
+                          </ul>
+                      </li>
+
+
+                        <span *ngFor="let menuitem of menuitems; let i=index">
+                          
+                            <span *ngIf="menuitem.id_menu==53">
+                               
+                            <li *ngIf="menuitem.sottomenu!=1" class="nav-item">
+                                
+                                <!--<a class="nav-link" aria-current="page" href="javascript:void(0)" [routerLink]="['/home']">Contatti</a>
+                            <a class="nav-link" aria-current="page" href="javascript:void(0)" (click)="goToContactList()">Contatti</a>-->
+                           <span *ngIf="!dev">
+                                <a mat-icon-button class="nav-link" aria-current="page"
+                                href="{{menuitem.link}}" > {{menuitem.testo}}</a>
+                            </span>
+                            <span *ngIf="dev">
+                                <a mat-icon-button class="nav-link" aria-current="page"
+                                *ngIf="dev"  href="{{menuitem.link_dev}}">{{menuitem.testo}}</a>
+                                 </span>
+                            </li>
+                            <li *ngIf="menuitem.sottomenu==1" class="nav-item dropdown mat-small">
+                                <a mat-icon-button class="nav-link dropdown-toggle mat-small" aria-current="page" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false"><span class="mat-small"><mat-icon class="icon">settings</mat-icon></span></a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <span *ngFor="let submenuitem of menuitem.submenu; let i=index">
+                                        <span *ngIf="!dev">
+                                        <li><a class="dropdown-item"
+                                                href="{{submenuitem.link}}">{{submenuitem.testo}}</a>
+                                        </li>
+                                    </span>
+                                    <span *ngIf="dev">
+                                        <li><a class="dropdown-item"
+                                                href="{{submenuitem.link_dev}}">{{submenuitem.testo}}</a>
+                                        </li>
+                                    </span>
+                                    </span>
+                                </ul>
+                            </li>
+                        </span>
+                        </span>
+
+                       
+                       
+                        <li class="nav-item">
+                            <button mat-icon-button *ngIf="!fullscreen" (click)="openFullscreen()">
+                                <mat-icon class="icon">fullscreen</mat-icon>
+                              </button>
+                              <button mat-icon-button *ngIf="fullscreen" (click)="closeFullscreen()">
+                                <mat-icon class="icon">fullscreen_exit</mat-icon>
+                              </button>
+                        </li>
+                        <li class="nav-item">
+                            <a mat-icon-button color="primary" href="logout.php">
+                            <mat-icon class="screen" (click)="logout()">eject</mat-icon>
+                        </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </nav>
+
+    <app-subheader></app-subheader>
+</div>

@@ -1,0 +1,133 @@
+<div class="row mt-3">
+    <div [ngClass]="{'col-lg-6':space}" class="col-3">
+        <div class="card card-border-c-blue shadow" [ngClass]="{'border-violet' : edit_info =='border-violet'}">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 d-flex justify-content-start">
+                        <h3 class=""> Valutazione contatto </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-task">
+                <div class="row">
+
+                    <div class="col-sm-12 text-center">
+                        <form [formGroup]="formvalutazione">
+                            <input type="hidden" [ngModel]="id" name="id_dettaglio" formControlName="id_utente">
+                            <div class="row">
+                                <div class="col-12" *ngFor="let contatto of contatto">
+                                    <input id="valutazione" class="scarso mx-2" name="valutazione" value="1"
+                                        type="radio" formControlName="valutazione" [(ngModel)]="contatto.valutazione"
+                                        (change)="Valutazione($event)" />
+                                    <label class="mx-2" matTooltip="è una capra" for="valutazione"></label>
+                                    <input id="valutazione1" class="buono mx-2" name="valutazione" value="2"
+                                        type="radio" formControlName="valutazione" [(ngModel)]="contatto.valutazione"
+                                        (change)="Valutazione($event)" />
+                                    <label class="mx-2" matTooltip="buono" for="valutazione1"></label>
+                                    <input id="valutazione2" class="ottimo mx-2" name="valutazione" value="3"
+                                        type="radio" formControlName="valutazione" [(ngModel)]="contatto.valutazione"
+                                        (change)="Valutazione($event)"/>
+                                    <label class="mx-2" matTooltip="ottimo" for="valutazione2"></label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <div [ngClass]="{'col-lg-6':space}" class="col-9">
+        <mat-form-field appearance="fill">
+            <mat-label>Data lavori prevista</mat-label>
+            <input matInput [matDatepicker]="dp2" [value]="data_lavori" (dateChange)="saveDateLavori($event)">
+            <mat-datepicker-toggle matIconSuffix [for]="dp2"></mat-datepicker-toggle>
+            <mat-datepicker #dp2></mat-datepicker>
+        </mat-form-field>
+    </div>
+    
+
+ 
+
+</div>
+<div class="row mt-5">
+    <div [ngClass]="{'col-lg-4':space}" class="col-4">
+        <app-appunti [user]="user_id"></app-appunti>
+        </div>
+    <div [ngClass]="{'col-lg-8':space}" class="col-8">
+        <div class="card card-border-c-blue shadow" [ngClass]="{'border-violet' : edit_info =='border-violet'}">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 d-flex justify-content-start">
+                        <h3 class=""> Info Aggiuntive </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-task">
+                <div class="row" *ngIf="showinfoagg">
+
+                    <div class="col-sm-12" *ngFor="let info of infos">
+                        <!--   <textarea id="body" type="text" [(ngModel)]="info.info" [innerHTML]="info.info"
+                    class="form-control-plaintext" [ngClass]="{ 'edit_field' : edit_field_info_agg=='edit_field' }"
+                    [readonly]="edit_info_agg" (change)="updateInfoAgg()" (click)="makeFieldEditable()
+                    " (clickOutside)="onClickedOutside($event)" [formControl]="infoaggfield"></textarea> -->
+                        <mat-form-field class="mat-small">
+                            <textarea matInput [value]="info.info" [(ngModel)]="info.info" placeholder=""
+                                [formControl]="infoaggfield" (change)="updateInfoAgg(info)" cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                                cdkAutosizeMaxRows="5"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" *ngIf="showinfoaggempty">
+
+                    <div class="col-sm-12">
+                        <!--  <textarea id="body" type="text" class="form-control-plaintext"
+                    [ngClass]="{'edit_field' : edit_field_info_agg=='edit_field'}" [readonly]="edit_info_agg"
+                    (change)="addInfoAgg()" (click)="makeFieldEditable()
+                  " (clickOutside)="onClickedOutside($event)" [formControl]="infoaggfield"></textarea> -->
+
+                        <mat-form-field class="mat-small">
+                            <textarea matInput placeholder="Scrivi qui le informazioni aggiuntive"
+                                [formControl]="infoaggfield" (change)="addInfoAgg()" cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                                cdkAutosizeMaxRows="5"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!--form data lavori previsti modal-->
+<div class="modal fade" id="lavori_previsti" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 999999;">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content violet_bck">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Inserisci data lavori previsti</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body col-6 mx-auto">
+                <h1 class="text-center" style="color:white;">Visto che hai valutato il cliente ottimo devi inserire la data del lavori prevista</h1>
+                <mat-form-field appearance="fill">
+                    <mat-label>Data lavori prevista</mat-label>
+                    <input matInput [matDatepicker]="dp" [value]="data_lavori" (dateChange)="saveDateLavori($event)">
+                    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

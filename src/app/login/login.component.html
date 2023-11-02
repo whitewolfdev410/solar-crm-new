@@ -1,0 +1,45 @@
+<section class="ftco-section">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-wrap p-4 p-md-5">
+                    <div class="icon d-flex align-items-center
+                      justify-content-center">
+
+                        <i class="fas fa-user fa-lg text-light"></i>
+                    </div>
+                    <h3 class="text-center mb-4">C.E.R.O. System Login</h3>
+                    <form action="#" class="login-form" (ngSubmit)="login()" [formGroup]="loginForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control rounded-left" placeholder="Username" formControlName="username" id="username" autocomplete="off">
+
+                        </div>
+
+                        <div class=" form-group d-flex">
+                            <input type="password" class="form-control rounded-left" placeholder="Password" formControlName="password" id="password" autocomplete="off">
+
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50">
+                                <label class="checkbox-wrap checkbox-primary">Rimani
+                                  connesso
+                                  <input type="checkbox" checked>
+                                  <span class="checkmark"></span>
+                              </label>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="#">Password dimenticata</a>
+                            </div>
+                        </div>
+                        <div class="form-group align-items-center justify-content-center d-flex m-0">
+                            <button type="submit" class="btn btn-primary rounded mx-auto submit p-3 px-5" (click)="showHeader()">Buon Lavoro</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

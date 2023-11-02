@@ -1,0 +1,29 @@
+<div class="card card-border-c-blue shadow mb-5" style="overflow:auto;margin-bottom:15px;" *ngIf="dettaglio">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class="">Gestione Tag</h3>
+        </div>
+    </div>
+    <div class="card-body" style="margin-bottom:15px;">
+
+        <mat-list dense class="small-height">
+            <div class="row">
+
+                <div class="col-6" *ngFor="let taglist of tagslist; let i=index;">
+
+                    <mat-list-item class="mat-small">
+                        <span matListItemIcon class="mat-small">
+                            <mat-slide-toggle class="mat-small"  id="{{taglist.id}}" [(ngModel)]="taglist.checked" (change)="updatetag(taglist.id)">
+                            </mat-slide-toggle> </span>
+                        <span matListItemTitle class="mat-small">{{taglist.nome_cartella}}</span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+
+            </div>
+        </mat-list>
+
+    </div>
+    <div class="card-footer text-end">
+    </div>
+</div>

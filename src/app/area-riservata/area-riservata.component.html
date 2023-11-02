@@ -1,0 +1,264 @@
+<section class="container mt-3">
+    <div class="row d-flex">
+        <div class="col-6 col-lg-2"><img src="assets/img/logo-solarcalor.png" class="img-fluid"></div>
+        <div class="col-6 col-lg-10 text-lg-end d-flex align-items-center justify-content-end">
+            <mat-icon>account_circle</mat-icon><span *ngFor="let contatto of contatti">{{contatto.nome}}
+                {{contatto.cognome}}</span>
+        </div>
+    </div>
+
+</section>
+<section class="container mt-5">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card card-border-c-blue shadow mb-5">
+                <div class="card-body">
+                    <span *ngFor="let contatto of contatti">
+                        <h4>{{contatto.nome}} {{contatto.cognome}}</h4>
+                        <p><strong>Indirizzo: </strong><br>{{contatto.indirizzo}}<br>{{contatto.cap}} -
+                            {{contatto.localita}} ({{contatto.provincia}})</p>
+                        <p><strong>Telefono: </strong><br>{{contatto.telefono}}</p>
+                        <p><strong>Email: </strong><br>{{contatto.email}}</p>
+                    </span>
+                </div>
+            </div>
+            <button *ngIf="stato" mat-stroked-button color="warn" class="w-100 mb-5"
+                (click)="changeStatoInvioMail()">Non
+                sono più interessato</button>
+            <p *ngIf="!stato"><span style='color:red;'>OK, Non ti disturberemo più con email.</span></p>
+
+
+
+        </div>
+        <div class="col-lg-9">
+            <div class="row">
+                <!--SONDAGGIO-->
+                <!--OFFERTE-->
+                <div class="col-12" *ngIf="sondaggio">
+                    <div class="card card-border-c-red shadow mb-5">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-start">
+                                <h3 class="">Un breve sondaggio per la tua soddisfazione </h3>
+                            </div>
+                        </div>
+
+                        <div class="card-body" style="overflow:auto;margin-bottom:15px;">
+                            <h3>Sei stato chiamato da <strong>{{nome_op}} {{cognome_op}}</strong>,<br>
+                                Come valuti la telefonata che ti abbiamo fatto per:</h3>
+                            <p *ngIf="!formsondaggio" style="color:red;">GRAZIE PER LA TUA VALUTAZIONE!!!<br>
+                                Pubblichiamo 2 nuovi video ogni settimana,<br>
+                                MI RACCOMANDO ISCRIVITI SUBITO AL NOSTRO CANALE YOUTUBE PER CONOSCERE TUTTE LE NOVITÁ.
+                                <a href="https://www.youtube.com/@SolarCalor" target="_blank"><img
+                                        src="assets/img/Youtube.png" width="50px" height="auto"></a>
+                            </p>
+                            <form [formGroup]="form" (ngSubmit)="Sondaggio(form)" *ngIf="formsondaggio">
+                                <input type="hidden" [ngModel]="id" name="id_dettaglio" formControlName="id_utente">
+                                <input type="hidden" [ngModel]="id_operatore_sondaggio" name="id_operatore"
+                                    formControlName="id_operatore">
+                                <div class="container_emoji row">
+                                    <div class="col-12">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-5">Simpatia</div>
+                                                    <div class="col-7">
+                                                        <input id="simpatia" class="scarso" name="simpatia" value="1"
+                                                            type="radio" formControlName="simpatia" />
+                                                        <label for="simpatia"></label>
+                                                        <input id="simpatia1" class="buono" name="simpatia" value="2"
+                                                            type="radio" formControlName="simpatia" />
+                                                        <label for="simpatia1"></label>
+                                                        <input id="simpatia2" class="ottimo" name="simpatia" value="3"
+                                                            type="radio" formControlName="simpatia" />
+                                                        <label for="simpatia2"></label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-5">Disponibilità</div>
+                                                    <div class="col-7">
+                                                        <input id="disponibilita" class="scarso" name="disponibilita"
+                                                            value="1" type="radio" formControlName="disponibilita" />
+                                                        <label for="disponibilita"></label>
+                                                        <input id="disponibilita1" class="buono" name="disponibilita"
+                                                            value="2" type="radio" formControlName="disponibilita" />
+                                                        <label for="disponibilita1"></label>
+                                                        <input id="disponibilita2" class="ottimo" name="disponibilita"
+                                                            value="3" type="radio" formControlName="disponibilita" />
+                                                        <label for="disponibilita2"></label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-5">Competenza</div>
+                                                    <div class="col-7">
+                                                        <input id="competenza" class="scarso" name="competenza"
+                                                            value="1" type="radio" formControlName="competenza" />
+                                                        <label for="competenza"></label>
+                                                        <input id="competenza1" class="buono" name="competenza"
+                                                            value="2" type="radio" formControlName="competenza" />
+                                                        <label for="competenza1"></label>
+                                                        <input id="competenza2" class="ottimo" name="competenza"
+                                                            value="3" type="radio" formControlName="competenza" />
+                                                        <label for="competenza2"></label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-5">Puntualità</div>
+                                                    <div class="col-7">
+                                                        <input id="puntualita" class="scarso" name="puntualita"
+                                                            value="1" type="radio" formControlName="puntualita" />
+                                                        <label for="puntualita"></label>
+                                                        <input id="puntualita1" class="buono" name="puntualita"
+                                                            value="2" type="radio" formControlName="puntualita" />
+                                                        <label for="puntualita1"></label>
+                                                        <input id="puntualita2" class="ottimo" name="puntualita"
+                                                            value="3" type="radio" formControlName="puntualita" />
+                                                        <label for="puntualita2"></label>
+                                                    </div>
+
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end"><button type="submit"
+                                            [disabled]="form.invalid" class="btn btn-secondary mt-3">Invia</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--DATA LAVORI-->
+                <div class="col-lg-6">
+                    <div class="card card-border-c-blue shadow mb-5">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-start">
+                                <h3 class="">Data prevista dei lavori </h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <span *ngFor="let contatto of contatti">
+                                <mat-form-field appearance="fill">
+
+                                    <input matInput [matDatepicker]="dp" [value]="contatto.richiamare_il"
+                                        (dateChange)="saveDateLavori($event)">
+                                    <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp></mat-datepicker>
+                                </mat-form-field>
+                                <p>Se la data prevista è cambiata faccelo sapere. Modificala ora
+                                </p>
+                                <mat-divider></mat-divider>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!--FISSA APPUNTAMENTO-->
+                <div class="col-lg-6">
+                    <div class="card card-border-c-blue shadow mb-5">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-start">
+                                <h3 class="">Facci sapere quando vuoi essere richiamato </h3>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="row">
+                                <div class="col-12 text-center mb-3">
+                                    <p *ngIf="!showappuntamento">Nessun appuntamento programmato</p>
+                                    <p *ngIf="showappuntamento">Appuntamento fissato per il <span
+                                            *ngFor="let appuntamento of appuntamenti; let i=index"><strong>{{validDateFormat(appuntamento.start)
+                                                | date: 'dd-MMM-yyyy ore HH:mm'}}</strong></span> </p>
+                                              
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <span *ngFor="let contatto of contatti">
+
+                                        <a *ngIf="!showappuntamento" mat-raised-button
+                                        [routerLink]="['/calendario', contatto.id, contatto.interesse | replace:' ':'+',contatto.pwd]"
+                                        href="javascript:void(0)"
+                                        color="primary" class="mat-small w-100"><mat-icon>calendar_today</mat-icon> Fissa un appuntamento telefonico</a>
+                                        <div *ngIf="showappuntamento" class="row">
+                                        <div class="col"><a  mat-raised-button
+                                        [routerLink]="['/calendario', contatto.id, contatto.interesse | replace:' ':'+',contatto.pwd]"
+                                        href="javascript:void(0)"
+                                        color="primary" class="mat-small w-60"><mat-icon>calendar_today</mat-icon> Modifica appuntamento</a>
+                                    </div>
+                                    <div class="col">
+                                        <a *ngIf="showappuntamento" mat-raised-button color="warn"
+                                        (click)="deleteApp()" class="mat-small w-30 "><mat-icon> phonelink_erase</mat-icon> Cancella appuntamento</a>
+                                    </div></div>
+                                    </span>
+                                    <mat-divider class="mt-2"></mat-divider>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--OFFERTE-->
+                <div class="col-12">
+                    <div class="card card-border-c-blue shadow mb-5">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-start">
+                                <h3 class="">Offerte </h3>
+                            </div>
+                        </div>
+
+                        <div class="card-body" style="overflow:auto;margin-bottom:15px;">
+                            <mat-list>
+                                <span *ngFor="let preventivo of prev; let i=index">
+                                    <mat-list-item>
+                                        <div class="row">
+                                            <div class="col-lg-6"> <span matListItemLine
+                                                    class="mat-subtitle-1">{{preventivo.tipologia_materiale}}</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span matListItemLine class="mat-small">
+                                                    <a mat-raised-button
+                                                        href="https://gestionalecero.it/area_riservata/dettaglio_offerta_privata.php?id_dettaglio={{preventivo.id}}&id_utentex={{id}}&nofferta={{preventivo.numero_offerta}}clk={{admin}}"
+                                                        color="primary" class="mat-small">Preventivo n°
+                                                        <b>{{preventivo.numero_offerta}}</b>
+                                                        del
+                                                        <b>{{validDateFormat(preventivo.data_offerta) |
+                                                            date:'dd-MMM-yyyy'}}</b></a>
+                                                </span>
+                                                <span *ngIf="preventivo.nota!=''" matListItemLine
+                                                    class="mat-small">Nota:
+                                                    <b>{{preventivo.nota}}</b> </span>
+
+
+                                            </div>
+                                        </div>
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                </span>
+                            </mat-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- <div class="vh-100 d-flex align-items-center position-fixed start-0 top-0" role="navigation">
+    <div class="p-2">
+      <div id="mainNav">
+        <ul class="list-unstyled rounded ms-2">
+          <li><a class="vlink rounded border-0" href="#"><i class="fas fa-home"></i> <span>Home</span></a></li>
+          <li><a class="vlink rounded" href="#"><i class="fas fa-th"></i> <span>Services</span></a></li>
+          <li><a class="vlink rounded" href="#"><i class="fas fa-headset"></i> <span>Call Us</span></a></li>
+          <li><a class="vlink rounded" href="#"><i class="far fa-calendar-alt"></i> <span>Schedule</span></a></li>
+          <li><a class="vlink rounded" href="#"><i class="fas fa-user-circle"></i> <span>About Us</span></a></li>
+          <li><a class="vlink rounded" href="#"><i class="fas fa-newspaper"></i> <span>News</span></a></li>
+          <li><a class="vlink rounded" href="#"><i class="fas fa-photo-video"></i> <span>Gallery</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div> -->

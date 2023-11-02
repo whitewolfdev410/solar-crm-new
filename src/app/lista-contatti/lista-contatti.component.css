@@ -1,0 +1,55 @@
+table {
+    width: 100%;
+}
+.mat-table {
+    overflow-x: scroll;
+    display: table;
+    width: 100%;
+}
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 4px 4px 4px;
+    line-break: unset;
+    width: auto; 
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.mat-row,
+.mat-header-row {
+    display: table-row;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-color: #000;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+    padding-left: 1rem;
+}
+
+.mat-mdc-header-cell {
+    padding-left: 1rem;
+}
+
+tr.mat-mdc-row:hover {
+    background-color: #eee;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: #000;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+.mat-column-action {
+    flex: 0 0 30%;
+}
+
+.mat-column-productName {
+    flex: 0 0 50%;
+}

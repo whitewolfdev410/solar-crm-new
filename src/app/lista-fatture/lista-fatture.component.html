@@ -1,0 +1,163 @@
+<!-- lista preventivi -->
+<app-header></app-header>
+
+<section class="row mt-5">
+    <div id="load" class="min-vw-100 min-vh-100 violet p-0 m-0 position-fixed top-0
+    start-0 d-flex opacity-75" style="z-index:99999" *ngIf="loading">
+        <div class="spinner-border text-light m-auto" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="row d-flex mb-3">
+        <div class="col-2">
+            <mat-form-field appearance="fill" class="mat-small">
+                <mat-label class="mat-small">Cerca</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <form class="date-block row" [formGroup]="filterForm">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Seleziona le date</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date" formControlName="fromDate" (dateInput)="applyFilterDataRange($event)">
+                      <input matEndDate placeholder="End date" formControlName="toDate" (dateInput)="applyFilterDataRange($event)" (dateChange)="applyFilterDataRange($event)">
+                    </mat-date-range-input>
+                    <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+
+
+
+                <!-- <div class="col-2">
+                    <button mat-button color="primary" class="primary mat-small"
+                        (click)="applyFilterDataRange($event)">Submit</button>
+                </div> -->
+            </form>
+        </div>
+        <div class="col-6">
+            <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+        </div>
+
+        <div class="col-1">
+
+            <button mat-fab color="primary" class="mat-small mt-3" style="
+        height:28px !important;
+        width:28px !important;
+        font-size:18px !important;" matTooltip="Download in formato excel"
+                (click)="exporter.exportTable('xlsx', {fileName:'Fatture', sheet: 'sheet_name', Props: {Author: 'Talha'}})">
+                <mat-icon>get_app</mat-icon></button>
+        </div>
+       
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-12 col-xl-12">
+            <table mat-table matTableExporter [dataSource]="dataSource" class="mat-elevation-z8" matSort  #exporter="matTableExporter" [hiddenColumns]="[0,1]">
+                <!-- ID Column -->
+                <ng-container matColumnDef="numero">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="display:none"> Numero </th>
+                    <td mat-cell *matCellDef="let row " style="display:none">{{row.id}}</td>
+                    <td mat-footer-cell *matFooterCellDef style="display:none"> </td>
+                </ng-container>
+                <ng-container matColumnDef="numero_fattura">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> N. Fattura </th>
+                    <td mat-cell *matCellDef="let row " class="mat-small"><a
+                            href="https://gestionalecero.it/dettaglio_fattura.php?id_dettaglio={{row.id}}">0{{row.numero_fattura}}</a>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="data_fattura">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Data Fattura </th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">{{validDateFormat(row.data_fattura) | date:
+                        'dd-MMM-yyyy'}}</td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="chiusa">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"></th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">{{row.chiusa}}</td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Cliente</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small"><a href="javascript:void(0)" [routerLink]="['/dettaglio-contatto',
+                        row.id_cliente]" class="mat-small">{{ row.cognome }} {{ row.nome }}</a></td>
+                    <td mat-footer-cell *matFooterCellDef>Totale Iva Esclusa </td>
+                </ng-container>
+
+                <ng-container matColumnDef="imponibile">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Totale fattura iva esclusa</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">€ {{row.imponibile}}</td>
+                    <td mat-footer-cell *matFooterCellDef class="mat-small fw-bold">€ {{getTotal() | number:'1.2-2' }}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="totale_fattura">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Totale fattura</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">€ {{row.totale_fattura}}</td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="consulenza">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Consulenza</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small"><span *ngIf="row.consulenza"><mat-icon>check</mat-icon></span></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="materiale">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Tipologia materiale</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">{{row.materiale}}</td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="pagato">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Pagato</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">
+                        <span *ngIf="row.pagato"><mat-icon style="color:green;font-weight: 900;">check</mat-icon></span>
+                        <span *ngIf="row.filename" class="mat-small"> <a href='https://gestionalecero.it/upload_pagamenti_fatture/{{row.id}}/{{row.filename}}' mat-icon-button aria-label="Allegato pagamento">
+        <mat-icon>attach_file</mat-icon>
+                    </a></span></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="sdi_last_dt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Inviata</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small"><span *ngIf="row.inviato==1">{{validDateFormat(row.sdi_last_dt) | date:
+                        'dd-MMM-yyyy'}}</span></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="sdi_status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Stato</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">
+                        <span [ngClass]="{'red': row.sdi_status == 'NS' , 'green': row.sdi_status != 'NS','violet' : row.sdi_status=='Sent'}" >{{row.sdi_status}}</span>
+                       <!--  <span *ngIf="row.sdi_status!='NS'" style="color:green">{{row.sdi_status}}</span> --></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="azioni">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Stato</th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">
+                       
+                    <mat-icon (click)="eliminaFattura(row.id)" class="icon bulb"
+                        matTooltip="Elimina offerta">delete_forever</mat-icon></td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef class="mat-small"> Azioni </th>
+                    <td mat-cell *matCellDef="let row " class="mat-small">
+                      
+                    <td mat-footer-cell *matFooterCellDef class="mat-small fw-bold"></td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+</section>

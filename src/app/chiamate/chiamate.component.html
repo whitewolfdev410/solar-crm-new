@@ -1,0 +1,140 @@
+<div class="row mt-3">
+
+
+    <div class=" col-md-8">
+        
+        <div class="row my-3 ">
+            <div class="col"> <mat-slide-toggle id="" [(ngModel)]="non_risponde" (change)="onCheckedNnRisponde($event)">
+                    Non risponde </mat-slide-toggle></div>
+            <div class="col"><mat-slide-toggle id="" [(ngModel)]="contatto_errato"
+                    (change)="onCheckedContattoErrato($event)">
+                    Contatto Errato </mat-slide-toggle></div>
+
+        </div>
+
+        <div class="card card-border-c-blue shadow" [ngClass]="{ 'border-violet':edit_chiam=='border-violet' }">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6 d-flex justify-content-start ">
+                        <h3 class="my-auto"> Chiamate </h3>
+                    </div>
+                    <div class="col-sm-6 col-lg-6 d-flex justify-content-end">
+                        <button mat-button *ngIf="start_stop_button" class="mat-small" color="primary" matTooltip="aggiungi una nuova chiamata"
+                        #ddTrigger="matMenuTrigger" [matMenuTriggerFor]="dd"><mat-icon>phone_in_talk</mat-icon> Inizia nuova chiamata</button>
+                            <button mat-button *ngIf="!start_stop_button" class="mat-small" color="warn" matTooltip="stop chiamata"
+                            (click)="stopChiamata(user,avvio)"><mat-icon>phone_callback</mat-icon> Stop chiamata {{counter | formatTime}}</button>
+
+                            
+                    </div>
+                </div>
+            </div>
+
+            <mat-menu #dd="matMenu" [overlapTrigger]="false">
+                <mat-list role="list">
+                   <mat-list-item role="listitem" *ngFor="let tipologiachiamata of tipologiechiamate" (click)="startChiamata(user,avvio,tipologiachiamata.id)">{{tipologiachiamata.nome}}</mat-list-item>
+                 <!--  <mat-list-item role="listitem" (click)="startChiamata(user,avvio,1)">chiamata su appuntamento</mat-list-item>
+                    <mat-list-item role="listitem" (click)="startChiamata(user,avvio,2)">mi ha chiamato il cliente</mat-list-item>
+                    <mat-list-item role="listitem" (click)="startChiamata(user,avvio,3)">cliente caldo</mat-list-item>
+                    <mat-list-item role="listitem" (click)="startChiamata(user,avvio,4)">campione inviato</mat-list-item>
+                    <mat-list-item role="listitem" (click)="startChiamata(user,avvio,5)">offerta non aperta</mat-list-item>
+                    <mat-list-item role="listitem" (click)="startChiamata(user,avvio,6)">data lavori vicina</mat-list-item>
+                    <mat-list-item role="listitem" (click)="startChiamata(user,avvio,7)">altro</mat-list-item>-->
+                  </mat-list>
+            </mat-menu>
+            
+            <div class="card-body card-task">
+                <div class="header">
+                    <mat-form-field *ngIf="start" class="mat-small">
+                        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="15"
+            [(ngModel)]="aggiungiChiamata" [formControl]="aggiungiChiam" (change)="autoSaveChiamata(user)" class="p-3" style="background-color: red!important;color:white!important"></textarea>
+                        <!--<input matInput (change)="autoSaveChiamata(user)" placeholder="Aggiungi chiamata">-->
+                    </mat-form-field>
+
+
+                    
+                </div>
+
+
+                <mat-table #table [dataSource]="dataSourceChiamate" matSort class="mat-small">
+
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="note">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-form-field class="mat-small">
+                                <mat-label>{{validDateFormat(element.data_chiamata) | date: 'dd-MMM-yyyy'}} -
+                                    {{element.nome_amm}} - durata chiamata {{element.durata | formatTime}}</mat-label>
+                                <textarea matInput [value]="element.note" [(ngModel)]="element.note" (change)="updateChiamata(element)
+                  " cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                                    cdkAutosizeMaxRows="5"></textarea>
+                            </mat-form-field>
+                        </td>
+                    </ng-container>
+
+                    <!-- action Column -->
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <td mat-cell *matCellDef="let element" class="mat-small">
+                           <span class="mat-small"><mat-icon *ngIf="element.chiusa==0" color="warn" class="icon bulb">phone_callback</mat-icon></span> 
+                           <span class="mat-small"><mat-icon (click)="deleteChiamata(element.id)" class="icon bulb">delete_forever</mat-icon></span>
+                        </td>
+                    </ng-container>
+
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </mat-table>
+
+
+
+            </div>
+            <div class="card-footer">
+
+           <mat-form-field class="mat-small">
+                        <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
+                        <button mat-icon-button matSuffix aria-label="clear" *ngIf="filter.value"
+                            (click)="filter.value='' ; applyFilter( '');">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4 form-floating pr-2">
+        <mat-form-field appearance="fill" *ngIf="!esterno">
+            <mat-label>Contatto assegnato a:</mat-label>
+            <mat-select [(value)]="selected" (selectionChange)="editAmministratore()" [formControl]="selectOperatore">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let amministratore of amministratori" [value]="amministratore.id">
+                    {{amministratore.nome}} {{amministratore.cognome}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field><span *ngIf="!esterno">
+            <mat-form-field appearance="fill">
+                <mat-label>Contatto collegato all'idraulico:</mat-label>
+                <mat-select [(value)]="selected_idraulico" (selectionChange)="editIdraulico()"
+                    [formControl]="selectIdraulico">
+
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let idraulico of idraulici" [value]="idraulico.id">{{idraulico.nome}}
+                        {{idraulico.cognome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div mat-line class="mb-3" *ngIf="selected_idraulico!='0'">
+                <mat-slide-toggle id="" [(ngModel)]="checked" (change)="updateVisibility($event)">
+                    Visibile nella pagina dell'idraulico </mat-slide-toggle>
+            </div>
+        </span>
+        <app-allegati-contatti [user]="user"></app-allegati-contatti>
+
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<section class="container">
+    <div class="row d-flex py-2">
+        <div class="col-3 col-lg-2 mt-4"><img src="assets/img/logo-solarcalor_white.png" class="img-fluid"></div>
+
+    </div>
+
+</section>
+<section class="container-fluid my-1 bck_verde">
+    <div class="row text-center text-white mb-5 pt-5 pb-5">
+        <h1 style="font-size:30px;font-weight: 300;line-height:1.2em">Appuntamento telefonico</h1>
+        <h3 style="font-size:20px;font-weight: 300;line-height:1.2em">Seleziona data e ora a cui vorresti essere richiamato dal nostro Ufficio Tecnico/Commerciale:</h3>
+        <div class="col"></div>
+        <div class="col-md-4 mt-2 mb-5 mx-auto">
+            <!-- <div class="selected-date-wrapper">
+                <button mat-icon-button (click)="onPreviousDay()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+
+                <span (click)="calendarVisible = !calendarVisible">{{ selectedDate | date }}</span>
+
+                <button mat-icon-button (click)="onNextDay()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>  -->
+            <div class="calendar-wrapper background_white text-black" *ngIf="calendarVisible">
+                <div *ngIf="eventi">
+
+                    <mat-calendar [dateClass]="dateClass()" [selected]="selectedDate" [minDate]="minDate"
+                        (selectedChange)="onSelectedChange($event)" class="mat-elevation-z3">
+                    </mat-calendar>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6 mb-5 background_white text-black mt-2 pt-5" *ngIf="ora">
+            <h2 style="font-size:40px;font-weight: 300;line-height:1.2em">Seleziona l'ora a cui vuoi essere contattato il <br><strong>{{dataora}}</strong></h2>
+            <div class="row">
+                <div class="col-8 mx-auto">
+
+                    <span *ngFor="let ora of ore ">
+                        <mat-button-toggle class="m-2" name="ora" value="{{ora.start}}"
+                            (click)="setoraappuntamento(ora.start)">
+                            {{ora.ora}}
+                        </mat-button-toggle></span>
+
+
+                </div>
+
+            </div>
+            <div class="row mt-2 mb-3">
+
+                <div class="col-8 mx-auto" *ngIf="show_cellulare">
+                    <h3 style="font-size:40px;font-weight: 300;line-height:1.2em">Adesso reinserici il tuo numero di cellulare per conferma</h3>
+                    <form (ngSubmit)="checkCell()" [formGroup]="form">
+                        <input type="hidden" placeholder="{{ora_scelta}}" [ngModel]="ora_scelta" formControlName="data">
+                        <input type="hidden" placeholder="{{id_conatto}}" [ngModel]="id_contatto"
+                            formControlName="id_contatto">
+                        <input type="hidden" placeholder="{{interesse}}" [ngModel]="interesse"
+                            formControlName="interesse">
+                        <input type="hidden" placeholder="{{psw}}" [ngModel]="psw" formControlName="psw">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Cellulare</mat-label>
+                            <span matPrefix>+39 &nbsp;</span>
+                            <input type="tel" matInput placeholder="3939004445" formControlName="cellulare">
+                        </mat-form-field>
+                        <div class="form-element" align="center">
+                            <button mat-raised-button color="primary" type="submit" class="button"
+                                [disabled]="!form.valid">Inserisci appuntamento</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</section>
+
+<section class="container-fluid"  style="background-color: #3a3a3a;">
+<div class="row">
+<div class="col-4 mx-auto py-5 text-center" style="color:white;">
+    <img src="assets/img/logo_orizzontale.webp" class="img-fluid">
+    <p>Via L. Landucci, 2 Z.I. Isola d'Arbia<br>
+
+        53100 Siena - Italy<br>
+        
+        Partita IVA: 01465050522<br>
+        
+        Codice fiscale: 01465050522</p>
+</div>
+</div>
+</section>

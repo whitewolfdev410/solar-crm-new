@@ -1,0 +1,56 @@
+<!-- lista conferme dettaglio contatto -->
+
+<div class="card card-border-c-blue shadow mb-5" *ngIf="dettaglio">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class=""> Conferme d'ordine</h3>
+        </div>
+    </div>
+    <div class="card-body" style="max-height:350px;overflow:auto;margin-bottom:15px;">
+        <mat-list dense class="small-height">
+
+            <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    *ngFor="let conferma of conf">
+                  
+                    <mat-expansion-panel-header class="mat-small">
+                        <mat-panel-title>
+                                <p><a mat-icon-button href="https://gestionalecero.it/dettaglio_offerta_confermata.php?id_dettaglio={{conferma.id_conferma}}&id_cliente={{user}}" target="_blank"
+                                placement="left" matTooltip="Vai alla Conferma Ordine">
+                                <mat-icon>link</mat-icon> 
+                            </a>
+                            Conferma n° <b>{{conferma.numero_conferma}} </b> del
+                                <b>{{validDateFormat(conferma.data_conferma) | date: 'dd-MMM-yyyy'}}</b>
+                            </p>
+                            
+                        </mat-panel-title>
+                        
+                    </mat-expansion-panel-header>
+                    
+                    <!-- preventivo collegato alla conferma ordine dettaglio contatto -->
+                    <p class="mat-small">Offerta n. {{conferma.numero_offerta}} del
+                        {{validDateFormat(conferma.data_offerta) | date: 'dd-MMM-yyyy'}} </p>
+                        
+                    <p>
+                     
+                        <mat-form-field class="mat-small">
+                        <textarea  matInput [(ngModel)]="conferma.note" placeholder="Annotazioni alla conferma ordine"  (change)="updateNote(conferma)" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
+                   
+                    </p>
+                    <p>Allegati</p>
+                    <app-allegati-conferma-ordine [user]="user" [id_preventivo]="conferma.id_offerta" [upload_folder]="conferma.upload_folder"></app-allegati-conferma-ordine >
+
+                       
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+        </mat-list>
+
+
+    </div>
+
+</div>

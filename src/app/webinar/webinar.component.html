@@ -1,0 +1,167 @@
+<app-header></app-header>
+<section class="row d-flex mb-5 mt-5">
+    <div class="col-xl-8">
+        <div class="card card-border-c-blue shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 d-flex justify-content-start">
+                        <h3 class=""> Nuovo webinar </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-task">
+                <!-- ADD FORM -->
+                <ng-container *ngIf="!showdetails">
+                    <form [formGroup]="form" (ngSubmit)="saveWebinar(form)">
+                        <div class="row">
+                            <div class="col-xl-12 mb-2">
+
+                                <mat-form-field>
+                                    <input matInput [ngxMatDatetimePicker]="picker"
+                                        placeholder="Data e ora del Webinar*" formControlName="data_ora_webinar"
+                                        [min]="minDate" [max]="maxDate" [disabled]="disabled">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners"
+                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                        [enableMeridian]="enableMeridian">
+                                    </ngx-mat-datetime-picker>
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link del webinar</mat-label>
+                                    <input matInput maxlength="40" placeholder="Link del webinar"
+                                        formControlName="link_webinar" #link_webinarInput>
+                                    <mat-error>Testo è obbligatorio</mat-error>
+                                    <mat-error *ngIf="form.controls['link_webinar'].errors?.['minlength']">
+                                        Please enter more than 10 character
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link registrazione webinar</mat-label>
+                                    <input matInput placeholder="Link alla pagina registrazione webinar"
+                                        formControlName="link_registrazione_webinar" #llink_registrazione_webinarInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-2">
+                                <mat-form-field>
+                                    <input matInput [ngxMatDatetimePicker]="pickerO"
+                                        placeholder="Data e ora dell'Openday" formControlName="data_ora_openday"
+                                        [min]="minDate" [max]="maxDate" [disabled]="disabled">
+                                    <mat-datepicker-toggle matSuffix [for]="pickerO"></mat-datepicker-toggle>
+                                    <ngx-mat-datetime-picker #pickerO [showSpinners]="showSpinners"
+                                        [showSeconds]="showSeconds" [stepHour]="stepHour" [stepMinute]="stepMinute"
+                                        [stepSecond]="stepSecond" [touchUi]="touchUi" [color]="color"
+                                        [enableMeridian]="enableMeridian">
+                                    </ngx-mat-datetime-picker>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Luogo openday</mat-label>
+                                    <input matInput placeholder="Luogo dell'openday" formControlName="luogo_openday"
+                                        #luogo_opendayInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Giorno massimo registrazione openday</mat-label>
+                                    <input matInput placeholder="Giorno massimo della registrazione all'openday"
+                                        formControlName="giorno_max_registrazione_openday"
+                                        #giorno_max_registrazione_opendayInput>
+                                </mat-form-field>
+                            </div>
+
+                            <div mat-dialog-actions>
+                                <button mat-raised-button color="primary" type="submit"
+                                    [disabled]="!form.valid">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    <pre>
+                    </pre>
+                </ng-container>
+                <!-- EDIT FORM 
+                <ng-container *ngFor="let item of menuitem">
+                    <form [formGroup]="formEdit" (ngSubmit)="editMenuItem(formEdit)" *ngIf="showdetails">
+                        <mat-form-field [hidden]="true">
+                            <input matInput formControlName="id_menu" [ngModel]="item.id_menu">
+                        </mat-form-field>
+                        <div class="row">
+
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Testo da visualizzare nel menu</mat-label>
+                                    <input matInput maxlength="40" placeholder="Digita il testo da visualizzare"
+                                        formControlName="testo" #testoInput [(ngModel)]="item.testo">
+                                    <mat-error>Testo è obbligatorio</mat-error>
+                                    <mat-error *ngIf="form.controls['testo'].errors?.['minlength']">
+                                        Please enter more than 10 character
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill" hintLabel="Seleziona se è una voce del sottomenu">
+                                    <mat-label>Genitore</mat-label>
+                                    <mat-select matNativeControl name="genitore" formControlName="genitore"
+                                        [(ngModel)]="item.genitore">
+                                        <mat-option *ngFor="let pagina of pagine" value="{{pagina.id_menu}}">
+                                            {{pagina.testo}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-2">
+                                <mat-checkbox class="example-margin" value="1" formControlName="sottomenu"
+                                    [ngModel]="checked">Ha Sottomenu
+                                </mat-checkbox>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link</mat-label>
+                                    <input matInput placeholder="Link alla pagina senza www.gestionalecero.it"
+                                        formControlName="link" #linkInput [(ngModel)]="item.link">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link Development</mat-label>
+                                    <input matInput placeholder="Link alla pagina in development"
+                                        formControlName="link_dev" #linkdevInput [(ngModel)]="item.link_dev">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-5">
+                                <h4>Chi puo vedere il link
+                                </h4>
+                                <div formArrayName="ruoli_edit" class="row">
+                                    <div *ngFor="let item of formEdit['controls'].ruoli_edit['controls']; let i = index" class="col-2">
+                                        <span [formGroupName]="i">
+                                            <mat-checkbox formControlName="status">
+                                                {{formEdit['controls'].ruoli_edit['controls'][i]['controls']['nome'].value}}
+                                            </mat-checkbox>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>
+                            </pre>
+                        <div mat-dialog-actions>
+                            <button mat-raised-button color="primary" type="submit"
+                                [disabled]="!formEdit.valid">Modifica</button>
+                        </div>
+                    </form>
+                </ng-container>-->
+            </div>
+        </div>
+    </div>
+
+
+
+
+</section>

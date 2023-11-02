@@ -1,0 +1,28 @@
+<h2 mat-dialog-title style="color:black!important;">Hai delle chiamate aperte</h2>
+
+<mat-dialog-content class="mat-typography">
+    {{data}}
+     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <span *ngFor="let notifica of data; let i=index">
+       
+            <li class="mat-small">
+                    <a class="dropdown-item mat-small" href="javascript:void(0)" [routerLink]="['/dettaglio-contatto',
+                    notifica.user_id]">
+                    <span class="mat-small"><mat-icon color="warn" class="icon bulb" style="font-size:10px;">phone_callback</mat-icon></span>
+                    
+                    <span class="mat-small">{{notifica.cognome}} {{notifica.nome}}</span></a>
+            </li>
+            <mat-divider></mat-divider>
+        </span>
+    </ul>
+     
+    <span *ngIf="val">Questo contatto non ha ancora recenzioni</span>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <!--<button mat-button mat-dialog-close>Close</button>-->
+  <a href="https://gestionalecero.it/gest_2022/contatti" target="_blank">apri un altra scheda</a>
+  <!-- <button mat-button color="primary" (click)="data.callback(aggiungiChiamata.value)">
+    Salva
+  </button>-->
+</mat-dialog-actions>

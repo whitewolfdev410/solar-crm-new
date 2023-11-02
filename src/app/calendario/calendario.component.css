@@ -1,0 +1,47 @@
+/* ::ng-deep .mat-calendar-body-label[colspan="7"], 
+.mat-calendar-body-label[colspan="6"], 
+::ng-deep .mat-calendar-body-label[colspan="5"],
+.mat-calendar-body-label[colspan="4"] {
+    display: none;
+} */
+
+::ng-deep body{
+    background-color: #2c3c43!important;
+}
+::ng-deep .mat-calendar-body-label {
+    font-size:1px;
+   
+    visibility: hidden;
+    
+}
+::ng-deep .mat-calendar-arrow{
+    visibility: hidden;
+}
+::ng-deep .mat-mdc-button .mdc-button__label, .mat-mdc-unelevated-button .mdc-button__label, .mat-mdc-raised-button .mdc-button__label, .mat-mdc-outlined-button .mdc-button__label {
+    font-size:25px;
+}
+
+
+.mat-button-toggle{
+    background-color: #abca59!important;
+border-radius: 99px!important;
+}
+.mat-button-toggle-checked {
+    background-color: #f7a846!important;
+}
+.bck_verde{
+    background-image: url("../../assets/img/bck_verde.png");
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size:  contain;
+}
+.text-white{
+    color:white;
+}
+.text-black{
+    color:black;
+}
+.background_white{
+background-color: white;
+}
+

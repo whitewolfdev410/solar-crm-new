@@ -1,0 +1,67 @@
+.mat-mdc-form-field {
+    width: 99%;
+}
+
+ 
+
+input[type=radio] {
+    display: none;
+}
+
+input+label {
+    font-size: 1.8rem;
+    width: 2rem;
+    height: 2rem;
+    display: inline;
+    justify-content: center;
+    align-items: center;
+    transition: .1s all;
+    cursor: pointer;
+    z-index: 999 !important;
+    opacity: 0.5;
+   /* margin-right: 30px;*/
+}
+
+input+label:hover {
+    transform: scale(.95);
+    opacity: 1;
+}
+
+.scarso+label:after {
+    content: "🥴";
+}
+
+.buono+label:after {
+    content: "😐";
+}
+
+.ottimo+label:after {
+    content: "😀";
+}
+
+input:checked+label {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+input:checked+label:hover {
+    transform: scale(1.05);
+}
+
+.scarso:checked+label:after {
+    content: "🥴";
+}
+
+.buono:checked+label:after {
+    content: "😐";
+}
+
+.ottimo:checked+label:after {
+    content: "😀";
+}
+.mat-subtitle-1{
+  margin-bottom:0px!important;
+}
+.mdc-list-item__primary-text::before{
+  height:auto!important;
+}

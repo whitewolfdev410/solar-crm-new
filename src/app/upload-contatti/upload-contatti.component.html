@@ -1,0 +1,54 @@
+
+<span *ngIf="dev">
+        <div class="dropzone" appDnd  (filesChangeEmiter)="onFileChange($event)">
+            <input type="file" name="file" #fileDropRef id="fileDropRef" (change)="onFileChange($event.target.files)">
+            <p class="p-0 m-0">  
+
+            <i class="fa-brands fa-facebook"></i> Carica file excel</p>
+           
+        </div>
+
+        <div class="text-center" *ngIf="progressShow">
+            <hr>
+            <p> <b>{{progress}} %</b></p>
+            <hr>
+            <div id="output"></div>
+        </div>
+
+         <div class="dropzone" appDnd  (filesChangeEmiter)="onFileChangeGen($event)">
+            <input type="file" name="file" #fileDropRef id="fileDropRef" (change)="onFileChangeGen($event.target.files)">
+            <p class="p-0 m-0">  
+
+            Carica file contatti excel generico</p>
+           
+        </div> 
+        <div class="dropzone" appDnd  (filesChangeEmiter)="onFileChangeCampioni($event)">
+            <input type="file" name="file" #fileDropRef id="fileDropRef" (change)="onFileChangeCampioni($event.target.files)">
+            <p class="p-0 m-0">  
+
+            Carica file campioni</p>
+           
+        </div> 
+
+        <div class="text-center" *ngIf="progressShow_gen">
+            <hr>
+            <p> <b>{{progress_gen}} %</b></p>
+            <hr>
+            <div id="output"></div>
+        </div>
+
+        <div class="dropzone" appDnd  (filesChangeEmiter)="onFileChangeSyncroFB($event)">
+            <input type="file" name="file" #fileDropRef id="fileDropRef" (change)="onFileChangeSyncroFB($event.target.files)">
+            <p class="p-0 m-0">  
+
+            Sincronizza dati Facebook</p>
+           
+        </div> 
+
+        <div class="text-center" *ngIf="progressShow_gen">
+            <hr>
+            <p> <b>{{progress_gen}} %</b></p>
+            <hr>
+            <div id="output"></div>
+        </div>
+    </span>

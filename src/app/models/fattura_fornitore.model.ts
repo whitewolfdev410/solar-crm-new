@@ -1,0 +1,37 @@
+export class FatturaFornitore {
+  id: number;
+  nome_fattura: string;
+  tipo_fornitura: string;
+  data_fattura: Date;
+  scadenza_pagamento: Date;
+  id_fornitore: Number;
+  imponibile: Number;
+  iva: Number;
+  ritenuta_acconto: Number;
+  altri_addebiti: Number;
+  concessione_governativa: Number;
+  note_fattura: string;
+  note_pagamento: string;
+  id_lavoro: Number;
+  pagato: Number;
+  data_pagamento: Date;
+  percentuale_detrazione: Number;
+  pdf_pagamento: string;
+  non_fattura: Number;
+  importo_pagato: Number;
+  ordine: string;
+  data_ordine: Date;
+  id_ordine_fornitore: Number;
+  inserito_da: string;
+  stato_inserimento: string;
+  uuid: string;
+  xml_filename: string;
+  json: string;
+  import_error: string;
+  ts: Date;
+  file_path: string;
+  file_import_ts: Date;
+  id_azienda: Number;
+  nota: string;
+  metodo_pagamento: string;
+}

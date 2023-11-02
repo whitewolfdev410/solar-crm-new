@@ -1,0 +1,443 @@
+<app-header></app-header>
+<div id="load" class="min-vw-100 min-vh-100 violet p-0 m-0 position-fixed top-0
+  start-0 d-flex opacity-75" style="z-index:99999" *ngIf="loading">
+    <div class="spinner-border text-light m-auto" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<section class="container-fluid mt-5">
+    <div class="row">
+
+        <div class="col-md-5 col-sm-12 mb-3" *ngFor="let contatto of contatti" id="anagrafica">
+            <div class="card card-border-c-blue shadow" [ngClass]="{'border-violet' : edit=='border-violet'}">
+                <form class="" [formGroup]="formEditContact">
+                    <div class="card-header">
+                        <div class="row">
+                            
+                            <div class="col-sm-12 col-lg-6 d-flex justify-content-start">
+                                <h3 class="">
+
+                                    <input type="hidden" id="id" value="" [(ngModel)]="contatto.id"
+                                        formControlName="id">
+                                        <i *ngIf="contatto.facebook_id!='0'" class="fa-brands fa-facebook"></i> 
+                                    <input type="text" [readonly]="edit_anagrafica"
+                                        class="form-control-plaintext p-0 m-0"
+                                        [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="nome" value=""
+                                        [(ngModel)]="contatto.nome" formControlName="nome">
+                                    <input type="text" [readonly]="edit_anagrafica"
+                                        class="form-control-plaintext p-0 m-0"
+                                        [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="cognome" value=""
+                                        [(ngModel)]="contatto.cognome" formControlName="cognome">
+                                </h3>
+                            </div>
+                            <div class="col-sm-12 col-lg-6 d-flex justify-content-end">
+                                <a class="mr-5"
+                                    href="../vCard/VCard.php?id_dettaglio={{ contatto.id }}&nome={{contatto.nome }}&cognome={{ contatto.cognome }}&telefono={{contatto.telefono }}&telefono_2={{contatto.telefono2}}&email={{contatto.email}}&indirizzo=${{contatto.indirizzo}}&cap={{contatto.cap}}&provincia={{contatto.provincia}}&note={{contatto.landing}}\"><i
+                                        class="fa-solid fa-credit-card p-1"></i></a>
+                                <span class="ml-5"> numero contatti {{double}}</span>
+                                <br><a
+                                    href="https://gestionalecero.it/dettaglio_contatto.php?id_dettaglio={{contatto.id}}"
+                                    target="_blank">Vecchia versione</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body card-task">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="task-detail">Numero contatti: <b>{{double}}</b></p>
+                                <p class="task-detail">Interessato a: <b>{{contatto.interesse}}</b></p>
+                                <p class="task-detail"><span
+                                        *ngIf="!selectshow"><b>{{contatto.figura_professionale}}</b></span></p>
+                                <p class="task-detail"><span
+                                        *ngIf="!selectshow"><b>{{contatto.tipo_collaborazione_nome}}
+                                            </b></span></p>
+
+                                <!-- <div class="col-auto"><input type="text" [readonly]="edit_anagrafica"
+                                    class="form-control-plaintext my-2 py-2"
+                                    [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="figura_professionale"
+                                    value="" [(ngModel)]="contatto.figura_professionale" formControlName="figura_professionale"></div> -->
+
+                                <div class="form-floating col-lg-6 mb-3" *ngIf="selectshow">
+                                    <select name="figura_professionale" id="figura_professionale"
+                                        formControlName="figura_professionale" class="form-select form-select-sm"
+                                        [(ngModel)]="contatto.figura_professionale">
+                                        <option value="">Seleziona</option>
+                                        <option value="privato">Sono un privato</option>
+                                        <option value="installatore">Sono un installatore</option>
+                                        <option value="studio tecnico">Sono uno studio tecnico</option>
+                                        <option value="impresa edile">Sono un'impresa edile</option>
+                                        <option value="agente di commercio">Sono un agente di commercio</option>
+                                        <option value="segnalatore">Sono un segnalatore</option>
+                                    </select><label for="figura_professionale">Sono un:
+                                        {{contatto.figura_professionale}}</label>
+                                </div>
+                                <div class="form-floating col-lg-6 mb-3" *ngIf="selectshow">
+                                    <mat-form-field>
+                                        <mat-label>Collaboratore come </mat-label>
+                                        <mat-select [(ngModel)]="contatto.tipo_collaborazione"
+                                            formControlName="tipo_collaborazione" name="tipo_collaborazione">
+                                            <mat-option></mat-option>
+                                            <span *ngFor="let option of ruoli">
+                                            <mat-option [value]="option.id" *ngIf="option.assegnabile">
+                                                {{option.nome}}
+                                            </mat-option>
+                                        </span>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+
+                                <p>Data Contatto: {{ contatto.data_contatto | date:'dd/MM/yyyy' }}</p>
+
+                                <hr>
+                                <div class="row g-1 align-items-center">
+                                    <div class="col-12">
+                                        <b>Indirizzo</b>
+                                    </div>
+
+                                    <div class="col-auto"><input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="indirizzo"
+                                            value="" [(ngModel)]="contatto.indirizzo" formControlName="indirizzo"></div>
+                                    <div class="col-auto"> <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="cap" value=""
+                                            [(ngModel)]="contatto.cap" formControlName="cap"></div>
+                                    <div class="col-auto"> <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0" *ngIf="edit_anagrafica"
+                                            id="provincia" value="" [(ngModel)]="contatto.provincia"
+                                            formControlName="provincia">
+
+                                        <mat-form-field *ngIf="!edit_anagrafica">
+                                            <mat-label>Provincia {{contatto.provincia}}</mat-label>
+                                            <mat-select [(ngModel)]="contatto.provincia" formControlName="provincia"
+                                                name="provincia">
+                                                <mat-option></mat-option>
+                                                <mat-option [value]="option.sigla_province"
+                                                    *ngFor="let option of province">
+                                                    {{option.nome_province}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+
+                                <div class="row g-1 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="telefono" class="col-form-label">Telefono:</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="telefono" value=""
+                                            [(ngModel)]="contatto.telefono" formControlName="telefono">
+                                    </div>
+                                    <div class="col-auto">
+                                        <label for="telefono2" class="col-form-label">Telefono 2:</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="telefono2"
+                                            value="" [(ngModel)]="contatto.telefono_2" formControlName="telefono2">
+                                    </div>
+
+                                </div>
+
+                                <div class="row g-1 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="email" class="col-form-label">Email: <a
+                                                href="mailto:{{contatto.email}}"> <i
+                                                    class="fa-solid fa-envelope p-1"></i></a></label>
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="email" value=""
+                                            [(ngModel)]="contatto.email" formControlName="email">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row g-1 align-items-center">
+                                    <div class="col-auto">
+                                        <label for="username" class="col-form-label">Username:</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="username" value=""
+                                            [(ngModel)]="contatto.username" formControlName="username">
+                                    </div>
+                                    <div class="col-auto">
+                                        <label for="password" class="col-form-label">Password:</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="text" [readonly]="edit_anagrafica"
+                                            class="form-control-plaintext p-0 m-0"
+                                            [ngClass]="{'edit_field' : edit_field=='edit_field'}" id="password" value=""
+                                            [(ngModel)]="contatto.password" formControlName="password">
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        Appuntamento fissato: <span
+                                            *ngFor="let appuntamento of appuntamenti; let i=index">{{validDateFormat(appuntamento.start)
+                                            | date: 'dd-MMM-yyyy - HH:mm'}}</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+
+                                        <p>Link Calendario:</p>
+                                       <!--  <p *ngIf="!dev">https://gestionalecero.it/calendario/int-risc-4.php?id_utente={{contatto.id}}&interesse={{contatto.interesse
+                                            | replace:' ':'+'}}&pwd={{contatto.pwd}}&show_btn=0</p> -->
+                                            <p>https://www.gestionalecero.it/gest_2022/calendario/{{contatto.id}}/{{contatto.interesse
+                                                | replace:' ':'+'}}/{{contatto.pwd}}</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+
+                                        <!-- <button *ngIf="!dev" type="button" class="btn" placement="top" matTooltip="Area riservata"
+                                            (click)="goAreaRiservata(contatto.id,contatto.username,contatto.password)"><i
+                                                class="fa fa-lock"></i></button> -->
+                                                <button type="button" class="btn" placement="top" matTooltip="Area riservata"
+                                                [routerLink]="['/area-riservata', contatto.id, contatto.username,contatto.password]"><i
+                                                class="fa fa-lock"></i></button>
+                                        <button type="button" class="btn" placement="top"
+                                            matTooltip="Segna come non letto" (click)="setNonLetto(contatto.id)"><i
+                                                class="fa-brands fa-readme"></i></button>
+                                        <button type="button" class="btn" placement="top" matTooltip="Elimina contatto"
+                                            (click)="eliminaContatto(contatto.id)"><i
+                                                class="fa-solid fa-eraser"></i></button>
+                                                <button type="button" class="btn" placement="top"
+                                            matTooltip="Spegni Contatto" (click)="spegniContatto(contatto.id)"><i
+                                                class="fa-solid fa-power-off"></i></button>
+
+
+                                    </div>
+                                    <div class="col text-end">
+
+                                        <a class="btn btn-primary btn-sm" *ngIf="edit_anagrafica" placement="top"
+                                            matTooltip="Modifica angrafica" href=" javascript:void(0)"
+                                            (click)="showFormAnagrafica()">Modifica</a>
+                                        <a class="btn btn-primary btn-sm" *ngIf="!edit_anagrafica" placement="top"
+                                            matTooltip="Salva modifiche" href=" javascript:void(0)"
+                                            (click)="editContact()">Salva</a>
+                                    </div>
+
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3>Messaggio</h3>
+                                        <p>{{contatto.messaggio}}</p>
+                                        <app-dati-contatto-doppio [user]="user_id"></app-dati-contatto-doppio>
+                                       
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr>
+
+
+                    </div>
+                </form>
+            </div>
+               <!--CONFIGURAZIONE IMPIANTO-->
+<div class="row" *ngIf="impianto">
+    <div [ngClass]="{'col-lg-12':space}" class="mt-3" >
+     <div class="card card-border-c-blue shadow">
+         <div class="card-header">
+             <div class="row">
+                 <div class="col-sm-12 d-flex justify-content-start">
+                     <h3 class=""> Impianto configurato </h3>
+                 </div>
+             </div>
+         </div>
+         <div class="card-body card-task">
+             <mat-list dense class="small-height">
+ 
+                 <mat-accordion class="mat-small">
+                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                         *ngFor="let impianto of impiantocheck" [expanded]="isOpen">
+ 
+                         <mat-expansion-panel-header class="mat-small">
+                             <mat-panel-title>
+                                 <p style="text-transform: uppercase;">
+                                     <b>{{impianto.impianto}} </b>
+                                 </p>
+ 
+                             </mat-panel-title>
+ 
+                         </mat-expansion-panel-header>
+                         <div *ngIf="impianto.impianto=='Impianto Radiante'">
+                             <mat-panel-body class="mat-small">
+                                 <p>• Quanto è grande la parte riscaldata dove vuoi fare l'impianto radiante?
+                                     <br><strong>{{impianto.mq}}</strong>
+                                 </p>
+                                 <p>• Qual è il tuo fabbisogno energetico annuo?<br> <strong>
+                                         {{impianto.kwh}}
+                                     </strong></p>
+                                 <p>• La struttura è già coibentata con un cappotto termico o verrà fatto entro
+                                     12
+                                     mesi?<br> <strong>
+                                         {{impianto.struttura}}
+                                     </strong></p>
+                                 <p>• Quanto spazio hai per fare l'impianto radiante?<br> <strong>
+                                         {{impianto.altezza}}
+                                     </strong></p>
+                                 <p>• Che tipo di pavimento vuoi usare sopra al radiante?<br> <strong>
+                                         {{impianto.tipo_pav}}
+                                     </strong></p>
+ 
+                             </mat-panel-body>
+                         </div>
+                         <div *ngIf="impianto.impianto=='Fotovoltaico'">
+                             <mat-panel-body class="mat-small">
+                                 <p>Conosci già la potenza dell'impianto di cui necessiti? <br><strong>
+                                         {{impianto.potenza}}
+                                     </strong></p>
+                                 <p>Vuoi un sistema di accumulo?<br> <strong>
+                                         {{impianto.accumulo}}
+                                     </strong></p>
+                                 <p>Ti serve la stazione per la ricarica dei veicoli elettrici? <br><strong>
+                                         {{impianto.veicoli}}
+                                     </strong></p>
+                                 <p>Luogo dove verranno installati i pannelli <br><strong>
+                                         {{impianto.install_pann}}
+                                     </strong></p>
+                                 <p>Dimensione falda <br><strong>
+                                         {{impianto.dim_falda}}
+                                     </strong></p>
+                                 <p> Dimensione <br><strong>
+                                         {{impianto.dimensione}}
+                                     </strong></p>
+                                 <p>Qual'è il tuo fabbisogno elettrico stimato? <br><strong>
+                                         {{impianto.kwh_stimata}}
+                                     </strong></p>
+                                 <p>Qual è la potenza del tuo contatore elettrico?<br><strong>
+                                         {{impianto.kwh_contatore}}
+                                     </strong>
+                             </mat-panel-body>
+                         </div>
+                         <div *ngIf="impianto.impianto=='Solare Termico'">
+                             <mat-panel-body class="mat-small">
+                                 <p>Cosa vuoi fare col solare termico <br><strong>
+                                         {{impianto.cosa}}
+                                     </strong></p>
+                                 <p>Luogo dove verranno installati i pannelli <br><strong>
+                                         {{impianto.install_pann}}
+                                     </strong></p>
+                                 <p> Dimensione falda <br><strong>
+                                         {{impianto.dim_falda}}
+                                     </strong></p>
+                                 <p>Dimensione <br><strong>
+                                         {{impianto.dimensione}}
+                                     </strong></p>
+                                 <p>Luogo dove posizionare il serbatoio di accumulo <br><strong>
+                                         {{impianto.serbatoio}}
+                                     </strong></p>
+                                 <p>Per quante persone dobbiamo produrre acque calda sanitaria<br> <strong>
+                                         {{impianto.pax_acs}}
+                                     </strong></p>
+                                 <p>Quanti mq è la struttura? <br><strong>
+                                         {{impianto.mq}}
+                                     </strong></p>
+                                 <p> Quale combustibile usate al momento o vorrete usare in futuro <br><strong>
+                                         {{impianto.combustibile}}
+                                     </strong></p>
+                             </mat-panel-body>
+                         </div>
+                         <div *ngIf="impianto.impianto=='Pompa di Calore'">
+                             <mat-panel-body class="mat-small">
+                                 <p>Conosci già la potenza dell'impianto di cui necessiti? <br><strong>
+                                         {{impianto.potenza}}
+                                     </strong></p>
+                                 <p>Qual è la potenza del tuo contatore elettrico <br><strong>
+                                         {{impianto.kwh_contatore}}
+                                     </strong></p>
+                                 <p>Che tipo di riscaldamento utilizzerai con la pompa di calore? <br><strong>
+                                         {{impianto.tipo_risc}}
+                                     </strong></p>
+                                 <p>Vuoi usarla solo per fare caldo o per fare sia caldo che freddo? <br><strong>
+                                         {{impianto.utilizzo}}
+                                     </strong></p>
+                                 <p>Qual è il tuo fabbisogno energetico stimato annuo? <br> <strong>
+                                         {{impianto.kwh_annuo}}
+                                     </strong></p>
+                             </mat-panel-body>
+                         </div>
+                     </mat-expansion-panel>
+                 </mat-accordion>
+ 
+             </mat-list>
+         </div>
+     </div>
+ </div>
+ </div>
+        </div>
+       <div class="col-md-7">
+
+            <mat-tab-group (selectedTabChange)="createComponent($event)">
+                <mat-tab label="Info contatto" >
+                   
+                  <!--  <app-info-aggiuntive [user]="user_id"></app-info-aggiuntive>-->
+                    <div #primotab></div>
+                    <!--<app-chiamate [user]="user_id" [admin]="amm_id" [data_lavori]="data_prev"></app-chiamate>-->
+
+                </mat-tab>
+                <mat-tab label="Preventivi e Conferme Ordine" >
+               
+                    <div class="row mt-3">
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div #secondotab></div>
+                            <!--<app-lista-preventivi [operatore]="operatore" [user]="user_id"></app-lista-preventivi>-->
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div #secondotab_a></div>
+                          <!--<app-lista-conferme-ordine [operatore]="operatore" [user]="user_id">
+                            </app-lista-conferme-ordine>-->
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Fatture e Spedizioni">
+                    <div class="row mt-3">
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div #terzotab></div>
+                            <!--<app-fatturazione [user]="user_id"></app-fatturazione>-->
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                            <div #terzotab_a></div>
+                            <!--<app-spedizione [operatore]="operatore" [user]="user_id"></app-spedizione>-->
+                        </div>
+                    </div>
+                </mat-tab>
+           <mat-tab label="Gestione Tag">
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div #quartotab></div>
+                           <!-- <app-tag [user]="user_id" [operatore]="operatore"></app-tag>-->
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+
+
+
+
+
+        </div>
+
+    </div>
+
+</section>

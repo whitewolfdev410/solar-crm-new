@@ -1,0 +1,15 @@
+.mat-mdc-radio-button {
+    width: 100%!important;;
+  }
+  mat-form-field{
+    margin-right:20px;
+  }
+  #tipo-cliente{
+    width:100%!important;
+  }
+  #paese{
+    width:100%!important;
+  }
+  .mat-mdc-form-field {
+    width: 100% !important;
+  }

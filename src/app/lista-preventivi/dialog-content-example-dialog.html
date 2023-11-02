@@ -1,0 +1,13 @@
+<div mat-dialog-title>Invia mail {{data.tipo}}</div>
+<mat-dialog-content class="mat-typography">
+    <app-send-mail [tipo]="data.tipo" [id_offerta]="data.id_offerta" [id_utente]="data.id_utente" [template]="data.template"></app-send-mail>
+</mat-dialog-content>
+<!--<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>invia</button>
+</mat-dialog-actions>-->
+
+
+<!-- Copyright 2022 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->

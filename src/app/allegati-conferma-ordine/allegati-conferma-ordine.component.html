@@ -1,0 +1,17 @@
+<mat-list>
+    <span *ngFor="let allegato of allegati">
+        <mat-list-item>
+            <span matListItemIcon class="mat-small"><a mat-icon-button
+                    href="https://gestionalecero.it/uploads/utenti/{{upload_folder}}/{{allegato.name}}"
+                    class="btn-sm my-auto" matTooltip="Visualizza Allegato">
+                    <mat-icon>picture_as_pdf</mat-icon>
+            </a> </span>
+            <span matListItemTitle class="mat-small">{{allegato.name}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    </span>
+
+
+
+
+</mat-list>

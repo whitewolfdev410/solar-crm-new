@@ -1,0 +1,280 @@
+<app-header></app-header>
+<section class="row d-flex mb-5 mt-5">
+    <div class="col-xl-8">
+        <div class="card card-border-c-blue shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 d-flex justify-content-start">
+                        <h3 class=""> Costruisci il menu </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-task">
+                <!-- ADD FORM -->
+                <ng-container *ngIf="!showdetails">
+                    <form [formGroup]="form" (ngSubmit)="saveMenu(form)">
+                        <div class="row">
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Testo da visualizzare nel menu</mat-label>
+                                    <input matInput maxlength="40" placeholder="Digita il testo da visualizzare"
+                                        formControlName="testo" #testoInput>
+                                    <mat-error>Testo è obbligatorio</mat-error>
+                                    <mat-error *ngIf="form.controls['testo'].errors?.['minlength']">
+                                        Please enter more than 10 character
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill" hintLabel="Seleziona se è una voce del sottomenu">
+                                    <mat-label>Genitore</mat-label>
+                                    <mat-select matNativeControl name="genitore" formControlName="genitore">
+                                        <mat-option *ngFor="let pagina of pagine" value="{{pagina.id_menu}}">
+                                            {{pagina.testo}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-2">
+                                <mat-checkbox class="example-margin" value="1" formControlName="sottomenu">Ha Sottomenu
+                                </mat-checkbox>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link</mat-label>
+                                    <input matInput placeholder="Link alla pagina senza www.gestionalecero.it"
+                                        formControlName="link" #linkInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link Development</mat-label>
+                                    <input matInput placeholder="Link alla pagina in development"
+                                        formControlName="link_dev" #linkdevInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-5">
+                                <h4>Chi puo vedere il link
+                                </h4>
+                                <div class="row">
+                                    <div *ngFor="let ruolo of ruoli; let i=index" class="col-2" #valuecheck>
+                                        <mat-checkbox (change)="onCheckboxChange($event)" [value]="ruolo.id">
+                                            {{ruolo.nome}}
+                                        </mat-checkbox>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div mat-dialog-actions>
+                                <button mat-raised-button color="primary" type="submit"
+                                    [disabled]="!form.valid">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    <pre>
+                    </pre>
+                </ng-container>
+                <!-- EDIT FORM -->
+                <ng-container *ngFor="let item of menuitem">
+                    <form [formGroup]="formEdit" (ngSubmit)="editMenuItem(formEdit)" *ngIf="showdetails">
+                        <mat-form-field [hidden]="true">
+                            <input matInput formControlName="id_menu" [ngModel]="item.id_menu">
+                        </mat-form-field>
+                        <div class="row">
+
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Testo da visualizzare nel menu</mat-label>
+                                    <input matInput maxlength="40" placeholder="Digita il testo da visualizzare"
+                                        formControlName="testo" #testoInput [(ngModel)]="item.testo">
+                                    <mat-error>Testo è obbligatorio</mat-error>
+                                    <mat-error *ngIf="form.controls['testo'].errors?.['minlength']">
+                                        Please enter more than 10 character
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill" hintLabel="Seleziona se è una voce del sottomenu">
+                                    <mat-label>Genitore</mat-label>
+                                    <mat-select matNativeControl name="genitore" formControlName="genitore"
+                                        [(ngModel)]="item.genitore">
+                                        <mat-option *ngFor="let pagina of pagine" value="{{pagina.id_menu}}">
+                                            {{pagina.testo}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-2">
+                                <mat-checkbox class="example-margin" value="1" formControlName="sottomenu"
+                                    [ngModel]="checked">Ha Sottomenu
+                                </mat-checkbox>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link</mat-label>
+                                    <input matInput placeholder="Link alla pagina senza www.gestionalecero.it"
+                                        formControlName="link" #linkInput [(ngModel)]="item.link">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-6 mb-2">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Link Development</mat-label>
+                                    <input matInput placeholder="Link alla pagina in development"
+                                        formControlName="link_dev" #linkdevInput [(ngModel)]="item.link_dev">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xl-12 mb-5">
+                                <h4>Chi puo vedere il link
+                                </h4>
+                                <div formArrayName="ruoli_edit" class="row">
+                                    <div *ngFor="let item of formEdit['controls'].ruoli_edit['controls']; let i = index" class="col-2">
+                                        <span [formGroupName]="i">
+                                            <mat-checkbox formControlName="status">
+                                                {{formEdit['controls'].ruoli_edit['controls'][i]['controls']['nome'].value}}
+                                            </mat-checkbox>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>
+                            </pre>
+                        <div mat-dialog-actions>
+                            <button mat-raised-button color="primary" type="submit"
+                                [disabled]="!formEdit.valid">Modifica</button>
+                        </div>
+                    </form>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <!-- GESTIONE MENU -->
+
+    <div class="col-xl-4 mb-5">
+        <div class="card card-border-c-blue shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 d-flex justify-content-start">
+                        <h3 class=""> Modifica voci del menu </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-task">
+                <mat-tree class="example-tree" [dataSource]="nestedDataSource"
+                [treeControl]="nestedTreeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle (click)="editItem(node.id_menu)"
+                    class="cursor-pointer mat-small">
+                    {{node.testo}}
+                </mat-tree-node>
+                
+                <mat-nested-tree-node *matTreeNodeDef="let node, when: hasNestedChild" class="cursor-pointer mat-small"
+                    (click)="editItem(node.id_menu)">
+                    <div class="mat-tree-node cursor-pointer mat-small">
+                        <button mat-icon-button matTreeNodeToggle>
+                            <mat-icon>
+                                {{nestedTreeControl.isExpanded(node) ? "expand_more":"chevron_right"}}
+                            </mat-icon>
+                        </button>
+                        {{node.testo}}
+                    </div>
+                    <div class="nested-node mat-small" [class.example-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+                        <ng-container matTreeNodeOutlet></ng-container>
+                    </div>
+                </mat-nested-tree-node>
+                
+            </mat-tree>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- NAVBAR-->
+    <div class="col-xl-12 mb-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="javascript:void(0)" [routerLink]="['/home']">C.E.R.O. System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <span *ngFor="let menuitem of menuitems; let i=index">
+                            <li *ngIf="menuitem.sottomenu!=1" class="nav-item">
+                                <!--<a class="nav-link" aria-current="page" href="javascript:void(0)" [routerLink]="['/home']">Contatti</a>
+                            <a class="nav-link" aria-current="page" href="javascript:void(0)" (click)="goToContactList()">Contatti</a>-->
+                                <a class="nav-link" aria-current="page"
+                                    href="{{url_global}}/{{menuitem.link}}">{{menuitem.testo}}</a>
+                            </li>
+                            <li *ngIf="menuitem.sottomenu==1" class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" aria-current="page" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">{{menuitem.testo}}</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <span *ngFor="let submenuitem of menuitem.submenu; let i=index">
+                                        <li><a class="dropdown-item"
+                                                href="{{url_global}}/{{submenuitem.link}}">{{submenuitem.testo}}</a>
+                                        </li>
+                                    </span>
+                                </ul>
+                            </li>
+                        </span>
+                    </ul>
+                    <div class="d-flex justify-content-end">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+   
+ <!-- GESTIONE RUOLI-->
+ <div class="col-xl-4">
+    <div class="card card-border-c-blue shadow">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6 d-flex justify-content-start">
+                    <h3 class=""> Gestisci ruoli </h3>
+                </div>
+            </div>
+        </div>
+        <div class="card-body card-task">
+            <mat-list role="list" dense class="small-height">
+
+                <mat-list-item role="listitem" *ngFor="let ruolo of ruoli; let i=index" class="mat-small">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8 mat-small">
+                                <mat-icon>account_circle</mat-icon> {{ruolo.id}} {{ruolo.nome}}
+                            </div>
+                            <div class="col-4 mat-small">
+                                {{assegnabileChecked}}
+                                <mat-slide-toggle class="mat-small" id="{{ruolo.id}}" [(ngModel)]="ruolo.assegnabile"
+                                    (change)="updateRuolo(ruolo.id,$event)">
+                                    Assegnabile </mat-slide-toggle>
+                            </div>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                </mat-list-item>
+            </mat-list>
+
+
+        </div>
+        <div class="card-footer">
+
+            <mat-form-field>
+                <input matInput (change)="addRuolo()" placeholder="Aggiungi ruolo" [formControl]="aggiungiRuolo">
+                <mat-icon matSuffix>playlist_add</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</section>

@@ -1,0 +1,444 @@
+<!-- indirizzo di fatturazione dettaglio contatto -->
+<!-- form edit -->
+
+<div class="card card-border-c-blue shadow mb-5" *ngIf="formeditshow">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class=""> Dati Fatturazione</h3>
+        </div>
+    </div>
+    <div class="card-body" style="margin-bottom:15px;" *ngFor="let fatturazione of dati">
+        <form id="form" [formGroup]="datiFatturazione" (ngSubmit)="updateDatiFatturazione()">
+            <input hidden=true matInput [(ngModel)]="fatturazione.id" formControlName="id">
+            <input hidden=true matInput [(ngModel)]="fatturazione.id_utente" formControlName="id_utente">
+            <input hidden=true matInput formControlName="request">
+            <div class="row ">
+                <div class="mb-3 border-bottom pb-2 col-lg-6">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label class="mat-small ">Scelta Tipo Cliente</mat-label>
+                        <mat-select [(value)]="fatturazione.tipo" [(ngModel)]="fatturazione.tipo"
+                            formControlName="tipoCliente" class="mat-small ">
+                            <mat-option class="mat-small " value="privato" selected>Privato</mat-option>
+                            <mat-option class="mat-small " value="azienda">Azienda</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+
+                </div>
+                <div class="mb-3 border-bottom pb-2 col-lg-6">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label  class="mat-small ">Scelta Nazionalità Cliente</mat-label>
+                        <mat-select [(value)]="fatturazione.nazione" [(ngModel)]="fatturazione.nazione"
+                            formControlName="paese" class="mat-small ">
+                            <mat-option class="mat-small " value="italia">Italia</mat-option>
+                            <mat-option class="mat-small " value="estero">Estero</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small ">
+                        <mat-label>Intestatario</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.intestatario" formControlName="intestatario">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='privato'">
+                    <mat-form-field class="mat-small ">
+                        <mat-label>Nome</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.nome_pvt" formControlName="nome_pvt">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='privato'">
+                    <mat-form-field class="mat-small ">
+                        <mat-label>Cognome</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.cognome_pvt" formControlName="cognome_pvt">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Indirizzo</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.indirizzo" formControlName="indirizzo">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3" *ngIf="fatturazione.nazione=='italia'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Provincia {{fatturazione.provincia}}</mat-label>
+                        <mat-select [(ngModel)]="fatturazione.provincia" formControlName="provincia">
+                            <mat-option></mat-option>
+                            <mat-option [value]="option.sigla_province" *ngFor="let option of province">
+                                {{option.nome_province}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3" *ngIf="fatturazione.nazione=='estero'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Stato</mat-label>
+                        <mat-select [(ngModel)]="fatturazione.stato" formControlName="stato">
+                            <mat-option></mat-option>
+                            <mat-option [value]="option_stati.sigla_iso_3166_1_alpha_2_stati"
+                                *ngFor="let option_stati of stati">{{ option_stati.nome_stati }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Cap</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.cap" formControlName="cap">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field class="mat-small">
+                        <mat-label *ngIf="fatturazione.nazione=='italia'">Comune</mat-label>
+                        <mat-label *ngIf="fatturazione.nazione=='estero'">Città</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.localita" formControlName="localita">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Codice Fiscale</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.codice_fiscale" formControlName="codice_fiscale">
+                    </mat-form-field>
+                </div>
+                <!-- Campi da vedere solo se è privato -->
+                <div class="solo-privato" *ngIf="fatturazione.tipo=='privato'">
+                    <p class="my-2">Se l'indirizzo di fatturazione è diverso dall'indirizzo di residenza </p>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <mat-form-field class="mat-small">
+                                <mat-label>Indirizzo di residenza</mat-label>
+                                <input matInput [(ngModel)]="fatturazione.indirizzo_2" formControlName="indirizzo_2">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3" *ngIf="fatturazione.nazione=='italia'">
+                            <mat-form-field class="mat-small">
+                                <mat-label>Provincia</mat-label>
+                                <mat-select [(ngModel)]="fatturazione.provincia_2"
+                                    formControlName="provincia_residenza">
+                                    <mat-option></mat-option>
+                                    <mat-option [value]="option.sigla_province" *ngFor="let option of province">{{
+                                        option.nome_province
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3">
+                            <mat-form-field class="mat-small">
+                                <mat-label>Cap di residenza</mat-label>
+                                <input matInput [(ngModel)]="fatturazione.cap_2" formControlName="cap_2">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6">
+                            <mat-form-field class="mat-small">
+                                <mat-label>Comune di residenza</mat-label>
+                                <input matInput [(ngModel)]="fatturazione.localita_2" formControlName="localita_2">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- campi da vedere solo se è azienda -->
+
+
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Partita Iva</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.partita_iva" formControlName="partita_iva">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Codice SDI</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.numero_sdi" formControlName="numero_sdi">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Pec</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.pec_mail" formControlName="pec_mail">
+                    </mat-form-field>
+                </div>
+                <p class="my-2" *ngIf="fatturazione.tipo=='azienda'">Dati Amministratore Azienda </p>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Nome Titolare</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.nome_titolare" formControlName="nome_titolare">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Cognome Titolare</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.cognome_titolare" formControlName="cognome_titolare">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Nato a</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.nato_a_titolare" formControlName="nato_a_titolare">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Nato il</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="fatturazione.il_titolare"
+                            formControlName="il_titolare">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="fatturazione.tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label>Codice Fiscale</mat-label>
+                        <input matInput [(ngModel)]="fatturazione.cf_titolare" formControlName="cf_titolare">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="card-footer text-end">
+        <button mat-icon-button (click)="updateDatiFatturazione()"  matTooltip="Salva modifiche dati fatturazione">
+            <mat-icon>save</mat-icon>
+        </button>
+    </div>
+</div>
+
+
+<!-- form add -->
+
+<div class="card card-border-c-blue shadow mb-5" *ngIf="!formeditshow">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class="">Aggiungi Dati Fatturazione</h3>
+        </div>
+    </div>
+    <div class="card-body" style="margin-bottom:15px;">
+        <form id="form" [formGroup]="datiFatturazioneAdd" (ngSubmit)="addDatiFatturazione()">
+            <input hidden=true matInput formControlName="id">
+            <input hidden=true matInput [(ngModel)]="user" formControlName="id_utente">
+            <input hidden=true matInput formControlName="request">
+            <div class="row ">
+                <div class="mb-3 border-bottom pb-2 col-lg-6">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label class="mat-small ">Scelta Tipo Cliente</mat-label>
+                        <mat-select formControlName="tipoCliente" [(ngModel)]="tipo" class="mat-small">
+                            <mat-option class="mat-small " value="privato">Privato</mat-option>
+                            <mat-option class="mat-small " value="azienda">Azienda</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+
+                </div>
+                <div class="mb-3 border-bottom pb-2 col-lg-6">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label class="mat-small ">Scelta Nazionalità Cliente</mat-label>
+                        <mat-select formControlName="paese" [(ngModel)]="paese" [(ngModel)]="paese" class="mat-small ">
+                            <mat-option class="mat-small " value="italia">Italia</mat-option>
+                            <mat-option class="mat-small " value="estero">Estero</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small ">
+                        <mat-label class="mat-small ">Intestatario</mat-label>
+                        <input matInput formControlName="intestatario" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='privato'">
+                    <mat-form-field class="mat-small ">
+                        <mat-label class="mat-small ">Nome</mat-label>
+                        <input matInput formControlName="nome_pvt" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='privato'">
+                    <mat-form-field class="mat-small ">
+                        <mat-label class="mat-small ">Cognome</mat-label>
+                        <input matInput formControlName="cognome_pvt" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Indirizzo</mat-label>
+                        <input matInput formControlName="indirizzo" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3" *ngIf="paese=='italia'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Provincia </mat-label>
+                        <mat-select formControlName="provincia" class="mat-small">
+                            <mat-option></mat-option>
+                            <mat-option class="mat-small " [value]="option.sigla_province" *ngFor="let option of province">
+                                {{option.nome_province}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3" *ngIf="paese=='estero'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Stato</mat-label>
+                        <mat-select formControlName="stato" class="mat-small">
+                            <mat-option></mat-option>
+                            <mat-option class="mat-small" [value]="option_stati.sigla_iso_3166_1_alpha_2_stati"
+                                *ngFor="let option_stati of stati">{{ option_stati.nome_stati }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Cap</mat-label>
+                        <input matInput formControlName="cap" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small " *ngIf="paese=='italia'">Comune</mat-label>
+                        <mat-label class="mat-small " *ngIf="paese=='estero'">Città</mat-label>
+                        <input matInput formControlName="localita" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Codice Fiscale</mat-label>
+                        <input matInput formControlName="codice_fiscale" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <!-- Campi da vedere solo se è privato -->
+                <div class="solo-privato" *ngIf="tipo=='privato'">
+                    <p class="my-2">Se l'indirizzo di fatturazione è diverso dall'indirizzo di residenza </p>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <mat-form-field class="mat-small">
+                                <mat-label class="mat-small ">Indirizzo di residenza</mat-label>
+                                <input matInput formControlName="indirizzo_2" class="mat-small ">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3" *ngIf="paese=='italia'">
+                            <mat-form-field class="mat-small">
+                                <mat-label class="mat-small ">Provincia</mat-label>
+                                <mat-select formControlName="provincia_residenza" class="mat-small ">
+                                    <mat-option></mat-option>
+                                    <mat-option class="mat-small " [value]="option.sigla_province" *ngFor="let option of province">{{
+                                        option.nome_province
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3">
+                            <mat-form-field class="mat-small">
+                                <mat-label class="mat-small ">Cap di residenza</mat-label>
+                                <input matInput formControlName="cap_2" class="mat-small ">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6">
+                            <mat-form-field class="mat-small">
+                                <mat-label class="mat-small ">Comune di residenza</mat-label>
+                                <input matInput formControlName="localita_2" class="mat-small ">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- campi da vedere solo se è azienda -->
+
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Partita Iva</mat-label>
+                        <input matInput formControlName="partita_iva" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Codice SDI</mat-label>
+                        <input matInput formControlName="numero_sdi" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Pec</mat-label>
+                        <input matInput formControlName="pec_mail" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <p class="my-2" *ngIf="tipo=='azienda'">Dati Amministratore Azienda </p>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Nome Titolare</mat-label>
+                        <input matInput formControlName="nome_titolare" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Cognome Titolare</mat-label>
+                        <input matInput formControlName="cognome_titolare" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Nato a</mat-label>
+                        <input matInput formControlName="nato_a_titolare" class="mat-small ">
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Nato il</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="il_titolare" class="mat-small ">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" *ngIf="tipo=='azienda'">
+                    <mat-form-field class="mat-small">
+                        <mat-label class="mat-small ">Codice Fiscale</mat-label>
+                        <input matInput formControlName="cf_titolare" class="mat-small ">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="card-footer text-end">
+        <button mat-icon-button (click)="addDatiFatturazione()"  matTooltip="Salva dati fatturazione">
+            <mat-icon>save</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div class="card card-border-c-blue shadow mb-5" style="max-height:350px;overflow:auto;margin-bottom:15px;">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class="">Riepilogo Fatture</h3>
+        </div>
+    </div>
+    <div class="card-body" style="margin-bottom:15px;" *ngFor="let fatturazione of dati">
+        <mat-list dense class="small-height">
+            <mat-list-item *ngFor="let fattura of fatture; let i=index" class="mat-small">
+                <div mat-line><a mat-icon-button href="https://gestionalecero.it/dettaglio_fattura.php?id_dettaglio={{fattura.id}}"
+                        target="_blank" placement="left" matTooltip="Vai alla Fattura">
+                        <mat-icon>link</mat-icon>
+                    </a> Fattura n° <b>{{fattura.numero_fattura}}</b> del
+                    <b>{{validDateFormat(fattura.data_fattura) | date: 'dd-MMM-yyyy'}}</b> <span
+                        *ngIf="fattura.pagato==1" style="margin-left:0.3rem;color:green">
+                        <mat-icon>check</mat-icon>
+                    </span>
+                </div>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    <div class="card-footer text-end">
+
+    </div>
+</div>

@@ -1,0 +1,100 @@
+
+<section class="container p-2 mt-3">
+    <h2 class="modal-title" id="risultato">Risultato sondaggio di {{nome}} {{cognome}} </h2>
+    <mat-divider></mat-divider>
+</section>
+<section class="container pt-3 pb-3" style="background-color: white;">
+    <div class="row d-flex mb-3" >
+        <div class="col-2">
+            <mat-form-field appearance="fill"  class="mat-small">
+                <mat-label class="mat-small">Cerca</mat-label>
+                <input  class="mat-small" matInput (keyup)="applyFilterSondaggio($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+        </div>
+        <div class="col-8">
+            <mat-paginator  class="mat-small" [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+
+
+<mat-table #table [dataSource]="dataSourceSondaggio" matSort class="w-100">
+    <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contatto</th>
+        <td mat-cell *matCellDef="let row" class="uppercase mat-small"><a href="javascript:void(0)" (click)="onNoClick()" [routerLink]="['dettaglio-contatto', row.id_cliente]">{{row.nome}} {{row.cognome}}</a></td>
+    </ng-container>
+   
+    <ng-container matColumnDef="simpatia">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header >Simpatia</th>
+        <td mat-cell *matCellDef="let row" class="uppercase mat-small text-center">
+            <span *ngIf="row.simpatia > 0 && row.simpatia <=1"> <mat-icon
+                matTooltip="Simpatia {{row.simpatia }}"
+                style="color:red">tag_faces</mat-icon></span>
+        <span *ngIf="row.simpatia > 1 && row.simpatia <=2"> <mat-icon
+                matTooltip="Simpatia {{row.simpatia }}"
+                style="color:orange">tag_faces</mat-icon></span>
+        <span *ngIf="row.simpatia > 2 && row.simpatia <=3"> <mat-icon
+                matTooltip="Simpatia {{row.simpatia }} "
+                style="color:green" >tag_faces</mat-icon></span>
+            
+  </td>
+    </ng-container>
+    <ng-container matColumnDef="disponibilita">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Disponibilità</th>
+        <td mat-cell *matCellDef="let row" class="uppercase mat-small text-center">
+            <span *ngIf="row.disponibilita > 0 && row.disponibilita <=1"> <mat-icon
+                matTooltip="Disponibilita {{row.disponibilita }}"
+                style="color:red">tag_faces</mat-icon></span>
+        <span *ngIf="row.disponibilita > 1 && row.disponibilita <=2"> <mat-icon
+                matTooltip="Disponibilita {{row.disponibilita }}"
+                style="color:orange">tag_faces</mat-icon></span>
+        <span *ngIf="row.disponibilita > 2 && row.disponibilita <=3"> <mat-icon
+                matTooltip="Disponibilita {{row.disponibilita }}"
+                style="color:green">tag_faces</mat-icon></span></td>
+    </ng-container>
+    <ng-container matColumnDef="competenza">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Competenza</th>
+        <td mat-cell *matCellDef="let row" class="uppercase mat-small text-center">
+            <span *ngIf="row.competenza > 0 && row.competenza <=1"> <mat-icon
+                matTooltip="Competenza {{row.competenza }}"
+                style="color:red">tag_faces</mat-icon></span>
+        <span *ngIf="row.competenza > 1 && row.competenza <=2"> <mat-icon
+                matTooltip="Competenza {{row.competenza }}"
+                style="color:orange">tag_faces</mat-icon></span>
+        <span *ngIf="row.competenza > 2 && row.competenza <=3"> <mat-icon
+                matTooltip="Competenza {{row.competenza }}"
+                style="color:green">tag_faces</mat-icon></span>
+           </td>
+    </ng-container>
+    <ng-container matColumnDef="puntualita">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Puntualità</th>
+        <td mat-cell *matCellDef="let row" class="uppercase mat-small text-center">
+            <span *ngIf="row.puntualita > 0 && row.puntualita <=1"> <mat-icon
+                matTooltip="Puntualita {{row.puntualita }}"
+                style="color:red">tag_faces</mat-icon></span>
+        <span *ngIf="row.puntualita > 1 && row.puntualita <=2"> <mat-icon
+                matTooltip="Puntualita {{row.puntualita }}"
+                style="color:orange">tag_faces</mat-icon></span>
+        <span *ngIf="row.puntualita > 2 && row.puntualita <=3"> <mat-icon
+                matTooltip="Puntualita {{row.puntualita }}"
+                style="color:green">tag_faces</mat-icon></span></td>
+    </ng-container>
+    <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+        <td mat-cell *matCellDef="let row" class="uppercase mat-small">{{validDateFormat(row.date)
+            | date: 'dd-MMM-yyyy ore HH:mm'}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsSondaggio"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsSondaggio;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+</mat-table>
+
+
+<div mat-dialog-actions class="mt-5">
+    <button mat-raised-button (click)="onNoClick()">Chiudi finestra</button>
+</div>
+</section>

@@ -1,0 +1,131 @@
+<app-header></app-header>
+
+<section class="row mt-5">
+<div id="load" class="min-vw-100 min-vh-100 violet p-0 m-0 position-fixed top-0
+  start-0 d-flex opacity-75" style="z-index:99999" *ngIf="loading">
+    <div class="spinner-border text-light m-auto" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<div class="row d-flex mb-3">
+    <div class="col-2">
+        <mat-form-field appearance="fill" class="mat-small">
+            <mat-label class="mat-small">Cerca</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+    </div>
+    <div class="col-3">
+        <form class="date-block row" [formGroup]="filterForm">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Seleziona le date</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Start date" formControlName="fromDate" (dateInput)="applyFilterDataRange($event)">
+                  <input matEndDate placeholder="End date" formControlName="toDate" (dateInput)="applyFilterDataRange($event)" (dateChange)="applyFilterDataRange($event)">
+                </mat-date-range-input>
+                <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+
+
+
+            <!-- <div class="col-2">
+                <button mat-button color="primary" class="primary mat-small"
+                    (click)="applyFilterDataRange($event)">Submit</button>
+            </div> -->
+        </form>
+    </div>
+    <div class="col-6">
+        <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+    </div>
+
+    <div class="col-1">
+
+        <button mat-fab color="primary" class="mat-small mt-3" style="
+    height:28px !important;
+    width:28px !important;
+    font-size:18px !important;" matTooltip="Download in formato excel"
+            (click)="exporter.exportTable('xlsx', {fileName:'Fatture', sheet: 'sheet_name', Props: {Author: 'Talha'}})">
+            <mat-icon>get_app</mat-icon></button>
+    </div>
+   
+</div>
+
+<div class="row mb-5">
+    <div class="col-lg-12 col-xl-12">
+        <table mat-table matTableExporter [dataSource]="dataSource" class="mat-elevation-z8" matSort  #exporter="matTableExporter" [hiddenColumns]="[0,1]">
+            <!-- ID Column -->
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="display:none"> Numero </th>
+                <td mat-cell *matCellDef="let row " style="display:none">{{row.id}}</td>
+
+            </ng-container>
+            <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small">Nome e Cognome </th>
+                <td mat-cell *matCellDef="let row " class="mat-small">
+                    <a *ngIf="row.id_utente!=0" href="javascript:void(0)" [routerLink]="['/dettaglio-contatto',
+                        row.id_utente]" class="mat-small">{{row.nome_contatto}} {{row.cognome_contatto}}</a>
+                        <span *ngIf="row.id_utente==0">{{row.nome}} {{row.cognome}}</span>
+                </td>
+
+            </ng-container>
+            <ng-container matColumnDef="click">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Click </th>
+                <td mat-cell *matCellDef="let row " class="mat-small"><span *ngIf="row.click==1"><mat-icon style="color:green;font-weight: 900;">check</mat-icon></span></td>
+
+            </ng-container>
+            <ng-container matColumnDef="data_click">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Data Click </th>
+                <td mat-cell *matCellDef="let row " class="mat-small">{{validDateFormat(row.data_click) | date:
+                    'dd-MMM-yyyy'}}</td>
+
+            </ng-container>
+            <ng-container matColumnDef="pagamento">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Pagato </th>
+                <td mat-cell *matCellDef="let row " class="mat-small"><span *ngIf="row.pagamento"><mat-icon style="color:green;font-weight: 900;">check</mat-icon></span></td>
+
+            </ng-container>
+            <ng-container matColumnDef="data_pagamento">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Data Pagamento </th>
+                <td mat-cell *matCellDef="let row " class="mat-small"><span *ngIf="row.pagamento!=0">{{validDateFormat(row.data_pagamento) | date:
+                    'dd-MMM-yyyy'}}</span></td>
+
+            </ng-container>
+            <ng-container matColumnDef="spedizione">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Spedito </th>
+                <td mat-cell *matCellDef="let row " class="mat-small">
+                    <span *ngIf="row.spedizione==1"><mat-icon style="color:green;font-weight: 900;">flight_takeoff</mat-icon></span>
+                    <span *ngIf="row.spedizione==0"><button mat-icon-button aria-label="Inserisci la data di spedizione" matTooltip="Segna come spedito" (click)="setSpedizione(row.id)">
+                        <mat-icon style="color:grey;font-weight: 900;">flight_takeoff</mat-icon>
+                      </button></span>
+                </td>
+
+            </ng-container>
+            <ng-container matColumnDef="data_spedizione">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Data spedizione </th>
+                <td mat-cell *matCellDef="let row " class="mat-small"><span *ngIf="row.spedizione==1">{{validDateFormat(row.data_spedizione) | date:
+                    'dd-MMM-yyyy'}}</span></td>
+
+            </ng-container>
+            <ng-container matColumnDef="indirizzo_spedizione">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-small"> Indirizzo spedizione </th>
+                <td mat-cell *matCellDef="let row " class="mat-small">{{row.nome}} {{row.cognome}}<br>{{row.indirizzo}} - {{row.cap}} {{row.citta}} {{row.provincia}}<br> {{row.telefono}} - {{row.email}}</td>
+
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+           
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+</section>

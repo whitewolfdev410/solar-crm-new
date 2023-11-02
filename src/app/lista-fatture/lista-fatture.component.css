@@ -1,0 +1,25 @@
+.red {
+    background-color: red !important;
+    color: white;
+    padding: 0.2em;
+    size: 0.8em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.green {
+    background-color: green !important;
+    color: white;
+    padding: 0.2em;
+    size: 0.8em;
+    text-align: center;
+    font-weight: bold;
+}
+.violet {
+    background-color: #853a7d !important;
+    color: white;
+    padding: 0.2em;
+    size: 0.8em;
+    text-align: center;
+    font-weight: bold;
+}

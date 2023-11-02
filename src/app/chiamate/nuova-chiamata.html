@@ -1,0 +1,18 @@
+<h2 mat-dialog-title style="color:black!important;">Inserisci una nuova chiamata</h2>
+
+<mat-dialog-content class="mat-typography">
+    <!--<mat-form-field class="mat-small">
+        <input matInput placeholder="Aggiungi chiamata"
+            [formControl]="aggiungiChiamata">
+    </mat-form-field>-->
+    
+    <span *ngIf="val">Questo contatto non ha ancora recenzioni</span>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <!--<button mat-button mat-dialog-close>Close</button>-->
+  <a href="https://gestionalecero.it/gest_2022/contatti" target="_blank">apri un altra scheda</a>
+  <!-- <button mat-button color="primary" (click)="data.callback(aggiungiChiamata.value)">
+    Salva
+  </button>-->
+</mat-dialog-actions>

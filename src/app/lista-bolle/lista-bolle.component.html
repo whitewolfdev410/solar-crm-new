@@ -1,0 +1,23 @@
+<div class="card card-border-c-blue shadow mb-5" style="max-height:350px;overflow:auto;margin-bottom:15px;" *ngIf="dettaglio">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class="">Riepilogo Bolle</h3>
+        </div>
+    </div>
+    <div class="card-body" style="margin-bottom:15px;">
+        <mat-list dense class="small-height">
+            <mat-list-item *ngFor="let bolla of bolle; let i=index" class="mat-small">
+                <div mat-line><a mat-icon-button
+                        href="https://gestionalecero.it/dettaglio_bolla.php?id_dettaglio={{bolla.id}}"
+                        target="_blank" placement="left" matTooltip="Vai alla Bolla">
+                        <mat-icon>link</mat-icon>
+                    </a> Bolla n° <b>{{bolla.numero_bolla}}</b> del
+                    <b>{{validDateFormat(bolla.data_bolla) | date: 'dd-MMM-yyyy'}}</b> 
+                </div>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    <div class="card-footer text-end">
+    </div>
+</div>

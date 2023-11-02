@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-sm-12 col-md-5">
+            <img src="https://api.elasticemail.com/userfile/e3879597-cbd0-40ec-aca5-ee6fa170cab7/templates/126M-GRE2K.png" class="img-fluid">
+        </div>
+        <div class="col-sm-12 col-md-7" *ngFor="let contatto of contatti;">
+            <form class=" invia_preventivo " id="invia_preventivo" (ngSubmit)="sendMailPrev()" [formGroup]="sendMailPreventivo">
+                <mat-form-field class="col-12" appearance="fill">
+                    <mat-label style="color:white;">Link area riservata </mat-label>
+                    <input matInput placeholder="Link Personalizzato" formControlName="link_custom_email" [(ngModel)]="link" value="https://gestionalecero.it/area_riservata/login-home.php?id_dettaglio={{id_offerta}}&password={{contatto.password}}&username={{contatto.username}}">
+                    <!--<input matInput placeholder="Link Personalizzato" formControlName="link_custom_email" [(ngModel)]="link" value="https://gestionalecero.it/gest_2022/area-riservata/{{contatto.id}}/{{contatto.username}}/{{contatto.password}}">-->
+                </mat-form-field>
+                <mat-form-field class="col-12" appearance="fill">
+                    <mat-label style="color:white;">Inserisci testo personalizzato se serve</mat-label>
+                    <textarea matInput placeholder="" formControlName="descrizione"></textarea>
+                </mat-form-field>
+
+                <input  hidden="true" matInput class="form-control" formControlName="email"  [(ngModel)]="contatto.email"  value="{{contatto.email}}">
+                <input  hidden="true" matInput class="form-control" formControlName="id_utente"  [(ngModel)]="contatto.id"  value="{{contatto.id}}">
+                <input  hidden="true" matInput class="form-control" formControlName="nome"  [(ngModel)]="contatto.nome"  value="{{contatto.nome}}">
+                <input  hidden="true" matInput class="form-control" formControlName="tel_send"  [(ngModel)]="contatto.password"  value="{{contatto.password}}">
+                <input  hidden="true" matInput class="form-control" formControlName="id_offerta"  [(ngModel)]="id_offerta"  value="{{id_offerta}}">
+
+            </form>
+            <mat-dialog-actions align="end">
+                <button mat-button mat-dialog-close>Cancel</button>
+                <button mat-button [mat-dialog-close]="true" (click)="sendMailPrev()" cdkFocusInitial>invia</button>
+            </mat-dialog-actions>
+        </div>
+    </div>
+</div>

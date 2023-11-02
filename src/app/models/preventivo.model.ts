@@ -1,0 +1,30 @@
+export class Preventivo {
+  id: number;
+  data_offerta: Date;
+  numero_offerta: Number;
+  id_cliente: number;
+  imponibile: number;
+  iva_totale: number;
+  totale_offerta: number;
+  iva_gen:number;
+  sconto_gen:number;
+  mostra_prezzo_gen:string;
+  trasporto:number;
+  confermata:number;
+  totale_merci:number;
+  inviata:number;
+  id_azienda:number;
+  letta:number;
+  id_spedizione:number;
+  id_tipologia_materiale:number;
+  ts:Date;
+  imponibile_iva_22:number;
+  operatore:number;
+  click_offerta:number;
+  sconto_fattura:number;
+  type:string;
+  nota:string;
+  data_chiamata:Date;
+  id_offerta:number;
+  id_utente:number;
+}

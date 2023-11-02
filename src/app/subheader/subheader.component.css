@@ -1,0 +1,35 @@
+table {
+    width: 100%;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-color: #000;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+    padding-left: 1rem;
+}
+
+.mat-mdc-header-cell {
+    padding-left: 1rem;
+}
+
+tr.mat-mdc-row:hover {
+    background-color: #eee;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: #000;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+.mat-column-action {
+    flex: 0 0 30%;
+}
+
+.mat-column-productName {
+    flex: 0 0 50%;
+}

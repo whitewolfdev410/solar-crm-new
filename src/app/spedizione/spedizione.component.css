@@ -1,0 +1,39 @@
+.mat-mdc-radio-button {
+  width: 100% !important;
+  ;
+}
+
+mat-form-field {
+  margin-right: 20px;
+}
+
+#tipo-cliente {
+  width: 100% !important;
+}
+
+#paese {
+  width: 100% !important;
+}
+
+#addspedizione .mat-expansion-panel {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#addspedizione .mat-expansion-panel-header {
+  /*padding-left: 0px !important;
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;*/
+  background-color: transparent !important;
+
+}
+.mat-mdc-form-field {
+  width: 100% !important;
+}
+#addspedizione .mat-expansion-panel-header .mat-expanded {
+  background-color: transparent !important;
+}
+
+.mat-expansion-panel-header .mat-expanded {
+  background-color: #b39db2 !important;
+}
