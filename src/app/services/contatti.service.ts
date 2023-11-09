@@ -312,6 +312,18 @@ export class ContattiService {
         catchError(this.handleError)
       )
   }
+  public updateMessaggioWA(user_id: number,value:boolean) {
+    return this.httpClient.get<Contact[]>(this.url + 'updateMessaggioWADett&id=' + user_id+'&value='+value)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+  public updateEmail(user_id: number,value:boolean) {
+    return this.httpClient.get<Contact[]>(this.url + 'updateEmailDett&id=' + user_id+'&value='+value)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
   public updateContattoErrato(user_id: number,value:boolean) {
     return this.httpClient.get<Contact[]>(this.url + 'updateContattoErratoDett&id=' + user_id+'&value='+value)
       .pipe(

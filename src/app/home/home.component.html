@@ -88,8 +88,41 @@
         </div>
 
     </div>
-    <div class="col-6">
+    <div class="col-8">
+        <div class="row" *ngIf="id_ruolo==1">
+            
+            <div class="col-12">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          Statistiche
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          solo per amministratori
+                          <mat-icon>bar_chart</mat-icon>
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                  
+                      <mat-form-field>
+                        <mat-label>First name</mat-label>
+                        <input matInput>
+                      </mat-form-field>
+                  
+                      <mat-form-field>
+                        <mat-label>Age</mat-label>
+                        <input matInput type="number" min="1">
+                      </mat-form-field>
+                      <mat-action-row>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
 
+                  
+                  </mat-accordion>
+            </div>
+    
+        </div>
    
     </div>
 

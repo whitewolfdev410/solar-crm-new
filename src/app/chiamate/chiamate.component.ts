@@ -61,8 +61,12 @@ export class ChiamateComponent implements OnInit {
   //datalavori: any;
   non_risponde: boolean;
   contatto_errato: boolean;
+  messaggio_wa:boolean;
+  contattato_email:boolean;
   nn_risponde: any;
   errato: any;
+  mess_wa:any;
+  email:any;
   valutazione: any;
   name: any = 'World';
   id_chiamata: any;
@@ -237,9 +241,9 @@ export class ChiamateComponent implements OnInit {
         this.loadChiamate();
         //this.aggiungiChiamata.reset();
         this.loadselectedAdmin();
-        
-
+        this.non_risponde = false;
       }
+      
       //this.router.navigateByUrl('post/index');
     })
   }
@@ -321,11 +325,19 @@ if(this.avvio==1){
         this.visibile = this.contatti.map(t => t.mostra_idraulico);
         this.nn_risponde = this.contatti.map(t => t.non_risponde);
         this.errato = this.contatti.map(t => t.errato);
+        this.mess_wa = this.contatti.map(t => t.messaggio_wa);
+        this.email = this.contatti.map(t => t.contattato_email);
         if (this.visibile == true) {
           this.checked = true;
         }
         if (this.nn_risponde == 'on') {
           this.non_risponde = true;
+        }
+        if (this.mess_wa == 'on') {
+          this.messaggio_wa = true;
+        }
+        if (this.email == 'on') {
+          this.contattato_email = true;
         }
         if (this.errato == 'on') {
           this.contatto_errato = true;
@@ -458,6 +470,20 @@ if(this.avvio==1){
     //console.log(event.checked);
     //console.log("value changed");
     this.service.updateNnRisponde(this.user, event.checked).subscribe((res: any) => {
+    })
+
+  }
+  onCheckedContattoMessaggioWA(event) {
+    //console.log(event.checked);
+    //console.log("value changed");
+    this.service.updateMessaggioWA(this.user, event.checked).subscribe((res: any) => {
+    })
+
+  }
+  onCheckedContattoEmail(event) {
+    //console.log(event.checked);
+    //console.log("value changed");
+    this.service.updateEmail(this.user, event.checked).subscribe((res: any) => {
     })
 
   }

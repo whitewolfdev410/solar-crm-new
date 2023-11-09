@@ -157,7 +157,7 @@ export class HeaderComponent implements OnInit {
         this.menuitems = response;
         this.parent_id = this.menuitems.map(t => t.id_menu);
         this.nestedDataSource.data = response;
-        //console.log(this.id_ruolo);
+        console.log(this.menuitems);
         //this.loadSubMenuItems(this.parent_id);
       });
   }

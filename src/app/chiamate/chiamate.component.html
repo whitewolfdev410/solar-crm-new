@@ -6,9 +6,16 @@
         <div class="row my-3 ">
             <div class="col"> <mat-slide-toggle id="" [(ngModel)]="non_risponde" (change)="onCheckedNnRisponde($event)">
                     Non risponde </mat-slide-toggle></div>
-            <div class="col"><mat-slide-toggle id="" [(ngModel)]="contatto_errato"
-                    (change)="onCheckedContattoErrato($event)">
-                    Contatto Errato </mat-slide-toggle></div>
+                    <div class="col"><mat-slide-toggle id="" [(ngModel)]="contatto_errato"
+                        (change)="onCheckedContattoErrato($event)">
+                        Contatto Errato </mat-slide-toggle></div>
+                    <div class="col"><mat-slide-toggle id="" [(ngModel)]="messaggio_wa"
+                        (change)="onCheckedContattoMessaggioWA($event)">
+                        Whatsapp </mat-slide-toggle></div>
+                        <div class="col"><mat-slide-toggle id="" [(ngModel)]="contattato_email"
+                            (change)="onCheckedContattoEmail($event)">
+                            Email </mat-slide-toggle></div>
+           
 
         </div>
 

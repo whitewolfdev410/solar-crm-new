@@ -50,12 +50,13 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.controls['username'].value,
       password: this.loginForm.controls['password'].value
 
-    }).subscribe(res => {
+    }).subscribe((res)=> {
       if (res[0] == "KO") {
         alert(res[1]);
       } else {
         this.currentyear = (new Date()).getFullYear();
         if (this.dev==false){
+
         localStorage.setItem("name", res[1]);
         localStorage.setItem("id", res[2]);
         localStorage.setItem("nome", res[3]);
