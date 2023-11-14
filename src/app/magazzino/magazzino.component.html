@@ -1,18 +1,199 @@
 <app-header></app-header>
 <section class="row mt-5">
+    <div class="row mb-5">
+        <mat-tab-group>
+            <mat-tab label="Gestione Magazzino">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="d-flex flex-row justify-content-end align-items-center p-4">
+                        <div style="margin-right: 20px;">Ricerca:</div> <input [formControl]="filter">
+                    </div>
+                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 gestione">
+                        <ng-container matColumnDef="expand">
+                            <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+                            <td mat-cell class="td-small" *matCellDef="let element">
+                                <button mat-icon-button aria-label="expand row" *ngIf="element.details.length > 0"
+                                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                    <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                    <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
 
-    <div class="col-xl-2">
+                        <ng-container matColumnDef="reference">
+                            <th mat-header-cell *matHeaderCellDef>Cod. Prodotto</th>
+                            <td mat-cell style="display: flex;flex-direction: column" class="td-md"
+                                *matCellDef="let row">
+                                <div>{{row.id_product}}</div>
+                                <div>{{row.reference}}</div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
 
-        <div class="row">
-            
-        </div>
+                        <ng-container matColumnDef="product_name">
+                            <th mat-header-cell *matHeaderCellDef> Prodotto</th>
+                            <td mat-cell class="td-big" *matCellDef="let row">
+                                {{row.product_name}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef style="min-width: 160px;"></th>
+                            <td mat-cell class="td-small" *matCellDef="let row "
+                                style="display: flex;flex-direction: row;" class="mat-small">
+                                <button mat-raised-button color="accent" (click)="subQ(row)">-</button>
+                                <button mat-raised-button color="primary" (click)="addQ(row)">+</button>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
 
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Qt Mag </th>
+                            <td mat-cell class="td-small" *matCellDef="let row " class="mat-small">
+                                <input [(ngModel)]="row.quantity" (change)="editQ(row)" />
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="booked">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Prenotata </th>
+                            <td mat-cell class="td-small" *matCellDef="let row " class="mat-small">{{row.booked}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="sold">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Venduta </th>
+                            <td mat-cell class="td-small" *matCellDef="let row " class="mat-small">{{row.sold}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="recap">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Riepilogo </th>
+                            <td mat-cell class="td-md" *matCellDef="let row " class="mat-small">{{row.booked}} -
+                                {{row.sold}} -
+                                {{row.booked}}
+                                = {{row.booked}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="shipped">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Spedita </th>
+                            <td mat-cell class="td-md" *matCellDef="let row " class="mat-small">{{row.shipped}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="order_status">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Quantità in ordine
+                            </th>
+                            <td mat-cell class="td-md" *matCellDef="let row " class="mat-small">
+                                {{row.order_status}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="supplier_status">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Ord.fornitore </th>
+                            <td mat-cell class="td-md" *matCellDef="let row " class="mat-small">
+                                {{row.supplier_status}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell style="width: 100%;padding: 0px;" *matCellDef="let element"
+                                [attr.colspan]="columnsToDisplayWithExpand.length">
+                                <div class="example-element-detail"
+                                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                    <ng-container *ngFor="let row of element.details">
+                                        <div class="example-element-description" style="width: 100%;padding: 0px;">
+                                            <div style="min-width: 80px;"></div>
+                                            <div style="min-width: 100px;">
+                                            </div>
+                                            <div mat-cell style="display: flex;flex-direction: column;padding: 0px;"
+                                                class="td-big">
+                                                <div>{{row.id_offerta}} {{row.product_name}}</div>
+                                            </div>
+                                            <div mat-cell
+                                                style="padding-left: 0px!important;text-align: center;min-width: 160px;">
+                                                <a
+                                                    href="https://gestionalecero.it/dettaglio_offerta_confermata.php?id_dettaglio={{row.id_offerta}}&id_cliente={{row.id_cliente}}">
+                                                    Offerta
+                                                </a>
+                                            </div>
+                                            <div mat-cell style="width: 10vw;text-align: center;" class="mat-small">
+                                                <a
+                                                    href="https://gestionalecero.it/dettaglio_fattura.php?id_dettaglio={{row.id_fattura}}">Fattura
+                                                    n. {{row.numero_fattura}}</a>
+                                            </div>
+                                            <div mat-cell class="td-small"></div>
+                                            <div mat-cell class="td-small"></div>
+                                            <div mat-cell class="td-small"></div>
+                                            <div mat-cell style="text-align: center;" class="td-md mat-small"></div>
+                                            <div mat-cell class="td-md mat-small"></div>
+
+                                            <div mat-cell class="td-md mat-small"></div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+                            [class.example-expanded-row]="expandedElement === element"
+                            (click)="expandedElement = expandedElement === element ? null : element">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    </table>
+                    <mat-paginator (page)="page($event)" [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons
+                        [length]="length" aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="Giacenza magazzino">
+                <div class="d-flex flex-row justify-content-end align-items-center p-4">
+                    <div style="margin-right: 20px;">Valore giacenza magazzino</div> {{total|currency:'EUR':true}}
+                </div>
+                <div class="col-lg-12 col-xl-12">
+                    <table mat-table [dataSource]="dataSourceGiacenze" class="mat-elevation-z8">
+
+                        <ng-container matColumnDef="reference">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small">Cod. Prodotto</th>
+                            <td mat-cell style="display: flex;flex-direction: column;" *matCellDef="let row "
+                                class="mat-small">
+                                <div>{{row.id_product}}</div>
+                                <div>{{row.reference}}</div>
+                                <div>{{row.supplier_name}}</div>
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="product_name">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Prodotto</th>
+                            <td mat-cell style="width: 25vw;" *matCellDef="let row " class="mat-small">
+                                {{row.product_name}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Qt Mag </th>
+                            <td mat-cell class="td-small" *matCellDef="let row " class="mat-small">
+                                {{row.quantity}}
+                            </td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="product_supplier_price_te">
+                            <th mat-header-cell *matHeaderCellDef class="mat-small"> Prenotata </th>
+                            <td mat-cell class="td-small" *matCellDef="let row " class="mat-small">
+                                {{row.product_supplier_price_te|currency:'EUR':true}}</td>
+                            <td mat-footer-cell *matFooterCellDef> </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsGiacenze"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumnsGiacenze;"
+                            class="example-element-row" [class.example-expanded-row]="expandedElement === element">
+                        </tr>
+                    </table>
+                    <mat-paginator (page)="page2($event)" [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons
+                        [length]="length2" aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
     </div>
-    <div class="col-xl-10">
-
-    </div>
-
-
-
-</section> 
-<p>magazzino works!</p>
+</section>
