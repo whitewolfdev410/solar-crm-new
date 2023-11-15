@@ -103,19 +103,16 @@
                           <mat-icon>bar_chart</mat-icon>
                         </mat-panel-description>
                       </mat-expansion-panel-header>
-                  
-                      <mat-form-field>
-                        <mat-label>First name</mat-label>
-                        <input matInput>
-                      </mat-form-field>
-                  
-                      <mat-form-field>
-                        <mat-label>Age</mat-label>
-                        <input matInput type="number" min="1">
-                      </mat-form-field>
-                      <mat-action-row>
-                        <button mat-button color="primary" (click)="nextStep()">Next</button>
-                      </mat-action-row>
+                      <a href="javascript:void(0)" mat-fab extended [routerLink]="['/marketing']" class="mx-3">
+                        <mat-icon>scatter_plot</mat-icon>
+                        Marketing
+                      </a>
+                      <a href="javascript:void(0)" mat-fab extended [routerLink]="['/stat_operatori']"  class="mx-3">
+                        <mat-icon>sentiment_satisfied_alt</mat-icon>
+                        Operatori
+                      </a>
+                      
+                      
                     </mat-expansion-panel>
 
                   
