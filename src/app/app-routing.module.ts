@@ -19,6 +19,7 @@ import { WebinarComponent } from './webinar/webinar.component';
 import { MarketingComponent } from './marketing/marketing.component';
 import { CampioniComponent } from './campioni/campioni.component';
 import { ListaContattiComponent } from './lista-contatti/lista-contatti.component';
+import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 
 /*const routes: Routes = [
   {
@@ -58,6 +59,7 @@ const routes: Routes = [
   { path: 'campioni', component: CampioniComponent, },
   { path: 'webinar', component: WebinarComponent, },
   { path: 'marketing', component: MarketingComponent, },
+  { path: 'stat_operatori', component: StatOperatoriComponent, },
   { path: 'riepilogo-fatture-fornitori', component: RiepilogoFattureFornitoriComponent, },
   { path: 'nuovo-modello-offerta', component: NuovoModelloOffertaComponent, },
   { path: 'area-riservata/:id/:username/:password', component: AreaRiservataComponent, },

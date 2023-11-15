@@ -1,0 +1,268 @@
+<app-header></app-header>
+
+<section class="row mt-5">
+    <div id="load" class="min-vw-100 min-vh-100 violet p-0 m-0 position-fixed top-0
+    start-0 d-flex opacity-75" style="z-index:99999" *ngIf="loading">
+        <div class="spinner-border text-light m-auto" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="row d-flex mb-3">
+    
+        <div class="col-2">
+            <mat-form-field appearance="fill" class="mat-small">
+                <mat-label class="mat-small">Cerca</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+        </div>
+        <div class="col-3">
+            <form class="date-block row" [formGroup]="filterForm">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Seleziona le date</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Start date" formControlName="fromDate"
+                            (dateInput)="applyFilterDataRange($event)">
+                        <input matEndDate placeholder="End date" formControlName="toDate"
+                             (dateChange)="applyFilterDataRange($event)">
+                    </mat-date-range-input>
+                    <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+
+
+
+                <!-- <div class="col-2">
+                    <button mat-button color="primary" class="primary mat-small"
+                        (click)="applyFilterDataRange($event)">Submit</button>
+                </div> -->
+            </form>
+        </div>
+        <div class="col-6">
+            <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+        </div>
+
+        <div class="col-1">
+
+            <button mat-fab color="primary" class="mat-small mt-3" style="
+        height:28px !important;
+        width:28px !important;
+        font-size:18px !important;" matTooltip="Download in formato excel"
+                (click)="exporter.exportTable('xlsx', {fileName:'Operatori', sheet: 'sheet_name', Props: {Author: 'Talha'}})">
+                <mat-icon>get_app</mat-icon></button>
+        </div>
+
+    </div>
+
+
+    <div class="row mb-5">
+        <div class="col-lg-12 col-xl-12">
+           
+            <table mat-table matTableExporter [dataSource]="dataSource" class="mat-elevation-z8" matSort
+                #exporter="matTableExporter" [hiddenColumns]="[0]">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="numero">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="display:none"> ID </th>
+                    <td mat-cell *matCellDef="let row " style="display:none"> {{row.id}} </td>
+                </ng-container>
+
+
+                <!-- Cognome Column -->
+                <ng-container matColumnDef="cognome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cognome</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        <!--  <a *ngIf="!dev" href="https://gestionalecero.it/dettaglio_contatto.php?id_dettaglio={{row.id}}"><i *ngIf="row.facebook_id!='0'" class="fa-brands fa-facebook"></i>  {{ row.cognome }} {{ row.nome }}</a>-->
+                        {{ row.cognome }}
+                    
+                    </td>
+                </ng-container>
+
+                <!-- NOme Column -->
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{ row.nome }}
+                        <!--  <a *ngIf="!dev" href="https://gestionalecero.it/dettaglio_contatto.php?id_dettaglio={{row.id}}"><i *ngIf="row.facebook_id!='0'" class="fa-brands fa-facebook"></i>  {{ row.cognome }} {{ row.nome }}</a>-->
+                        
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="appuntamento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Chiamata su appuntamento</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.appuntamento}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="chiamato_cliente">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Mi ha chiamato il cliente</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.chiamato_cliente}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="cliente_caldo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente Caldo</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.cliente_caldo}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="campione_inviato">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Campione Inviato</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.campione_inviato}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="offerta_non_aperta">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offerta non aperta</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.offerta_non_aperta}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="data_lavori_vicina">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data lavori vicina</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.data_lavori_vicina}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="altro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Altro</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.altro}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="tot_offerte">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Totale Offerte</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.tot_offerte}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="offerte">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offerte non aperte</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.offerte}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="click_offerta">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti Caldi</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.click_offerta}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="sondaggio">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sondaggio</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.sondaggio}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="simpatia">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Simpatia</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.simpatia}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="disponibilita">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Disponibilità</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.disponibilita}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="competenza">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Competenza</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.competenza}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="puntualita">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Puntualità</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.puntualita}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="contatti_ottimi">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti ottimi</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.contatti_ottimi}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="contatti_buoni">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti buoni</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.contatti_buoni}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="contatti_pessimi">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti pessimi</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.contatti_pessimi}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="non_risponde">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Non rispone</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.non_risponde}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="errato">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatto Errato</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.errato}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media su appuntamento</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media_cliente">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media chiamata da cliente</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media_cliente}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media_caldo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media contatto caldo</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media_caldo}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media_campione">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media chiamata per campione</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media_campione}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media_offerta">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media offerta non aperta</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media_offerta}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media_lavori">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media per lavori vicini</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media_lavori}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="media_altro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Media altro</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.media_altro}}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row (click)="clickedRows.add(row)" [class.demo-row-is-clicked]="clickedRows.has(row)"
+                    *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+</section>

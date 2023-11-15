@@ -80,6 +80,7 @@ import { NgxMatMomentModule } from '@angular-material-components/moment-adapter'
 import { MarketingComponent } from './marketing/marketing.component';
 import { CampioniComponent } from './campioni/campioni.component';
 import { AppuntiComponent } from './appunti/appunti.component';
+import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 
 
 
@@ -132,7 +133,8 @@ registerLocaleData(localeIt);
         WebinarComponent,
         MarketingComponent,
         CampioniComponent,
-        AppuntiComponent
+        AppuntiComponent,
+        StatOperatoriComponent
 
     ],
     imports: [
