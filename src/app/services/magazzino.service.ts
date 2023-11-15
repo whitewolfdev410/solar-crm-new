@@ -19,7 +19,6 @@ export class MagazzinoService {
 
   constructor(private httpClient: HttpClient, public fb: UntypedFormBuilder,) { }
 
-  // Http Options
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

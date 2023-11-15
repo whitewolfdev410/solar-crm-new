@@ -33,7 +33,6 @@ export class MagazzinoComponent implements OnInit {
   displayedColumnsGiacenze: string[] = ['reference', 'product_name', 'quantity', 'product_supplier_price_te'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
 
-
   total = 0
   length = 0
   length2 = 0
