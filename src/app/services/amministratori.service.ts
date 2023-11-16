@@ -1,9 +1,7 @@
 
-import { User } from '../models/amministratore.model';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { User } from '../models/amministratore.model';
 @Injectable({
 
   providedIn: 'root'
@@ -26,10 +24,10 @@ export class AmministratoriService {
   }
   public getIdraulici() {
     return this.httpClient.get<User[]>(this.urls_idraulici);
-
   }
+
   public getAmministratoreChiamata(id) {
-    return this.httpClient.get<User[]>(this.url+id);
+    return this.httpClient.get<User[]>(this.url + id);
 
   }
 }

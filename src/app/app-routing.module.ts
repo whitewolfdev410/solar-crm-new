@@ -1,25 +1,26 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { AmministratoreComponent } from './amministratore/amministratore.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { MagazzinoComponent } from './magazzino/magazzino.component';
 import { PreventiviComponent } from './preventivi/preventivi.component';
 
-import { DettaglioContattiComponent } from './dettaglio-contatti/dettaglio-contatti.component';
-import { MenuBuildComponent } from './menu-build/menu-build.component';
-import { NuovoModelloOffertaComponent } from './nuovo-modello-offerta/nuovo-modello-offerta.component';
-import { TestcheckComponent } from './testcheck/testcheck.component';
 import { AreaRiservataComponent } from './area-riservata/area-riservata.component';
 import { CalendarioComponent } from './calendario/calendario.component';
-import { ListaFattureComponent } from './lista-fatture/lista-fatture.component';
-import { RiepilogoFattureFornitoriComponent } from './riepilogo-fatture-fornitori/riepilogo-fatture-fornitori.component';
-import { WebinarComponent } from './webinar/webinar.component';
-import { MarketingComponent } from './marketing/marketing.component';
 import { CampioniComponent } from './campioni/campioni.component';
+import { DettaglioContattiComponent } from './dettaglio-contatti/dettaglio-contatti.component';
 import { ListaContattiComponent } from './lista-contatti/lista-contatti.component';
+import { ListaFattureComponent } from './lista-fatture/lista-fatture.component';
+import { MarketingComponent } from './marketing/marketing.component';
+import { MenuBuildComponent } from './menu-build/menu-build.component';
+import { NuovoModelloOffertaComponent } from './nuovo-modello-offerta/nuovo-modello-offerta.component';
+import { OffertaComponent } from './offerta/offerta.component';
+import { RiepilogoFattureFornitoriComponent } from './riepilogo-fatture-fornitori/riepilogo-fatture-fornitori.component';
 import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
+import { TestcheckComponent } from './testcheck/testcheck.component';
+import { WebinarComponent } from './webinar/webinar.component';
 
 /*const routes: Routes = [
   {
@@ -55,6 +56,7 @@ const routes: Routes = [
   { path: 'menu-build', component: MenuBuildComponent, },
   { path: 'testcheck', component: TestcheckComponent, },
   { path: 'offerte', component: PreventiviComponent, },
+  { path: 'nuova-offerta', component: OffertaComponent, },
   { path: 'fatture', component: ListaFattureComponent, },
   { path: 'campioni', component: CampioniComponent, },
   { path: 'webinar', component: WebinarComponent, },

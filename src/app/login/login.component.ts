@@ -100,6 +100,16 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("assegnabile", '0');
             localStorage.setItem("anno_globale", this.currentyear);
           }
+          if (this.admin == 16) {
+            localStorage.setItem("name", 'Dev');
+            localStorage.setItem("id", '59');
+            localStorage.setItem("nome", 'Dev');
+            localStorage.setItem("cognome", 'angular');
+            localStorage.setItem("ruolo", 'Developer');
+            localStorage.setItem("id_ruolo", '16');
+            localStorage.setItem("assegnabile", '0');
+            localStorage.setItem("anno_globale", this.currentyear);
+          }
 
           this.router.navigate(['/home']);
         }

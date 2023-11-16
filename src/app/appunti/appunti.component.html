@@ -1,52 +1,50 @@
+<div class="card card-border-c-blue shadow" [ngClass]="{ 'border-violet':edit_chiam=='border-violet' }">
+    <div class="card-header">
 
-        <div class="card card-border-c-blue shadow" [ngClass]="{ 'border-violet':edit_chiam=='border-violet' }">
-            <div class="card-header">
-
-                <div class="col-sm-6 col-lg-6 d-flex justify-content-start">
-                    <h3 class=""> Appunti </h3>
-                </div>
-            </div>
-            <div class="card-body card-task">
-                
-
-                <mat-table #table [dataSource]="dataSourceChiamate" matSort class="mat-small">
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="note">
-                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                        <td mat-cell *matCellDef="let element">
-                            <mat-form-field class="mat-small">
-                                <mat-label>{{validDateFormat(element.data) | date: 'dd-MMM-yyyy'}} -
-                                    {{element.nome_amm}}</mat-label>
-                                <textarea matInput [value]="element.note" [(ngModel)]="element.note" (change)="updateAppunto(element)
-                  " cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                                    cdkAutosizeMaxRows="5"></textarea>
-                            </mat-form-field>
-                        </td>
-                    </ng-container>
-
-                    <!-- action Column -->
-                    <ng-container matColumnDef="action">
-                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                        <td mat-cell *matCellDef="let element">
-                            <mat-icon (click)="deleteAppunto(element.id)" class="icon bulb">delete_forever</mat-icon>
-                        </td>
-                    </ng-container>
-
-
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </mat-table>
-
-
-
-            </div>
-            <div class="card-footer">
-
-                <mat-form-field class="mat-small">
-                    <input matInput (change)="addAppunto(user)" placeholder="Aggiungi appunto"
-                        [formControl]="aggiungiAppunto">
-                </mat-form-field>
-            </div>
-
+        <div class="col-sm-6 col-lg-6 d-flex justify-content-start">
+            <h3 class=""> Appunti </h3>
         </div>
+    </div>
+    <div class="card-body card-task">
+
+
+        <mat-table #table [dataSource]="dataSourceChiamate" matSort class="mat-small">
+            <!-- Name Column -->
+            <ng-container matColumnDef="note">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field class="mat-small">
+                        <mat-label>{{validDateFormat(element.data) | date: 'dd-MMM-yyyy'}} -
+                            {{element.nome_amm}}</mat-label>
+                        <textarea matInput [value]="element.note" [(ngModel)]="element.note" (change)="updateAppunto(element)
+                  " cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="5"></textarea>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <!-- action Column -->
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon (click)="deleteAppunto(element.id)" class="icon bulb">delete_forever</mat-icon>
+                </td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </mat-table>
+
+
+
+    </div>
+    <div class="card-footer">
+
+        <mat-form-field class="mat-small">
+            <input matInput (change)="addAppunto(user)" placeholder="Aggiungi appunto" [formControl]="aggiungiAppunto">
+        </mat-form-field>
+    </div>
+
+</div>

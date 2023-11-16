@@ -1,138 +1,150 @@
-            /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
 /* angular-cli file: src/styles.css */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 html {
-    height: 100%!important;
-    padding:0px!important;
-    margin:0px!important;
-}            
+    height: 100% !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
 body {
-                /* padding-top: 3.5rem;*/
-                font-family: "Roboto", sans-serif;
-                height: 100%!important;
-                padding:0px!important;
-                margin:0px!important;
-            }
+    /* padding-top: 3.5rem;*/
+    font-family: "Roboto", sans-serif;
+    height: 100% !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
 
-            .violet {
-                background-color: #8d448b !important;
-                color: #fff;
-            }
+.violet {
+    background-color: #8d448b !important;
+    color: #fff;
+}
 
-            .violet_bck {
-                background-color: #8d448b !important;
-            }
+.violet_bck {
+    background-color: #8d448b !important;
+}
 
-            .dataTables_length {
-                margin-bottom: 3em;
-            }
+.dataTables_length {
+    margin-bottom: 3em;
+}
 
-            .btn-primary {
-                background-color: #8d448b !important;
-                color: #fff;
-            }
+.btn-primary {
+    background-color: #8d448b !important;
+    color: #fff;
+}
 
-            .modal-title {
-                color: #fff !important;
-            }
-            .modal-backdrop {
-                display: none;
-              }
-            .card-border-c-blue {
-                border-top: 4px solid #4099ff;
-            }
+.modal-title {
+    color: #fff !important;
+}
 
-            .card-border-c-red {
-                border-top: 4px solid #ff0101;
-            }
+.modal-backdrop {
+    display: none;
+}
 
-            .border-violet {
-                border: 1px solid #8d448b;
-            }
+.card-border-c-blue {
+    border-top: 4px solid #4099ff;
+}
 
-            .edit_field {
-                box-shadow: 0 .3rem 0.5rem rgba(141, 68, 149, .15) !important;
-                font-size: 1rem;
-                padding: 0.5rem !important;
-            }
+.card-border-c-red {
+    border-top: 4px solid #ff0101;
+}
 
-            .small-text {
-                font-size: 0.8em;
-            }
+.border-violet {
+    border: 1px solid #8d448b;
+}
 
-            html,
-            body {
-                height: 100%;
-            }
+.edit_field {
+    box-shadow: 0 .3rem 0.5rem rgba(141, 68, 149, .15) !important;
+    font-size: 1rem;
+    padding: 0.5rem !important;
+}
 
-            body {
-                margin: 0;
-                font-family: Roboto, "Helvetica Neue", sans-serif;
+.small-text {
+    font-size: 0.8em;
+}
 
-            }
+html,
+body {
+    height: 100%;
+}
 
-            .custom-modalbox>mat-dialog-container {
-                background-color: #8d448b !important;
-                color: white;
-            }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 
-            html,
-            body {
-                height: 100%;
-            }
+}
 
-            body {
-                margin: 0;
-                font-family: Roboto, "Helvetica Neue", sans-serif;
-            }
+.custom-modalbox>mat-dialog-container {
+    background-color: #8d448b !important;
+    color: white;
+}
 
-            .assegnato_idraulico {
-                background-color: rgb(212, 239, 203) !important;
-            }
+html,
+body {
+    height: 100%;
+}
 
-            .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-                background-color: white !important;
-            }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-            .mdc-list-item__content {
-                pointer-events: auto !important;
-            }
+.assegnato_idraulico {
+    background-color: rgb(212, 239, 203) !important;
+}
 
-            .mdc-list-item__start {
-                pointer-events: auto !important;
-            }
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: white !important;
+}
 
-            .mdc-list-item--with-leading-icon .mdc-list-item__start {
-                margin-left: 0px !important;
-            }
+.mdc-list-item__content {
+    pointer-events: auto !important;
+}
 
-            .mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-two-lines {
-                height: auto !important;
-            }
+.mdc-list-item__start {
+    pointer-events: auto !important;
+}
 
-            .mat-mdc-dialog-container .mdc-dialog__surface {
-                background-color: #8d448b !important;
-            }
+.mdc-list-item--with-leading-icon .mdc-list-item__start {
+    margin-left: 0px !important;
+}
 
-            .mat-mdc-dialog-container .mdc-dialog__title {
-                color: white !important;
-            }
+.mat-mdc-list-item.mdc-list-item--with-leading-icon.mdc-list-item--with-two-lines {
+    height: auto !important;
+}
 
-            .mat-mdc-button:not(:disabled) {
-                /*color: #fff!important;*/
-            }
-            .red{
-                background-color: #abca59!important;
-               /* border-radius: 999px!important;*/
-            }
-            .mat-calendar-body-selected {
-                background-color: #f7a846!important;
-                color: #fff;
-            }
-            .mat-mdc-tab-header{
-                z-index: 0;
-            }
-            .mat-mdc-form-field {
-                width: 100%;
-              }
-            
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: #8d448b !important;
+    color: white !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__title {
+    color: white !important;
+}
+
+.mat-mdc-button:not(:disabled) {
+    /*color: #fff!important;*/
+}
+
+.red {
+    background-color: #abca59 !important;
+    /* border-radius: 999px!important;*/
+}
+
+.mat-calendar-body-selected {
+    background-color: #f7a846 !important;
+    color: #fff;
+}
+
+.mat-mdc-tab-header {
+    z-index: 0;
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.mat-mdc-dialog-container {
+    color: white !important;
+}

@@ -81,6 +81,7 @@ import { MarketingComponent } from './marketing/marketing.component';
 import { CampioniComponent } from './campioni/campioni.component';
 import { AppuntiComponent } from './appunti/appunti.component';
 import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
+import { OffertaComponent } from './offerta/offerta.component';
 
 
 
@@ -134,7 +135,8 @@ registerLocaleData(localeIt);
         MarketingComponent,
         CampioniComponent,
         AppuntiComponent,
-        StatOperatoriComponent
+        StatOperatoriComponent,
+        OffertaComponent
 
     ],
     imports: [

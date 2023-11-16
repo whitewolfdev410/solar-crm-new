@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Input, HostListener, ViewChild } from '@angular/core';
-import { FormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { chiamate } from '../models/chiamate.model';
 import { AmministratoriService } from '../services/amministratori.service';
 import { ContattiService } from '../services/contatti.service';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { chiamate } from '../models/chiamate.model';
-import {MatInputModule} from '@angular/material/input';
-import { observable } from 'rxjs';
-import * as moment from 'moment';
 
 
 @Component({
@@ -20,7 +18,7 @@ export class AppuntiComponent implements OnInit {
   @Input() user: any;
   @Input() admin: string;
   @Input() data_lavori: Date;
-  
+
   edit_chiamata: string = "none";
   operatore: any;
   amm: any;
@@ -48,12 +46,12 @@ export class AppuntiComponent implements OnInit {
   id_ruolo: any = localStorage.getItem("id_ruolo");
   visibile: boolean;
   checked: boolean;
-  datalavori:any;
-  non_risponde:boolean;
-  contatto_errato:boolean;
-  nn_risponde:any;
-  errato:any;
-  appunto:any;
+  datalavori: any;
+  non_risponde: boolean;
+  contatto_errato: boolean;
+  nn_risponde: any;
+  errato: any;
+  appunto: any;
 
 
   //public displayedColumns = ['id', 'note', 'user_id', 'action'];
@@ -68,7 +66,7 @@ export class AppuntiComponent implements OnInit {
     } else {
       this.esterno = false;
     }
-    
+
   }
 
 
@@ -95,97 +93,96 @@ export class AppuntiComponent implements OnInit {
 
       });
 
-    
-     
-    
-  }    
-    
-      private loadAppunti() {
-        this.service.loadAppunti(this.user)
-          .subscribe({
-            next: (response => {
-              this.appunto = response;
-              //console.log(this.chiamate);
-              this.dataSourceChiamate = new MatTableDataSource(this.appunto);
-              // this.operatore = this.chiamate.map(t => t.operatore);
-            }),
-            error: err => {
-              alert(`Error ${err}!`);
-            }
-          });
-      }
-    
-      applyFilter(filterValue: string) {
-        //debugger;
-        /* filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-        this.dataSource.filter = filterValue; */
-        this.dataSourceChiamate.filter = filterValue.trim().toLowerCase();
-      }
-    
-      deleteAppunto(id: number) {
-        if (window.confirm('Sei sicuro ?')) {
-          this.service.deleteAppunto(id).subscribe(res => {
-            if (res[0] == "KO") {
-              alert(res[1]);
-            } else {
-              this.loadAppunti();
-            }
-            //console.log(res);
-          });
+
+
+
+  }
+
+  private loadAppunti() {
+    this.service.loadAppunti(this.user)
+      .subscribe({
+        next: (response => {
+          this.appunto = response;
+          //console.log(this.chiamate);
+          this.dataSourceChiamate = new MatTableDataSource(this.appunto);
+          // this.operatore = this.chiamate.map(t => t.operatore);
+        }),
+        error: err => {
+          alert(`Error ${err}!`);
         }
-      }
-    
-    
-      updateAppunto(appunto: chiamate) {
-        this.service.updateAppunto(appunto).subscribe({
-          next: (value => {
-            //console.log('Post updated successfully!');
-          }),
-          error: (err => {
-            alert('errore');
-          })
-        })
-        //console.log('update chiamata');
-      }
-    
-    
-    
-      addAppunto(id): void {
-        this.operatore = localStorage.getItem("id");
-        //console.log(this.aggiungiChiamata.value);
-        //console.log(id);
-        //console.log(this.operatore);
-        this.service.addAppunto(id, this.operatore, this.aggiungiAppunto.value).subscribe((res: any) => {
-          //console.log('Post updated successfully!');
-          if (res[0] == "KO") {
-            alert(res[1]);
-          } else {
-            this.loadAppunti();
-            this.aggiungiAppunto.reset();
-          }
-          //this.router.navigateByUrl('post/index');
-        })
-        //console.log('update chiamata');
-      }
-    
-      validDateFormat(dateString) {
-        if (dateString) {
-          return dateString.replace(/\s/, 'T');
+      });
+  }
+
+  applyFilter(filterValue: string) {
+    /* filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue; */
+    this.dataSourceChiamate.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteAppunto(id: number) {
+    if (window.confirm('Sei sicuro ?')) {
+      this.service.deleteAppunto(id).subscribe(res => {
+        if (res[0] == "KO") {
+          alert(res[1]);
+        } else {
+          this.loadAppunti();
         }
-    
-        return null;
-    
+        //console.log(res);
+      });
+    }
+  }
+
+
+  updateAppunto(appunto: chiamate) {
+    this.service.updateAppunto(appunto).subscribe({
+      next: (value => {
+        //console.log('Post updated successfully!');
+      }),
+      error: (err => {
+        alert('errore');
+      })
+    })
+    //console.log('update chiamata');
+  }
+
+
+
+  addAppunto(id): void {
+    this.operatore = localStorage.getItem("id");
+    //console.log(this.aggiungiChiamata.value);
+    //console.log(id);
+    //console.log(this.operatore);
+    this.service.addAppunto(id, this.operatore, this.aggiungiAppunto.value).subscribe((res: any) => {
+      //console.log('Post updated successfully!');
+      if (res[0] == "KO") {
+        alert(res[1]);
+      } else {
+        this.loadAppunti();
+        this.aggiungiAppunto.reset();
       }
-      updateVisibility(event) {
-        if (window.confirm('Sei sicuro ?')) {
-        console.log(event.checked)
-        this.service.updateVisibilityDett(this.user, event.checked).subscribe((res: any) => {
-        })
-      }
+      //this.router.navigateByUrl('post/index');
+    })
+    //console.log('update chiamata');
+  }
+
+  validDateFormat(dateString) {
+    if (dateString) {
+      return dateString.replace(/\s/, 'T');
     }
 
-  
+    return null;
+
+  }
+  updateVisibility(event) {
+    if (window.confirm('Sei sicuro ?')) {
+      console.log(event.checked)
+      this.service.updateVisibilityDett(this.user, event.checked).subscribe((res: any) => {
+      })
+    }
+  }
+
+
 }
 
 export interface Element {
