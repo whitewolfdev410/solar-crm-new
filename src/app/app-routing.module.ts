@@ -57,6 +57,7 @@ const routes: Routes = [
   { path: 'testcheck', component: TestcheckComponent, },
   { path: 'offerte', component: PreventiviComponent, },
   { path: 'nuova-offerta', component: OffertaComponent, },
+  { path: 'nuova-offerta/:id', component: OffertaComponent, },
   { path: 'fatture', component: ListaFattureComponent, },
   { path: 'campioni', component: CampioniComponent, },
   { path: 'webinar', component: WebinarComponent, },
