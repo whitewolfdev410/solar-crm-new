@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, retry, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Contact } from './../models/contact.model';
 import { infoAgg } from './../models/infoagg.model';
@@ -28,6 +28,7 @@ export class ContattiService {
   array_idraulico: any;
   array_datalavori: any;
   delete: any;
+  public operatore = new BehaviorSubject(null);
 
   constructor(private httpClient: HttpClient, public fb: UntypedFormBuilder,) { }
 
@@ -174,7 +175,8 @@ export class ContattiService {
       data_appunto: new Date(),
       operatore: operatore
     };
-    console.log(JSON.stringify(this.array_appunto));
+    
+    this.operatore.next(localStorage.getItem("id"));
     return this.httpClient.post<appunto>(this.url_post, JSON.stringify(this.array_appunto), this.httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -306,26 +308,27 @@ export class ContattiService {
         catchError(this.handleError)
       )
   }
-  public updateNnRisponde(user_id: number,value:boolean) {
-    return this.httpClient.get<Contact[]>(this.url + 'updateNnRispondeDett&id=' + user_id+'&value='+value)
+  public updateNnRisponde(user_id: number,value:boolean,operatore) {
+    console.log(operatore);
+    return this.httpClient.get<Contact[]>(this.url + 'updateNnRispondeDett&id=' + user_id+'&value='+value+'&operatore='+operatore)
       .pipe(
         catchError(this.handleError)
       )
   }
-  public updateMessaggioWA(user_id: number,value:boolean) {
-    return this.httpClient.get<Contact[]>(this.url + 'updateMessaggioWADett&id=' + user_id+'&value='+value)
+  public updateMessaggioWA(user_id: number,value:boolean,operatore) {
+    return this.httpClient.get<Contact[]>(this.url + 'updateMessaggioWADett&id=' + user_id+'&value='+value+'&operatore='+operatore)
       .pipe(
         catchError(this.handleError)
       )
   }
-  public updateEmail(user_id: number,value:boolean) {
-    return this.httpClient.get<Contact[]>(this.url + 'updateEmailDett&id=' + user_id+'&value='+value)
+  public updateEmail(user_id: number,value:boolean,operatore) {
+    return this.httpClient.get<Contact[]>(this.url + 'updateEmailDett&id=' + user_id+'&value='+value+'&operatore='+operatore)
       .pipe(
         catchError(this.handleError)
       )
   }
-  public updateContattoErrato(user_id: number,value:boolean) {
-    return this.httpClient.get<Contact[]>(this.url + 'updateContattoErratoDett&id=' + user_id+'&value='+value)
+  public updateContattoErrato(user_id: number,value:boolean,operatore) {
+    return this.httpClient.get<Contact[]>(this.url + 'updateContattoErratoDett&id=' + user_id+'&value='+value+'&operatore='+operatore)
       .pipe(
         catchError(this.handleError)
       )

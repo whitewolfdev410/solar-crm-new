@@ -66,25 +66,25 @@ export class AmministratoreComponent implements OnInit {
   }
   loadAmministratori(): void {
     this.loading = true;
-    console.log(this.ruolo_operatore);
+
     if(this.ruolo_operatore=='Amministratore'){
       this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=users').subscribe(res => {
         this.users = res;
-        //console.log(res);
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.data = res;
-        //console.log(this.dataSource);
+
         this.loading = false;
       });
     }else{
       this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=userDett&id='+this.operatore).subscribe(res => {
         this.users = res;
-        //console.log(res);
+    
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.data = res;
-        //console.log(this.dataSource);
+
         this.loading = false;
       });
     }
@@ -131,7 +131,7 @@ export class AmministratoreComponent implements OnInit {
       attivo: this.form.controls['attivo'].value,
       ruolo: this.form.controls['ruolo'].value
     }).subscribe(res => {
-      //console.log(res);
+
       this.form.reset();
       this.loading = false;
       this.loadAmministratori();
@@ -145,7 +145,7 @@ export class AmministratoreComponent implements OnInit {
       .subscribe(response => {
 
         this.ruoli = response;
-        console.log(this.ruoli);
+
       });
   }
   applyFilter(fevent: Event) {
@@ -224,7 +224,6 @@ export class Sondaggiodialog implements OnInit{
       this.sondaggio.loadsondaggi(id)
         .subscribe(res => {
           this.sondaggi = res;
-          console.log(this.sondaggi)
           this.dataSourceSondaggio.paginator = this.paginator;
           this.dataSourceSondaggio.sort = this.sort;
           this.dataSourceSondaggio.data = this.sondaggi;

@@ -1,0 +1,131 @@
+<div mat-dialog-title>Ci piace conoscere cosa ne pensi di noi</div>
+<mat-dialog-content class="mat-typography">
+  <div class="row">
+    <div class="col-12" *ngIf="data.sondaggio">
+
+
+      <div class="card card-border-c-red shadow mb-5">
+        <div class="card-header">
+          <div class="d-flex justify-content-start">
+            <h3 class="">Un breve sondaggio per la tua soddisfazione </h3>
+          </div>
+        </div>
+
+        <div class="card-body" style="overflow:auto;margin-bottom:15px;">
+          <h3 *ngIf="formsondaggio">Sei stato chiamato da <strong>{{data.nome_op}} {{data.cognome_op}}</strong>,<br>
+            Come valuti la telefonata che ti abbiamo fatto per:</h3>
+          <div *ngIf="!formsondaggio" class="row">
+            <div class="col-12">
+              <p style="color:red;">GRAZIE PER LA TUA VALUTAZIONE!!!<br>
+                Pubblichiamo 2 nuovi video ogni settimana,<br>
+                MI RACCOMANDO ISCRIVITI SUBITO AL NOSTRO CANALE YOUTUBE PER CONOSCERE TUTTE LE NOVITÁ.
+                <a href="https://www.youtube.com/@SolarCalor" target="_blank"><img src="assets/img/Youtube.png"
+                    width="50px" height="auto"></a>
+              </p>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+              <button mat-dialog-close class="btn btn-secondary mt-3">Chiudi</button>
+            </div>
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="Sondaggio(form)" *ngIf="formsondaggio">
+            <input type="hidden" [ngModel]="data.id" name="id_dettaglio" formControlName="id_utente">
+            <input type="hidden" [ngModel]="data.id_operatore_sondaggio" name="id_operatore"
+              formControlName="id_operatore">
+            <div class="container_emoji row">
+              <div class="col-12">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-5">Simpatia</div>
+                      <div class="col-7">
+                        <input id="simpatia" class="scarso" name="simpatia" value="1" type="radio"
+                          formControlName="simpatia" />
+                        <label for="simpatia"></label>
+                        <input id="simpatia1" class="buono" name="simpatia" value="2" type="radio"
+                          formControlName="simpatia" />
+                        <label for="simpatia1"></label>
+                        <input id="simpatia2" class="ottimo" name="simpatia" value="3" type="radio"
+                          formControlName="simpatia" />
+                        <label for="simpatia2"></label>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-5">Disponibilità</div>
+                      <div class="col-7">
+                        <input id="disponibilita" class="scarso" name="disponibilita" value="1" type="radio"
+                          formControlName="disponibilita" />
+                        <label for="disponibilita"></label>
+                        <input id="disponibilita1" class="buono" name="disponibilita" value="2" type="radio"
+                          formControlName="disponibilita" />
+                        <label for="disponibilita1"></label>
+                        <input id="disponibilita2" class="ottimo" name="disponibilita" value="3" type="radio"
+                          formControlName="disponibilita" />
+                        <label for="disponibilita2"></label>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-5">Competenza</div>
+                      <div class="col-7">
+                        <input id="competenza" class="scarso" name="competenza" value="1" type="radio"
+                          formControlName="competenza" />
+                        <label for="competenza"></label>
+                        <input id="competenza1" class="buono" name="competenza" value="2" type="radio"
+                          formControlName="competenza" />
+                        <label for="competenza1"></label>
+                        <input id="competenza2" class="ottimo" name="competenza" value="3" type="radio"
+                          formControlName="competenza" />
+                        <label for="competenza2"></label>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-5">Puntualità</div>
+                      <div class="col-7">
+                        <input id="puntualita" class="scarso" name="puntualita" value="1" type="radio"
+                          formControlName="puntualita" />
+                        <label for="puntualita"></label>
+                        <input id="puntualita1" class="buono" name="puntualita" value="2" type="radio"
+                          formControlName="puntualita" />
+                        <label for="puntualita1"></label>
+                        <input id="puntualita2" class="ottimo" name="puntualita" value="3" type="radio"
+                          formControlName="puntualita" />
+                        <label for="puntualita2"></label>
+                      </div>
+
+                    </div>
+                  </li>
+
+                </ul>
+              </div>
+              <div class="col-12 d-flex justify-content-end"><button type="submit" [disabled]="form.invalid"
+                  class="btn btn-secondary mt-3">Invia</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+</mat-dialog-content>
+<!--<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>invia</button>
+</mat-dialog-actions>-->
+
+
+<!-- Copyright 2022 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->

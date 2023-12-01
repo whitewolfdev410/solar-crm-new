@@ -9,9 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'gestionecero';
-  constructor(
-    private router: Router
-  ) { }
+  constructor(private router: Router) { }
 
   public ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;

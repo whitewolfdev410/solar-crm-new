@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 
 
 
@@ -56,6 +57,8 @@ export class ChiamateComponent implements OnInit {
   idraulico_id: any;
   esterno: boolean;
   id_ruolo: any = localStorage.getItem("id_ruolo");
+  nome_operatore: any = localStorage.getItem("nome");
+  //id_operatore: any = localStorage.getItem("id");
   visibile: boolean;
   checked: boolean;
   //datalavori: any;
@@ -111,6 +114,10 @@ export class ChiamateComponent implements OnInit {
     } else {
       this.esterno = false;
     }
+    this.service.operatore.subscribe((id_operatore)=>{
+      this.selectOperatore.setValue(id_operatore);
+    })
+    
 
   }
   ngOnInit(): void {
@@ -225,6 +232,7 @@ export class ChiamateComponent implements OnInit {
       this.avvio=0;
   }
   stopChiamata(id): void {
+    
     this.operatore = localStorage.getItem("id");
     this.start = false;
     this.start_stop_button = true;
@@ -235,6 +243,11 @@ export class ChiamateComponent implements OnInit {
       if (res[0] == "KO") {
         alert(res[1]);
       } else {
+        if(res[1]==0){
+        const dialogRef = this.dialog.open(DialogConfirmComponent, {
+          data: { message: this.nome_operatore+' Ricordati di recensire il contatto!! Cordiali saluti Michele Cerone' },
+        });
+      }
         this.counter = 0;
         // alert(res[1]);
         this.checkChiamateAperte(id, this.avvio);
@@ -469,28 +482,28 @@ if(this.avvio==1){
   onCheckedNnRisponde(event) {
     //console.log(event.checked);
     //console.log("value changed");
-    this.service.updateNnRisponde(this.user, event.checked).subscribe((res: any) => {
+    this.service.updateNnRisponde(this.user, event.checked,this.operatore).subscribe((res: any) => {
     })
 
   }
   onCheckedContattoMessaggioWA(event) {
     //console.log(event.checked);
     //console.log("value changed");
-    this.service.updateMessaggioWA(this.user, event.checked).subscribe((res: any) => {
+    this.service.updateMessaggioWA(this.user, event.checked,this.operatore).subscribe((res: any) => {
     })
 
   }
   onCheckedContattoEmail(event) {
     //console.log(event.checked);
     //console.log("value changed");
-    this.service.updateEmail(this.user, event.checked).subscribe((res: any) => {
+    this.service.updateEmail(this.user, event.checked,this.operatore).subscribe((res: any) => {
     })
 
   }
   onCheckedContattoErrato(event) {
     //console.log(event);
     // console.log("value changed");
-    this.service.updateContattoErrato(this.user, event.checked).subscribe((res: any) => {
+    this.service.updateContattoErrato(this.user, event.checked,this.operatore).subscribe((res: any) => {
     })
   }
 

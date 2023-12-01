@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { DOCUMENT } from '@angular/common';
@@ -19,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  
   elem: any;
   @Input() headerShow;
   ruolo: boolean;
@@ -45,6 +46,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private document: any, public http: HttpClient, public route: ActivatedRoute, public router: Router, private Location: Location, public ruoliservice: Ruoli, private service: ContattiService,public dialoginput: MatInputModule, private dialog: MatDialog,
   private snackBar: MatSnackBar) {
+
+   
+
     if (!this.dev) {
       this.name = localStorage.getItem("name");
       this.ruoloa = localStorage.getItem("ruolo");
@@ -164,6 +168,7 @@ export class HeaderComponent implements OnInit {
 
 
   logout() {
+   // debugger
     this.http.post("https://gestionalecero.it/gest_2022/session/session.php", {
       request: "logout"
     }).subscribe(res => {

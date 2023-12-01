@@ -1,0 +1,26 @@
+<div class="card card-border-c-blue shadow mb-5">
+    <div class="card-header">
+        <div class="d-flex justify-content-start">
+            <h3 class=""> Report Email Inviate</h3>
+        </div>
+    </div>
+    <div class="card-body" style="max-height:350px;overflow:auto;margin-bottom:15px;">
+        <mat-list>
+            <span *ngFor="let reportmail of reportmails; let i=index">
+                <mat-list-item>
+                    
+                    <span matListItemTitle class="mat-small">Inviato: <b>{{reportmail.nome_template}}</b>
+                        il
+                        <b>{{validDateFormat(reportmail.data_invio) | date: 'dd-MMM-yyyy'}}</b></span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </span>
+        </mat-list>
+    </div>
+    <div class="card-footer text-end">
+        <a mat-icon-button href="https://gestionalecero.it/nuova_offerta.php?id_utente={{user}}" target="_blank"
+            placement="left" matTooltip="Nuovo Preventivo">
+            <mat-icon>note_add</mat-icon>
+        </a>
+    </div>
+</div>

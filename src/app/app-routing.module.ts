@@ -11,6 +11,7 @@ import { AreaRiservataComponent } from './area-riservata/area-riservata.componen
 import { CalendarioComponent } from './calendario/calendario.component';
 import { CampioniComponent } from './campioni/campioni.component';
 import { DettaglioContattiComponent } from './dettaglio-contatti/dettaglio-contatti.component';
+import { FattureComponent } from './fatture/fatture.component';
 import { ListaContattiComponent } from './lista-contatti/lista-contatti.component';
 import { ListaFattureComponent } from './lista-fatture/lista-fatture.component';
 import { MarketingComponent } from './marketing/marketing.component';
@@ -18,6 +19,7 @@ import { MenuBuildComponent } from './menu-build/menu-build.component';
 import { NuovoModelloOffertaComponent } from './nuovo-modello-offerta/nuovo-modello-offerta.component';
 import { OffertaComponent } from './offerta/offerta.component';
 import { RiepilogoFattureFornitoriComponent } from './riepilogo-fatture-fornitori/riepilogo-fatture-fornitori.component';
+import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
 import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 import { TestcheckComponent } from './testcheck/testcheck.component';
 import { WebinarComponent } from './webinar/webinar.component';
@@ -63,10 +65,12 @@ const routes: Routes = [
   { path: 'webinar', component: WebinarComponent, },
   { path: 'marketing', component: MarketingComponent, },
   { path: 'stat_operatori', component: StatOperatoriComponent, },
+  { path: 'stat_offerte', component: StatOfferteComponent, },
   { path: 'riepilogo-fatture-fornitori', component: RiepilogoFattureFornitoriComponent, },
   { path: 'nuovo-modello-offerta', component: NuovoModelloOffertaComponent, },
   { path: 'area-riservata/:id/:username/:password', component: AreaRiservataComponent, },
   { path: 'calendario/:id_contatto/:interesse/:psw', component: CalendarioComponent, },
+  { path: 'nuova-fattura/:id', component: FattureComponent },
   { path: "**", redirectTo: "" },
 ];
 

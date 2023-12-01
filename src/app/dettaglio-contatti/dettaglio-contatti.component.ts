@@ -16,6 +16,7 @@ import { ListaConfermeOrdineComponent } from '../lista-conferme-ordine/lista-con
 import { FatturazioneComponent } from '../fatturazione/fatturazione.component';
 import { SpedizioneComponent } from '../spedizione/spedizione.component';
 import { TagComponent } from '../tag/tag.component';
+import { EmailGestComponent } from '../email-gest/email-gest.component';
 
 @Component({
   selector: 'app-dettaglio-contatti',
@@ -68,6 +69,7 @@ export class DettaglioContattiComponent implements OnInit {
   @ViewChild("terzotab", { read: ViewContainerRef }) container2;
   @ViewChild("terzotab_a", { read: ViewContainerRef }) container2_a;
   @ViewChild("quartotab", { read: ViewContainerRef }) container3;
+  @ViewChild("quintotab", { read: ViewContainerRef }) container4;
   //@Input() contatto?: Contact;
 
   constructor(public http: HttpClient, public fb: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private service: ContattiService, @Inject(DOCUMENT) private document: any, private Location: Location, private provincia: ProvinceService, private ruolo: Ruoli,private resolver: ComponentFactoryResolver) {
@@ -224,6 +226,13 @@ export class DettaglioContattiComponent implements OnInit {
       //QUARTO TAB
       const tag = this.resolver.resolveComponentFactory(TagComponent);
       this.componentRef = this.container3.createComponent(tag);
+      this.componentRef.instance.user =  this.id;
+      this.componentRef.instance.operatore = this.operatore;
+    }
+    else if (type.index === 4) {
+      //QUINTO TAB
+      const tag = this.resolver.resolveComponentFactory(EmailGestComponent);
+      this.componentRef = this.container4.createComponent(tag);
       this.componentRef.instance.user =  this.id;
       this.componentRef.instance.operatore = this.operatore;
     }

@@ -11,7 +11,10 @@ import { ConfirmationDialog, HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import localeIt from '@angular/common/locales/it';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -40,9 +43,12 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { AllegatiConfermaOrdineComponent } from './allegati-conferma-ordine/allegati-conferma-ordine.component';
 import { AllegatiContattiComponent } from './allegati-contatti/allegati-contatti.component';
 import { AmministratoreComponent, Sondaggiodialog } from './amministratore/amministratore.component';
+import { AppuntiComponent } from './appunti/appunti.component';
 import { AreaRiservataComponent } from './area-riservata/area-riservata.component';
 import { CalendarioComponent } from './calendario/calendario.component';
+import { CampioniComponent } from './campioni/campioni.component';
 import { ChiamateComponent, FormatTimePipe } from './chiamate/chiamate.component';
+import { AutocompleteRestComponent } from './components/autocomplete-rest/autocomplete-rest.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DateFormat } from "./date-format";
 import { DatiAziendaPartnerComponent } from './dati-azienda-partner/dati-azienda-partner.component';
@@ -59,29 +65,22 @@ import { ListaContattiComponent } from './lista-contatti/lista-contatti.componen
 import { ListaFattureComponent } from './lista-fatture/lista-fatture.component';
 import { DialogContentExampleDialog, ListaPreventiviComponent } from './lista-preventivi/lista-preventivi.component';
 import { MagazzinoComponent } from './magazzino/magazzino.component';
+import { MarketingComponent } from './marketing/marketing.component';
 import { MenuBuildComponent } from './menu-build/menu-build.component';
 import { NuovoModelloOffertaComponent } from './nuovo-modello-offerta/nuovo-modello-offerta.component';
+import { OffertaComponent } from './offerta/offerta.component';
 import { OperatoreComponent } from './operatore/operatore.component';
 import { PreventiviComponent } from './preventivi/preventivi.component';
 import { ReplacePipe } from './replace.pipe';
 import { RiepilogoFattureFornitoriComponent } from './riepilogo-fatture-fornitori/riepilogo-fatture-fornitori.component';
 import { SendMailComponent } from './send-mail/send-mail.component';
 import { SpedizioneComponent } from './spedizione/spedizione.component';
+import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 import { SubheaderComponent } from './subheader/subheader.component';
 import { TagComponent } from './tag/tag.component';
 import { TestcheckComponent } from './testcheck/testcheck.component';
 import { UploadContattiComponent } from './upload-contatti/upload-contatti.component';
 import { WebinarComponent } from './webinar/webinar.component';
-
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { AppuntiComponent } from './appunti/appunti.component';
-import { CampioniComponent } from './campioni/campioni.component';
-import { AutocompleteRestComponent } from './components/autocomplete-rest/autocomplete-rest.component';
-import { MarketingComponent } from './marketing/marketing.component';
-import { OffertaComponent } from './offerta/offerta.component';
-import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 
 registerLocaleData(localeIt);
 

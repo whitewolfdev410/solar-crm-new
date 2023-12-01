@@ -12,6 +12,8 @@ import { Location } from '@angular/common';
 import { AreariservataService } from '../services/area-riservata.service';
 import * as moment from 'moment';
 import { PreventiviService } from '../services/preventivi.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { template } from 'lodash';
 
 @Component({
   selector: 'app-area-riservata',
@@ -58,11 +60,11 @@ export class AreaRiservataComponent implements OnInit {
   cognome_op: any;
   id_operatore_sondaggio: any;
   form: UntypedFormGroup = new UntypedFormGroup({});
-  error:any;
-  valutazione:any;
+  error: any;
+  valutazione: any;
 
-  constructor(public http: HttpClient, public fb: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private preventivi: PreventiviService, private service: ContattiService, private Location: Location, private areariservata: AreariservataService, private ruolo: Ruoli) {
-    console.log(this.id_operatore)
+  constructor(public http: HttpClient, public fb: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private preventivi: PreventiviService, private service: ContattiService, private Location: Location, private areariservata: AreariservataService, private ruolo: Ruoli, public dialog: MatDialog) {
+
 
     if (this.id_operatore != null) {
       this.admin = 'admin';
@@ -100,7 +102,6 @@ export class AreaRiservataComponent implements OnInit {
         if (res[0] == "KO") {
           console.log('sessione scaduta');
         } else {
-          console.log(this.id_operatore);
           this.getContatto(this.id);
           this.getAppuntamentoDettaglio();
           this.getStatoInvioMail();
@@ -151,39 +152,33 @@ export class AreaRiservataComponent implements OnInit {
     this.service.getAppuntamentoDett(this.id)
       .subscribe(response => {
         this.appuntamenti = response;
-        console.log(this.appuntamenti);
         this.start = this.appuntamenti.map(t => t.start);
         var startDate = moment(this.start);//Date format
         var endDate = moment(this.today);
-        console.log(startDate + ' - ' + endDate);
         if (moment(startDate).isSameOrBefore(endDate)) {
           this.showappuntamento = true;
         }
       });
 
   }
-  deleteApp(){
+  deleteApp() {
     this.service.deleteAppAreaRiservata(this.id)
       .subscribe(response => {
         if (response[0] == "OK") {
           this.showappuntamento = false;
-              
+
         } else {
           this.error = response[1];
         }
       });
   }
   ListPreventiviDettaglioContatto(): void {
-    //console.log(this.id_operatore);
+
     this.preventivi.getPreventiviDettContact(this.id, this.assegnabile, this.id_operatore)
       .subscribe(response => {
         this.prev = response;
 
         this.id_offerta = this.prev.id;
-        console.log(this.prev);
-
-        ////console.log('dio boiaccio' + this.selected);
-
       });
   }
 
@@ -198,9 +193,7 @@ export class AreaRiservataComponent implements OnInit {
 
   saveDateLavori(event: any) {
     let newdatalavori = (moment(event.target.value).format('YYYY-MM-DD'));
-    console.log(newdatalavori);
-
-    this.service.saveDateLavori(this.id, newdatalavori,this.valutazione)
+    this.service.saveDateLavori(this.id, newdatalavori, this.valutazione)
       .subscribe(response => {
         this.datalavori = response;
       });
@@ -209,13 +202,13 @@ export class AreaRiservataComponent implements OnInit {
     this.areariservata.checkSondaggio(this.id)
       .subscribe(res => {
         this.chacksondaggio = res;
-        console.log(res[0])
         if (res[0] == "KO") {
           this.nome_op = res[1];
           this.cognome_op = res[2];
           this.id_operatore_sondaggio = res[3];
-          console.log(this.id_operatore_sondaggio);
+          this.formsondaggio = true;
           this.sondaggio = true;
+          this.openDialog(this.id,this.sondaggio, this.nome_op, this.cognome_op,this.id_operatore_sondaggio);
         } else {
           this.sondaggio = false;
         }
@@ -223,13 +216,68 @@ export class AreaRiservataComponent implements OnInit {
   }
 
   Sondaggio(form) {
-    console.log(form.value)
-
     this.areariservata.insertSondaggio(JSON.stringify(this.form.value)).subscribe((res: any) => {
       if (res[0] == "OK") {
         this.formsondaggio = false;
       }
       //this.getDatiPartner();
+    })
+  }
+
+
+
+  openDialog(id,sondaggio,nome_op, cognome_op, id_operatore_sondaggio) {
+    const dialogRef = this.dialog.open(SondaggioDialog, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      backdropClass: 'confirmDialogComponent',
+      panelClass: 'custom-modalbox',
+      data: { tipo: 'tipo', operatore: 'operatore',id:id, sondaggio: sondaggio, nome_op: nome_op, cognome_op: cognome_op,id_operatore_sondaggio:id_operatore_sondaggio }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+}
+
+@Component({
+  selector: 'sondaggio-modal',
+  templateUrl: 'sondaggio-modal.html',
+  styleUrls: ['area-riservata.component.css']
+})
+export class SondaggioDialog {
+
+  form: UntypedFormGroup = new UntypedFormGroup({});
+  formsondaggio:boolean=true;
+
+  constructor(
+    public dialogRef: MatDialogRef<SondaggioDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public fb: UntypedFormBuilder,
+    private areariservata: AreariservataService,) {
+
+      this.form = this.fb.group({
+        'request': ['insertsondaggio'],
+        id_utente: [null],
+        id_operatore: [null],
+        simpatia: [null, [Validators.required]],
+        disponibilita: [null, [Validators.required]],
+        competenza: [null, [Validators.required]],
+        puntualita: [null, [Validators.required]],
+      });
+
+     }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  Sondaggio(form) {
+    this.areariservata.insertSondaggio(JSON.stringify(this.form.value)).subscribe((res: any) => {
+      if (res[0] == "OK") {
+        this.formsondaggio = false;
+      }
     })
   }
 

@@ -25,7 +25,7 @@ export class AllegatiContattiComponent implements OnInit {
   constructor(public http: HttpClient, public fb: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private service: ContattiService,private _snackBar: MatSnackBarModule, public dialog: MatDialogModule) { }
 
   ngOnInit(): void {
-    //console.log(this.user);
+
     this.getListAllegati();
   }
 
@@ -34,7 +34,7 @@ export class AllegatiContattiComponent implements OnInit {
       .subscribe({
         next: (response => {
           this.allegati = response;
-          console.log(this.allegati);
+
 
           // this.operatore = this.chiamate.map(t => t.operatore);
         }),
@@ -62,7 +62,7 @@ export class AllegatiContattiComponent implements OnInit {
         if (events.type == HttpEventType.UploadProgress) {
           this.progressShow=true;
         this.progress = Math.round(events.loaded/events.total *100);
-        ////console.log(this.progress);
+
         } else if (events.type === HttpEventType.Response) {
           let res = events.body;
           this.progressShow=false;
@@ -75,7 +75,7 @@ export class AllegatiContattiComponent implements OnInit {
           }
         }
       });
-    //console.log(this.files);
+
 
 
   }
@@ -89,7 +89,6 @@ export class AllegatiContattiComponent implements OnInit {
         } else {
           this.getListAllegati();
         }
-        //console.log(res);
       });
     }
   }

@@ -1,8 +1,13 @@
 <h1 mat-dialog-title>Conferma</h1>
 <div mat-dialog-content>
-    <p><strong>{{data.message}}</strong></p>
+    <p style="color:white"><strong>{{data.message}}</strong></p>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="cancel()">Indietro</button>
-    <button mat-button cdkFocusInitial (click)="confirm()">Conferma</button>
+    <ng-container *ngIf="data.hideActions">
+        <button mat-button (click)="cancel()">Indietro</button>
+        <button mat-button cdkFocusInitial (click)="confirm()">Conferma</button>
+    </ng-container>
+    <ng-container *ngIf="!data.hideActions">
+        <button mat-button (click)="cancel()">Chiudi</button>
+    </ng-container>
 </div>

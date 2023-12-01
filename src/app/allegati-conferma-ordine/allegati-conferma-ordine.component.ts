@@ -29,7 +29,6 @@ export class AllegatiConfermaOrdineComponent implements AfterViewInit {
       .subscribe({
         next: (response => {
           this.allegati = response;
-         // console.log(this.allegati);
         }),
         error: err => {
           alert(`Error ${err}!`);

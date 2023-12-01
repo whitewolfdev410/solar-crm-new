@@ -1,0 +1,46 @@
+.mat-mdc-form-field {
+    width: 99%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-header-row {
+    height: 1px!important;
+    max-height: 1px!important;
+    display: none;
+}
+
+.mat-mdc-row {
+    border-bottom-width: 0px;
+}
+
+.mat-column-note {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 95% !important;
+    width: 95% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    padding: 0px!important;
+}
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: #000 !important;
+}
+
+.mat-mdc-form-field {
+    width: 100%!important;
+  }
+
+  mat-list-item:hover, 
+mat-list-item:active,
+mat-list-item:visited {
+  background-color: #8d448b21; 
+  color:white!important;
+}
