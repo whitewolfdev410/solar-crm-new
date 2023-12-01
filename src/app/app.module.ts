@@ -44,11 +44,10 @@ import { AllegatiConfermaOrdineComponent } from './allegati-conferma-ordine/alle
 import { AllegatiContattiComponent } from './allegati-contatti/allegati-contatti.component';
 import { AmministratoreComponent, Sondaggiodialog } from './amministratore/amministratore.component';
 import { AppuntiComponent } from './appunti/appunti.component';
-import { AreaRiservataComponent } from './area-riservata/area-riservata.component';
+import { AreaRiservataComponent, SondaggioDialog } from './area-riservata/area-riservata.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { CampioniComponent } from './campioni/campioni.component';
 import { ChiamateComponent, FormatTimePipe } from './chiamate/chiamate.component';
-import { AutocompleteRestComponent } from './components/autocomplete-rest/autocomplete-rest.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DateFormat } from "./date-format";
 import { DatiAziendaPartnerComponent } from './dati-azienda-partner/dati-azienda-partner.component';
@@ -81,6 +80,13 @@ import { TagComponent } from './tag/tag.component';
 import { TestcheckComponent } from './testcheck/testcheck.component';
 import { UploadContattiComponent } from './upload-contatti/upload-contatti.component';
 import { WebinarComponent } from './webinar/webinar.component';
+
+
+import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
+import { FattureComponent } from './fatture/fatture.component';
+
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { EmailGestComponent } from './email-gest/email-gest.component';
 
 registerLocaleData(localeIt);
 
@@ -133,7 +139,11 @@ registerLocaleData(localeIt);
         AppuntiComponent,
         StatOperatoriComponent,
         OffertaComponent,
-        AutocompleteRestComponent
+        StatOfferteComponent,
+        FattureComponent,
+        EmailGestComponent,
+        SondaggioDialog
+
 
     ],
     imports: [
@@ -173,7 +183,8 @@ registerLocaleData(localeIt);
         NgxMatDatetimePickerModule,
         NgxMatTimepickerModule,
         NgxMatMomentModule,
-        MatMenuModule
+        MatMenuModule,
+        ScrollingModule
 
     ],
     providers: [{ provide: LOCALE_ID, useValue: 'it-IT' },
