@@ -21,6 +21,8 @@ import { RiepilogoFattureFornitoriComponent } from './riepilogo-fatture-fornitor
 import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 import { TestcheckComponent } from './testcheck/testcheck.component';
 import { WebinarComponent } from './webinar/webinar.component';
+import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
+import { FattureComponent } from './fatture/fatture.component';
 
 /*const routes: Routes = [
   {
@@ -62,10 +64,12 @@ const routes: Routes = [
   { path: 'webinar', component: WebinarComponent, },
   { path: 'marketing', component: MarketingComponent, },
   { path: 'stat_operatori', component: StatOperatoriComponent, },
+  { path: 'stat_offerte', component: StatOfferteComponent, },
   { path: 'riepilogo-fatture-fornitori', component: RiepilogoFattureFornitoriComponent, },
   { path: 'nuovo-modello-offerta', component: NuovoModelloOffertaComponent, },
   { path: 'area-riservata/:id/:username/:password', component: AreaRiservataComponent, },
   { path: 'calendario/:id_contatto/:interesse/:psw', component: CalendarioComponent, },
+  { path: 'nuova-fattura/:id', component: FattureComponent },
   { path: "**", redirectTo: "" },
 ];
 

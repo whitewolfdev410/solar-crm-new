@@ -113,7 +113,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="offerta_non_aperta">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offerta non aperta</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Chiamata a offerta non aperta</th>
                     <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
                         {{row.offerta_non_aperta}}
                     </td>
@@ -137,15 +137,27 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="offerte">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offerte non aperte</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offerte non aperte nel periodo</th>
                     <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
                         {{row.offerte}}
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="offerte_anno">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Offerte non aperte nell'anno</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.offerte_anno}}
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="click_offerta">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti Caldi</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti Caldi nel periodo</th>
                     <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
                         {{row.click_offerta}}
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="click_offerta_anno">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contatti Caldi nell'anno</th>
+                    <td mat-cell *matCellDef="let row; let i=index" class="mat-small">
+                        {{row.click_offerta_anno}}
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="sondaggio">

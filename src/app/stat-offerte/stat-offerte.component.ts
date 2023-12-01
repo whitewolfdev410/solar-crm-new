@@ -13,12 +13,14 @@ import { AmministratoriService } from '../services/amministratori.service';
 import { ContattiService } from '../services/contatti.service';
 import { MarketingService } from '../services/marketing.service';
 
+
 @Component({
-  selector: 'app-stat-operatori',
-  templateUrl: './stat-operatori.component.html',
-  styleUrls: ['./stat-operatori.component.css']
+  selector: 'app-stat-offerte',
+  templateUrl: './stat-offerte.component.html',
+  styleUrls: ['./stat-offerte.component.css']
 })
-export class StatOperatoriComponent implements OnInit {
+export class StatOfferteComponent implements OnInit{
+
   dev = GlobalComponent.dev;
   url_global = GlobalComponent.url_global;
   id_ruolo = GlobalComponent.key_ruolo;
@@ -48,10 +50,10 @@ export class StatOperatoriComponent implements OnInit {
   assegnabile: any;
   chiamate: any;
   amministratori: any;
-  operatori: any;
+  offerte: any;
 
 
-  displayedColumns: string[] = ['numero', 'cognome', 'nome', 'appuntamento', 'chiamato_cliente', 'cliente_caldo', 'campione_inviato', 'offerta_non_aperta', 'data_lavori_vicina', 'altro', 'tot_offerte', 'offerte','offerte_anno', 'click_offerta','click_offerta_anno', 'sondaggio', 'simpatia', 'disponibilita', 'competenza', 'puntualita', 'contatti_ottimi', 'contatti_buoni', 'contatti_pessimi', 'non_risponde', 'errato', 'media', 'media_cliente', 'media_caldo', 'media_campione', 'media_offerta', 'media_lavori', 'media_altro'];
+  displayedColumns: string[] = ['cognome_operatore', 'data_offerta', 'data_conferma', 'totale_merci', 'tipologia'];
 
   dataSource = new MatTableDataSource<Contact>();
 
@@ -63,23 +65,21 @@ export class StatOperatoriComponent implements OnInit {
 
 
   constructor(public http: HttpClient, public fb: UntypedFormBuilder, public route: ActivatedRoute, public router: Router, private marketing: MarketingService, private ammservice: AmministratoriService, private service: ContattiService) {
-    this.operatori = new Array();
+    this.offerte = new Array();
 
     this.start='01-01-'+this.anno_globale;
     this.end='31-12-'+this.anno_globale;
 
   }
 
-
   ngOnInit(): void {
-    this.loadOperatori(this.start,this.end);
+    this.loadOfferte(this.start,this.end);
     //this.loadAmministratore()
 
     // ordina i risultati in base alla data
 
 
   }
-
 
   clickedRows = new Set<Contact>();
   applyFilter(fevent: Event) {
@@ -100,19 +100,18 @@ export class StatOperatoriComponent implements OnInit {
 
   }
 
-
-  private loadOperatori(start,end) {
+  private loadOfferte(start,end) {
     this.loading = true;
     //console.log(this.loading);
     this.operatore = localStorage.getItem("id");
     this.assegnabile = localStorage.getItem("assegnabile");
-    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/marketing.php?request=LoadOperatori&start='+start+'&end='+end).subscribe({
+    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/marketing.php?request=LoadOfferte&start='+start+'&end='+end).subscribe({
       next: (res => {
-        this.operatori = res;
+        this.offerte = res;
         this.dataSource.data = res;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(this.operatori);
+        console.log(this.offerte);
 
         this.loading = false;
         // this.operatore = this.chiamate.map(t => t.operatore);
@@ -145,10 +144,9 @@ export class StatOperatoriComponent implements OnInit {
       let endDate=this.end.getFullYear()+"-"+(this.end.getMonth()+1)+"-"+this.end.getDate();
       console.log(startDate);
       console.log(endDate);
-    this.loadOperatori(startDate, endDate)
+    this.loadOfferte(startDate, endDate)
     }
   }
-
 
 
 }

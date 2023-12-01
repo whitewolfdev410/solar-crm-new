@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface DialogData {
   message: string;
+  hideActions?; boolean;
 }
 
 @Component({

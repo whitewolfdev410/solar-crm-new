@@ -32,9 +32,54 @@
         </div>
         <div class="col-lg-9">
             <div class="row">
+                 <!--OFFERTE-->
+                 <div class="col-12">
+                    <div class="card card-border-c-blue shadow mb-5">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-start">
+                                <h3 class="">Offerte </h3>
+                            </div>
+                        </div>
+
+                        <div class="card-body" style="overflow:auto;margin-bottom:15px;">
+                            <mat-list>
+                                <span *ngFor="let preventivo of prev; let i=index">
+                                    <mat-list-item>
+                                        <div class="row">
+                                            <div class="col-lg-6"> <span matListItemLine
+                                                    class="mat-subtitle-1">{{preventivo.tipologia_materiale}}</span>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <span matListItemLine class="mat-small">
+                                                    <a mat-raised-button
+                                                        href="https://gestionalecero.it/area_riservata/dettaglio_offerta_privata.php?id_dettaglio={{preventivo.id}}&id_utentex={{id}}&nofferta={{preventivo.numero_offerta}}clk={{admin}}"
+                                                        color="primary" class="mat-small">Preventivo n°
+                                                        <b>{{preventivo.numero_offerta}}</b>
+                                                        del
+                                                        <b>{{validDateFormat(preventivo.data_offerta) |
+                                                            date:'dd-MMM-yyyy'}}</b></a>
+                                                </span>
+                                                <span matListItemLine
+                                                    class="mat-small"><span *ngIf="preventivo.nota!=''">Nota:
+                                                    <b>{{preventivo.nota}}</b></span> </span>
+
+
+                                            </div>
+                                        </div>
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                </span>
+                            </mat-list>
+                        </div>
+                    </div>
+                </div>
                 <!--SONDAGGIO-->
-                <!--OFFERTE-->
-                <div class="col-12" *ngIf="sondaggio">
+               <!--  <div class="col-12" *ngIf="sondaggio">
+                    <span matListItemIcon class="mat-small"><button mat-icon-button
+                        (click)="openDialog()"
+                        class="btn-sm my-auto" matTooltip="Invia offerta per Email">
+                        <mat-icon>email</mat-icon>
+                    </button> </span>
                     <div class="card card-border-c-red shadow mb-5">
                         <div class="card-header">
                             <div class="d-flex justify-content-start">
@@ -134,7 +179,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!--DATA LAVORI-->
                 <div class="col-lg-6">
                     <div class="card card-border-c-blue shadow mb-5">
@@ -201,47 +246,7 @@
                         </div>
                     </div>
                 </div>
-                <!--OFFERTE-->
-                <div class="col-12">
-                    <div class="card card-border-c-blue shadow mb-5">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-start">
-                                <h3 class="">Offerte </h3>
-                            </div>
-                        </div>
-
-                        <div class="card-body" style="overflow:auto;margin-bottom:15px;">
-                            <mat-list>
-                                <span *ngFor="let preventivo of prev; let i=index">
-                                    <mat-list-item>
-                                        <div class="row">
-                                            <div class="col-lg-6"> <span matListItemLine
-                                                    class="mat-subtitle-1">{{preventivo.tipologia_materiale}}</span>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <span matListItemLine class="mat-small">
-                                                    <a mat-raised-button
-                                                        href="https://gestionalecero.it/area_riservata/dettaglio_offerta_privata.php?id_dettaglio={{preventivo.id}}&id_utentex={{id}}&nofferta={{preventivo.numero_offerta}}clk={{admin}}"
-                                                        color="primary" class="mat-small">Preventivo n°
-                                                        <b>{{preventivo.numero_offerta}}</b>
-                                                        del
-                                                        <b>{{validDateFormat(preventivo.data_offerta) |
-                                                            date:'dd-MMM-yyyy'}}</b></a>
-                                                </span>
-                                                <span *ngIf="preventivo.nota!=''" matListItemLine
-                                                    class="mat-small">Nota:
-                                                    <b>{{preventivo.nota}}</b> </span>
-
-
-                                            </div>
-                                        </div>
-                                    </mat-list-item>
-                                    <mat-divider></mat-divider>
-                                </span>
-                            </mat-list>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div>

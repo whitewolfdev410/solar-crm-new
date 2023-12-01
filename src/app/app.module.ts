@@ -63,7 +63,7 @@ import { TestcheckComponent } from './testcheck/testcheck.component';
 import { DatiAziendaPartnerComponent } from './dati-azienda-partner/dati-azienda-partner.component';
 import { PreventiviComponent } from './preventivi/preventivi.component';
 import { OperatoreComponent } from './operatore/operatore.component';
-import { AreaRiservataComponent } from './area-riservata/area-riservata.component';
+import { AreaRiservataComponent,SondaggioDialog } from './area-riservata/area-riservata.component';
 import { CalendarioComponent } from './calendario/calendario.component';
 import { CustomDateAdapter } from './custom-date-adapter';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -82,6 +82,11 @@ import { CampioniComponent } from './campioni/campioni.component';
 import { AppuntiComponent } from './appunti/appunti.component';
 import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 import { OffertaComponent } from './offerta/offerta.component';
+import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
+import { FattureComponent } from './fatture/fatture.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { EmailGestComponent } from './email-gest/email-gest.component';
 
 
 
@@ -128,6 +133,7 @@ registerLocaleData(localeIt);
         PreventiviComponent,
         OperatoreComponent,
         AreaRiservataComponent,
+        SondaggioDialog,
         CalendarioComponent,
         ListaFattureComponent,
         RiepilogoFattureFornitoriComponent,
@@ -136,7 +142,10 @@ registerLocaleData(localeIt);
         CampioniComponent,
         AppuntiComponent,
         StatOperatoriComponent,
-        OffertaComponent
+        OffertaComponent,
+        StatOfferteComponent,
+        FattureComponent,
+        EmailGestComponent
 
     ],
     imports: [
@@ -156,6 +165,8 @@ registerLocaleData(localeIt);
         MatTableModule,
         MatDialogModule,
         MatButtonModule,
+        MatAutocompleteModule,
+        ScrollingModule,
         MatTabsModule,
         MatListModule,
         MatSnackBarModule,

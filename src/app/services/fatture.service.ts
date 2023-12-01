@@ -44,7 +44,42 @@ export class FattureService {
         catchError(this.handleError)
       )
   }
-  
+  public LoadAzienda() {
+    return this.httpClient.get<Fattura[]>(this.url + 'LoadAzienda')
+      .pipe(
+        catchError(this.handleError)
+      )
+  }  
+  public LoadCliente() {
+    return this.httpClient.get<Fattura[]>(this.url + 'LoadCliente')
+      .pipe(
+        catchError(this.handleError)
+      )
+  }  
+  public LoadDatiFatturazione(id) {
+    return this.httpClient.get<Fattura[]>(this.url + 'LoadDatiFatturazione&id='+id)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }  
+  public LoadTipoDocumento() {
+    return this.httpClient.get<Fattura[]>(this.url + 'LoadTipoDocumento')
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+      public LoadNumeroFattura(anno_globale,id_azienda) {
+        return this.httpClient.get<Fattura[]>(this.url + 'LoadNumeroFattura&anno_globale='+anno_globale+'&id_azienda='+id_azienda)
+          .pipe(
+            catchError(this.handleError)
+          )
+  }  
+  public LoadProdotti() {
+    return this.httpClient.get<Fattura[]>(this.url + 'LoadProdotti')
+      .pipe(
+        catchError(this.handleError)
+      )
+}  
 
 
 

@@ -72,10 +72,6 @@ export class AppuntiComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //this.admin='3';
-    //console.log('user' + this.user);
-
-    //  //console.log('amministratore'+ this.admin);
 
   }
   ngAfterViewInit() {
@@ -88,9 +84,6 @@ export class AppuntiComponent implements OnInit {
     this.ammservice.getAmministratori()
       .subscribe(response => {
         this.amministratori = response;
-        //      //console.log('pippo' + this.amministratori);
-        //      //console.log('dio boiaccio' + this.selected);
-
       });
 
 
@@ -103,9 +96,7 @@ export class AppuntiComponent implements OnInit {
       .subscribe({
         next: (response => {
           this.appunto = response;
-          //console.log(this.chiamate);
           this.dataSourceChiamate = new MatTableDataSource(this.appunto);
-          // this.operatore = this.chiamate.map(t => t.operatore);
         }),
         error: err => {
           alert(`Error ${err}!`);
@@ -128,7 +119,7 @@ export class AppuntiComponent implements OnInit {
         } else {
           this.loadAppunti();
         }
-        //console.log(res);
+
       });
     }
   }
@@ -137,33 +128,27 @@ export class AppuntiComponent implements OnInit {
   updateAppunto(appunto: chiamate) {
     this.service.updateAppunto(appunto).subscribe({
       next: (value => {
-        //console.log('Post updated successfully!');
-      }),
+     }),
       error: (err => {
         alert('errore');
       })
     })
-    //console.log('update chiamata');
   }
 
 
 
   addAppunto(id): void {
     this.operatore = localStorage.getItem("id");
-    //console.log(this.aggiungiChiamata.value);
-    //console.log(id);
-    //console.log(this.operatore);
     this.service.addAppunto(id, this.operatore, this.aggiungiAppunto.value).subscribe((res: any) => {
-      //console.log('Post updated successfully!');
       if (res[0] == "KO") {
         alert(res[1]);
       } else {
         this.loadAppunti();
+
         this.aggiungiAppunto.reset();
       }
       //this.router.navigateByUrl('post/index');
     })
-    //console.log('update chiamata');
   }
 
   validDateFormat(dateString) {
@@ -176,7 +161,6 @@ export class AppuntiComponent implements OnInit {
   }
   updateVisibility(event) {
     if (window.confirm('Sei sicuro ?')) {
-      console.log(event.checked)
       this.service.updateVisibilityDett(this.user, event.checked).subscribe((res: any) => {
       })
     }
