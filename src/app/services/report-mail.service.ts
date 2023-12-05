@@ -35,7 +35,12 @@ export class ReportMailService {
         catchError(this.handleError)
       )
   }
- 
+  public getAutomazioniList() {
+    return this.httpClient.get(this.url + 'getAutomazioniList')
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
 
 
 

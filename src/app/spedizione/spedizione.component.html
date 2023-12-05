@@ -19,7 +19,7 @@
                         <mat-expansion-panel-header class="mat-small">
                             <mat-panel-title>
                                 <p style="text-transform: uppercase;">
-                                    <b>{{spedizione.destinatario}} </b>
+                                    <b>{{spedizione.destinatario}} </b> <span *ngIf="spedizione.numero_conferma">conferma ordine n: {{spedizione.numero_conferma}}</span>
                                 </p>
 
                             </mat-panel-title>

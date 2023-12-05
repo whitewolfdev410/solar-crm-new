@@ -183,6 +183,7 @@ export class DettaglioContattiComponent implements OnInit {
     this.container2.clear();
     this.container2_a.clear();
     this.container3.clear();
+    this.container4.clear();
 
     if (type.index === 0 || type === 0) {
       //PRIMO TAB

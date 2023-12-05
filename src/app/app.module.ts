@@ -86,7 +86,7 @@ import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
 import { FattureComponent } from './fatture/fatture.component';
 
 import {ScrollingModule} from '@angular/cdk/scrolling';
-import { EmailGestComponent } from './email-gest/email-gest.component';
+import { EmailGestComponent,TemplateEmail } from './email-gest/email-gest.component';
 
 registerLocaleData(localeIt);
 
@@ -142,7 +142,8 @@ registerLocaleData(localeIt);
         StatOfferteComponent,
         FattureComponent,
         EmailGestComponent,
-        SondaggioDialog
+        SondaggioDialog,
+        TemplateEmail
 
 
     ],

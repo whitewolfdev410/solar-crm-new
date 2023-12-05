@@ -28,6 +28,8 @@ export class FatturazioneComponent implements OnInit {
   dettaglio:boolean=false;
   //formaddshow: boolean = true;
   id_dati: any;
+  operatore: any = localStorage.getItem("id");
+  id_ruolo: any = localStorage.getItem("id_ruolo");
 
   constructor(public http: HttpClient, public fb: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private Location: Location, private fatturazione: FatturazioneService, private service: ProvinceService,) {
    //form edit

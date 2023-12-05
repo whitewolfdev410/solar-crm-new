@@ -425,7 +425,7 @@
     <div class="card-body" style="margin-bottom:15px;" *ngFor="let fatturazione of dati">
         <mat-list dense class="small-height">
             <mat-list-item *ngFor="let fattura of fatture; let i=index" class="mat-small">
-                <div mat-line><a mat-icon-button href="https://gestionalecero.it/dettaglio_fattura.php?id_dettaglio={{fattura.id}}"
+                <div mat-line ><a *ngIf="id_ruolo!='2' && id_ruolo!='3'" mat-icon-button href="https://gestionalecero.it/dettaglio_fattura.php?id_dettaglio={{fattura.id}}"
                         target="_blank" placement="left" matTooltip="Vai alla Fattura">
                         <mat-icon>link</mat-icon>
                     </a> Fattura n° <b>{{fattura.numero_fattura}}</b> del

@@ -17,6 +17,9 @@ export class SendMailComponent implements OnInit {
   @Input() id_offerta: any;
   @Input() id_utente: any;
   @Input() template: any;
+  @Input() id_automazione: any;
+  @Input() name_automazione: any;
+
   contatti: any;
   sendMailPreventivo: UntypedFormGroup;
   link: string;
