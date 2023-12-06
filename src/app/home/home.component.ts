@@ -17,7 +17,7 @@ import { ListinoService } from '../services/listino.service';
 
 
 export class HomeComponent implements OnInit {
-  displayedColumns = ['id', 'name', 'price', 'action'];
+  displayedColumns = ['id', 'name', 'desc', 'price', 'action'];
   dataSource: Listino[] = []
   name: any;
   nome: boolean;
@@ -85,6 +85,7 @@ export class HomeComponent implements OnInit {
     this.dataSource.push({
       id: 0,
       name: '',
+      desc: '',
       price: 0
     })
     this.dataSource = [...this.dataSource]

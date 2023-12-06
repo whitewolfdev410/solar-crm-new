@@ -81,7 +81,7 @@ export class OffertaService {
       }
       else
         filter = filter.toLocaleLowerCase()
-      filterString = ` AND LOWER(CONCAT(nome, cognome)) LIKE '%${filter}%'`
+      filterString = ` AND LOWER(CONCAT(nome, cognome)) LIKE '%${filter}%' OR id=${filter}`
 
     }
     const request = {

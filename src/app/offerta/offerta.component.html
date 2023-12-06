@@ -9,6 +9,9 @@
                 <div class="mat-elevation-z8">
                     <div class="col-12 row">
                         <h4 class="text-center">Intestazione offerta</h4>
+                        <ng-container *ngIf="isDev">
+                            <div>Sottotitolo dev</div>
+                        </ng-container>
                         <mat-divider class="m-4"></mat-divider>
                         <div class="col-6">
 
@@ -32,10 +35,11 @@
                                     <mat-label>Cliente</mat-label>
 
                                     <input type="text" placeholder="Seleziona" [autocomplete]="auto" matInput
-                                        [formControl]="form.get('offerta.users')" [value]="getUserLabel"
+                                        [formControl]="form.get('offerta.users[0]')" [value]="getUserLabel"
                                         [matAutocomplete]="auto">
 
-                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                        (optionSelected)="setOptionData($event)">
                                         <mat-option *ngFor="let option of users" [value]="option">
                                             {{option.nome}} {{option.cognome}}
                                         </mat-option>
@@ -46,10 +50,11 @@
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Partner</mat-label>
 
-                                    <input type="text" placeholder="Seleziona" matInput [formControl]="partner"
+                                    <input type="text" placeholder="Seleziona" matInput [formControl]="partner[0]"
                                         [matAutocomplete]="autoIdraulico" [value]="getIdraulicoLabel">
 
-                                    <mat-autocomplete autoActiveFirstOption #autoIdraulico="matAutocomplete">
+                                    <mat-autocomplete autoActiveFirstOption #autoIdraulico="matAutocomplete"
+                                        (optionSelected)="setOptionData2($event)">
                                         <mat-option *ngFor="let option of idraulici" [value]="option">
                                             {{option.nome}}
                                         </mat-option>

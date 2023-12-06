@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, isDevMode } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, startWith, switchMap } from 'rxjs';
 import { AmministratoriService } from '../services/amministratori.service';
 import { OffertaService } from '../services/offerta.service';
@@ -12,6 +12,7 @@ import { OffertaService } from '../services/offerta.service';
   styleUrls: ['./offerta.component.css']
 })
 export class OffertaComponent {
+  isDev = isDevMode()
   customerid: string
   partnerid: string
   form: FormGroup;
@@ -48,7 +49,7 @@ export class OffertaComponent {
     'vat'
   ]
 
-  constructor(private fb: FormBuilder, private service: OffertaService, private ammservice: AmministratoriService, private _route: ActivatedRoute) {
+  constructor(private changeDetectorRef: ChangeDetectorRef, private fb: FormBuilder, private service: OffertaService, private ammservice: AmministratoriService, private _route: ActivatedRoute) {
     const assegnabile = localStorage.getItem("assegnabile",);
     const data_fattura = new Date()
     const data_scadenza = new Date();
@@ -161,12 +162,29 @@ export class OffertaComponent {
     // partner idraulici
     this.ammservice.getIdraulici().subscribe((response) => {
       this.idraulici = response
-      debugger
+      this._route.paramMap.pipe(
+        switchMap((params: ParamMap) => this.customerid = params.get('id'))
+      ).subscribe(() => {
+        this.service.allUsersPaged(this.customerid, this.usersOffset, this.usersLimit).subscribe((response) => {
+          const customer = response.data[0]
+          const idraulico = this.idraulici.filter((el) => { return parseInt(el.id) == parseInt(customer.id_idraulico) })
+          // case 1
+          debugger
+          this.form.get('offerta.users').setValue(customer)
+          this.partner.setValue(idraulico[0])
+          this.changeDetectorRef.detectChanges();
+        })
+      });
+
     })
 
     this.service.allUsersPaged().subscribe((response) => {
       this.users = response.data
     })
+    this.initValueChanges()
+
+
+
   }
 
   initValueChanges() {
@@ -181,7 +199,7 @@ export class OffertaComponent {
           this.usersFilter = val
           return this.service.allUsersPaged(this.usersFilter, this.usersOffset, this.usersLimit)
         })
-      ).subscribe((filtered) => {
+      ).subscribe((filtered: any) => {
         this.users = filtered.data;
       });
 
@@ -202,6 +220,7 @@ export class OffertaComponent {
       ).subscribe((val) => {
         this.filteredModels = this.models.filter((model) => { return model.nome_offerta.toLocaleLowerCase().includes(val.toLocaleLowerCase()) })
       });
+
 
   }
 
@@ -402,5 +421,13 @@ export class OffertaComponent {
 
   get totalPayment() {
     return this.total.net + this.totalVat.net + this.totalVat.transport
+  }
+
+  setOptionData(e) {
+    this.form.get('offerta.users').setValue(e.option.value);
+  }
+
+  setOptionData2(e) {
+    this.partner.setValue(e.option.value);
   }
 }

@@ -152,7 +152,22 @@
                                 <ng-container *ngIf="!element.id || currentUpdateIndex == i">
                                     <mat-form-field appearance="fill">
                                         <mat-label>Prodotto/Servizio</mat-label>
-                                        <input [(ngModel)]="element.name" matInput placeholder="Placeholder">
+                                        <input [(ngModel)]="element.name" matInput placeholder="">
+                                    </mat-form-field>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="desc">
+                            <th mat-header-cell *matHeaderCellDef> Descrizione </th>
+                            <td style="width: 30%;" mat-cell *matCellDef="let element;let i = index">
+                                <ng-container *ngIf="element.id && currentUpdateIndex != i">
+                                    {{element.name}}
+                                </ng-container>
+                                <ng-container *ngIf="!element.id || currentUpdateIndex == i">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Descrizione</mat-label>
+                                        <input [(ngModel)]="element.desc" matInput placeholder="">
                                     </mat-form-field>
                                 </ng-container>
                             </td>
@@ -176,21 +191,23 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef> Azione </th>
                             <td style="width: 40%;" mat-cell *matCellDef="let element;let i = index">
-                                <button *ngIf=" currentUpdateIndex != i" mat-raised-button color="primary"
-                                    (click)="deleteRow(element, i)">
-                                    Elimina <mat-icon>delete</mat-icon>
+                                <button style="margin: auto;text-align: center;" *ngIf=" currentUpdateIndex != i"
+                                    mat-raised-button color="primary" (click)="deleteRow(element, i)">
+                                    <mat-icon>delete</mat-icon>
                                 </button>
-                                <button *ngIf=" currentUpdateIndex == i" mat-raised-button color="primary"
-                                    (click)="currentUpdateIndex = -1">
-                                    Indietro <mat-icon>back</mat-icon>
+                                <button style="margin: auto;text-align: center" *ngIf=" currentUpdateIndex == i"
+                                    mat-raised-button color="primary" (click)="currentUpdateIndex = -1">
+                                    <mat-icon>back</mat-icon>
                                 </button>
-                                <button style="margin-left: 20px;" *ngIf="!element.id || currentUpdateIndex == i"
-                                    mat-raised-button color="accent" (click)="save(element, i)">
-                                    Salva <mat-icon>delete</mat-icon>
+                                <button style="margin: auto;text-align: center"
+                                    *ngIf="!element.id || currentUpdateIndex == i" mat-raised-button color="accent"
+                                    (click)="save(element, i)">
+                                    <mat-icon>save</mat-icon>
                                 </button>
-                                <button style="margin-left: 20px;" *ngIf="element.id && currentUpdateIndex != i"
-                                    mat-raised-button color="accent" (click)="currentUpdateIndex = i">
-                                    Modifica <mat-icon>edit</mat-icon>
+                                <button style="margin: auto;text-align: center"
+                                    *ngIf="element.id && currentUpdateIndex != i" mat-raised-button color="accent"
+                                    (click)="currentUpdateIndex = i">
+                                    <mat-icon>edit</mat-icon>
                                 </button>
                             </td>
                         </ng-container>

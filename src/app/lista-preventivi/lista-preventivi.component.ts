@@ -1,15 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, Injector, OnInit, Inject, AfterViewInit, ViewChild, } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { PreventiviService } from '../services/preventivi.service';
 import { Location } from '@angular/common';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { UntypedFormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalComponent } from '../global-component';
-import { MatTableDataSource } from '@angular/material/table';
-import { Preventivo } from '../models/preventivo.model';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { PreventiviService } from '../services/preventivi.service';
 
 
 declare var window: any;
@@ -31,7 +27,7 @@ export class ListaPreventiviComponent implements OnInit {
   prev: any;
   preventivilist: any;
   loading: boolean;
-
+  id_ruolo: any = localStorage.getItem("id_ruolo");
   prevhot: any;
   home: boolean = false;
   dettaglio: boolean = false;
@@ -78,7 +74,7 @@ export class ListaPreventiviComponent implements OnInit {
 
   }
 
- 
+
   ListPreventiviNotOpen(): void {
     this.preventivi.getPreventiviList(this.operatore, 'not_open')
       .subscribe(response => {
@@ -94,7 +90,7 @@ export class ListaPreventiviComponent implements OnInit {
   }
   ListPreventiviDettaglioContatto(): void {
     console.log(this.id_operatore);
-    this.preventivi.getPreventiviDettContact(this.user, this.assegnabile,this.id_operatore)
+    this.preventivi.getPreventiviDettContact(this.user, this.assegnabile, this.id_operatore)
       .subscribe(response => {
         this.prev = response;
 
