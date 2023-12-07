@@ -58,12 +58,15 @@
                             </span>
                             <span matListItemTitle class="mat-small">n° {{prevent.numero_offerta}} del
                                 {{validDateFormat(prevent.data_offerta) | date:
+                                'dd-MMM-yyyy'}} - {{prevent.tipo}} - {{validDateFormat(prevent.data_chiamata) | date:
                                 'dd-MMM-yyyy'}}</span>
                             <span matListItemLine class="mat-small" *ngIf="prevent.nota!=''">Nota:
                                 <b>{{prevent.nota}}</b> </span>
                             <span matListItemLine class="mat-small"> <a href="javascript:void(0)"
                                     [routerLink]="['/dettaglio-contatto',prevent.id_cliente]">{{prevent.cognome}}
-                                    {{prevent.nome}}</a> </span>
+                                    {{prevent.nome}}</a> Ultimo click:  {{validDateFormat(prevent.data_click) | date:
+                                        'dd-MMM-yyyy hh:mm:ss'}} </span>
+                                  
                         </mat-list-item>
                         <mat-divider></mat-divider>
                     </span>
@@ -104,7 +107,6 @@
         </mat-list>
     </div>
     <div class="card-footer text-end">
-
         <a *ngIf="id_ruolo == 1 || id_ruolo == 16" mat-icon-button href="{{url_global}}/nuova-offerta/{{user}}"
             target="_blank" placement="left" matTooltip="Nuovo Preventivo DEV">
             <mat-icon>note_add</mat-icon>

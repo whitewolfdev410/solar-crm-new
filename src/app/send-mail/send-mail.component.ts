@@ -35,6 +35,7 @@ export class SendMailComponent implements OnInit {
       id_utente: new UntypedFormControl(),
       tel_send: new UntypedFormControl(),
       id_offerta: new UntypedFormControl(),
+      id_automazione: new UntypedFormControl(),
       nome: new UntypedFormControl()
   });
 
@@ -42,6 +43,7 @@ export class SendMailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getContatto();
+    console.log (this.id_utente)
   }
   getContatto() {
     //console.log(this.id_utente);
@@ -62,7 +64,7 @@ export class SendMailComponent implements OnInit {
 
    
     this.http.post('https://gestionalecero.it/gest_2022/mail.php', {
-      request: 'sendMailOfferta',
+      request: 'sendMail',
       template:'49486',
       link_custom_email: this.sendMailPreventivo.controls['link_custom_email'].value,
       descrizione: this.sendMailPreventivo.controls['descrizione'].value,
@@ -70,6 +72,7 @@ export class SendMailComponent implements OnInit {
       id_utente: this.sendMailPreventivo.controls['id_utente'].value,
       tel_send: this.sendMailPreventivo.controls['tel_send'].value,
       id_offerta: this.sendMailPreventivo.controls['id_offerta'].value,
+      id_automazione: this.sendMailPreventivo.controls['id_automazione'].value,
       nome: this.sendMailPreventivo.controls['nome'].value
       
     }).subscribe(res => {

@@ -17,6 +17,7 @@ declare var window: any;
 })
 export class ListaPreventiviComponent implements OnInit {
   dev = GlobalComponent.dev;
+  url_global = GlobalComponent.url_global;
   @Input() operatore: any;
   @Input() tipo: any;
   @Input() user: any;

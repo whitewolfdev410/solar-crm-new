@@ -1,19 +1,30 @@
 <div class="container">
-    {{id_automazione}} - {{name_automazione}}
+    {{id_automazione}} - {{name_automazione}} - {{template}}
     <div class="row mt-5">
         <div class="col-sm-12 col-md-5">
-            <img src="https://api.elasticemail.com/userfile/e3879597-cbd0-40ec-aca5-ee6fa170cab7/templates/126M-GRE2K.png" class="img-fluid">
+            <img *ngIf="template==49486" src="https://api.elasticemail.com/userfile/e3879597-cbd0-40ec-aca5-ee6fa170cab7/templates/126M-GRE2K.png" class="img-fluid">
+            <img  *ngIf="id_automazione==177" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/8e27003f-ae6a-4996-aa77-801405d2cfff.png" class="img-fluid">
+            <img  *ngIf="id_automazione==178" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/7ff69959-91ba-40ce-b4c9-66098cec229e.png" class="img-fluid">
+            <img  *ngIf="id_automazione==179" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/7ff69959-91ba-40ce-b4c9-66098cec229e.png" class="img-fluid">
+            <img  *ngIf="id_automazione==180" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/e2da91a3-123b-4492-b6a0-38303f911098.png" class="img-fluid">
+            <img  *ngIf="id_automazione==181" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/4df156a2-8fc1-4fe5-8aaa-28dfc75c3b00.png" class="img-fluid">
+            <img  *ngIf="id_automazione==182" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/bcabdf97-3658-451c-ad60-14cc2197463d.png" class="img-fluid">
+            <img  *ngIf="id_automazione==183" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/5e2be27c-e50c-419c-b246-8e9ccfae836c.png" class="img-fluid">
+            <img  *ngIf="id_automazione==184" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/c3eb45fd-c980-4bc3-93fd-7ec9501a3a10.png" class="img-fluid">
+            <img  *ngIf="id_automazione==185" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/8b5c8dca-05e5-4efb-bb68-114ec79509ff.png" class="img-fluid">
+            <img  *ngIf="id_automazione==186" src="https://ac-image.s3.amazonaws.com/2/8/8/0/9/4/0/home/_screenshot_/f8209705-8c87-44f4-8a50-91b089a65263.png" class="img-fluid">
+       
         </div>
         <div class="col-sm-12 col-md-7" *ngFor="let contatto of contatti;">
             
             <form class=" invia_preventivo " id="invia_preventivo" (ngSubmit)="sendMailPrev()" [formGroup]="sendMailPreventivo">
                 <mat-form-field class="col-12" appearance="fill">
-                    <mat-label style="color:white;">Link area riservata </mat-label>
+                    <mat-label>Link area riservata </mat-label>
                     <input matInput placeholder="Link Personalizzato" formControlName="link_custom_email" [(ngModel)]="link" value="https://gestionalecero.it/area_riservata/login-home.php?id_dettaglio={{id_offerta}}&password={{contatto.password}}&username={{contatto.username}}">
                     <!--<input matInput placeholder="Link Personalizzato" formControlName="link_custom_email" [(ngModel)]="link" value="https://gestionalecero.it/gest_2022/area-riservata/{{contatto.id}}/{{contatto.username}}/{{contatto.password}}">-->
                 </mat-form-field>
                 <mat-form-field class="col-12" appearance="fill">
-                    <mat-label style="color:white;">Inserisci testo personalizzato se serve</mat-label>
+                    <mat-label>Inserisci testo personalizzato se serve</mat-label>
                     <textarea matInput placeholder="" formControlName="descrizione"></textarea>
                 </mat-form-field>
 
@@ -22,6 +33,7 @@
                 <input  hidden="true" matInput class="form-control" formControlName="nome"  [(ngModel)]="contatto.nome"  value="{{contatto.nome}}">
                 <input  hidden="true" matInput class="form-control" formControlName="tel_send"  [(ngModel)]="contatto.password"  value="{{contatto.password}}">
                 <input  hidden="true" matInput class="form-control" formControlName="id_offerta"  [(ngModel)]="id_offerta"  value="{{id_offerta}}">
+                <input  hidden="true" matInput class="form-control" formControlName="id_automazione"  [(ngModel)]="id_automazione"  value="{{id_automazione}}">
 
             </form>
             <mat-dialog-actions align="end">
