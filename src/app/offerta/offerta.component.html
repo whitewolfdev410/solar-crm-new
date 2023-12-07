@@ -90,20 +90,14 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-3">
-                            <mat-form-field class="example-full-width" appearance="fill">
-                                <mat-label>Importa modello offerta</mat-label>
-                                <mat-select (selectionChange)="importModels($event)" [formControl]="modelsControllers"
-                                    placeholder="Seleziona" multiple>
-                                    <mat-select-trigger>{{getModelsLabel}}</mat-select-trigger>
-                                    <ng-container *ngFor="let option of filteredModels;let i = index">
-                                        <mat-option (selectionChange)="toggleList(i)" [value]="option">
-                                            {{option.nome_offerta}}
-                                        </mat-option>
-                                    </ng-container>
-                                </mat-select>
-                            </mat-form-field>
+
+                        <div class="col-3 d-flex flex-column">
+                            <div class="m-auto">
+                                <button class="ml-2 mr-2 col-10" mat-raised-button (click)="dialogModels()"
+                                    color="accent">Modelli</button>
+                            </div>
                         </div>
+
                         <div class="col-3">
                             <mat-form-field class="example-full-width">
                                 <mat-label>Tipologia di materiale</mat-label>

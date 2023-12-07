@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { DateAdapter, MAT_DATE_LOCALE, MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule, } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -57,6 +58,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 import { DndDirective } from './dnd.directive';
 import { FatturazioneComponent } from './fatturazione/fatturazione.component';
+import { FattureComponent } from './fatture/fatture.component';
 import { InfoAggiuntiveComponent } from './info-aggiuntive/info-aggiuntive.component';
 import { ListaBolleComponent } from './lista-bolle/lista-bolle.component';
 import { ListaConfermeOrdineComponent } from './lista-conferme-ordine/lista-conferme-ordine.component';
@@ -74,6 +76,7 @@ import { ReplacePipe } from './replace.pipe';
 import { RiepilogoFattureFornitoriComponent } from './riepilogo-fatture-fornitori/riepilogo-fatture-fornitori.component';
 import { SendMailComponent } from './send-mail/send-mail.component';
 import { SpedizioneComponent } from './spedizione/spedizione.component';
+import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
 import { StatOperatoriComponent } from './stat-operatori/stat-operatori.component';
 import { SubheaderComponent } from './subheader/subheader.component';
 import { TagComponent } from './tag/tag.component';
@@ -81,12 +84,10 @@ import { TestcheckComponent } from './testcheck/testcheck.component';
 import { UploadContattiComponent } from './upload-contatti/upload-contatti.component';
 import { WebinarComponent } from './webinar/webinar.component';
 
-
-import { StatOfferteComponent } from './stat-offerte/stat-offerte.component';
-import { FattureComponent } from './fatture/fatture.component';
-
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import { EmailGestComponent,TemplateEmail } from './email-gest/email-gest.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { EmailGestComponent, TemplateEmail } from './email-gest/email-gest.component';
+import { ImportModalDialogComponent } from './import-modal-dialog/import-modal-dialog.component';
 
 registerLocaleData(localeIt);
 
@@ -143,7 +144,9 @@ registerLocaleData(localeIt);
         FattureComponent,
         EmailGestComponent,
         SondaggioDialog,
-        TemplateEmail
+        TemplateEmail,
+        AutocompleteComponent,
+        ImportModalDialogComponent
 
 
     ],
@@ -153,6 +156,7 @@ registerLocaleData(localeIt);
         AppRoutingModule,
         HttpClientModule,
         CommonModule,
+        MatChipsModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
