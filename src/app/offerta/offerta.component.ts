@@ -1,10 +1,14 @@
 import { ChangeDetectorRef, Component, isDevMode } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { debounceTime, distinctUntilChanged, filter, startWith, switchMap } from 'rxjs';
+import { Observable, debounceTime, distinctUntilChanged, filter, skipWhile, startWith, switchMap } from 'rxjs';
+import { ImportModalDialogComponent } from '../import-modal-dialog/import-modal-dialog.component';
 import { AmministratoriService } from '../services/amministratori.service';
 import { OffertaService } from '../services/offerta.service';
+export const skipNull = () => <T>(source: Observable<T>): Observable<T> => source.pipe(skipWhile(value => value === null));
 
 @Component({
   selector: 'app-offerta',
@@ -13,13 +17,14 @@ import { OffertaService } from '../services/offerta.service';
 })
 export class OffertaComponent {
   isDev = isDevMode()
-  customerid: string
+  customerid: string = ''
   partnerid: string
   form: FormGroup;
   checkAll = new FormControl(false);
   modelsControllers = new FormControl(null);
   modelsList = []
   users = []
+  modelsId = []
   dataSource = new MatTableDataSource([])
   transportVat = new FormControl(0)
   partner = new FormControl('')
@@ -49,7 +54,7 @@ export class OffertaComponent {
     'vat'
   ]
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private fb: FormBuilder, private service: OffertaService, private ammservice: AmministratoriService, private _route: ActivatedRoute) {
+  constructor(private changeDetectorRef: ChangeDetectorRef, public dialog: MatDialog, private snackBar: MatSnackBar, private fb: FormBuilder, private service: OffertaService, private ammservice: AmministratoriService, private _route: ActivatedRoute) {
     const assegnabile = localStorage.getItem("assegnabile",);
     const data_fattura = new Date()
     const data_scadenza = new Date();
@@ -143,8 +148,8 @@ export class OffertaComponent {
     // aziende
     this.service.allPartner(assegnabile).subscribe((response) => {
       this.partners = response.data
-      this.form.get('offerta.anagrafica_azienda').setValue(response.data[0])
       this.filteredPartners = response.data
+      this.form.get('offerta.anagrafica_azienda').setValue(response.data[0])
     })
     // materiali 
     this.service.getMaterials().subscribe((response) => {
@@ -163,18 +168,20 @@ export class OffertaComponent {
     this.ammservice.getIdraulici().subscribe((response) => {
       this.idraulici = response
       this._route.paramMap.pipe(
+        skipNull(),
         switchMap((params: ParamMap) => this.customerid = params.get('id'))
-      ).subscribe(() => {
+      )
+
+      if (this.customerid) {
         this.service.allUsersPaged(this.customerid, this.usersOffset, this.usersLimit).subscribe((response) => {
           const customer = response.data[0]
           const idraulico = this.idraulici.filter((el) => { return parseInt(el.id) == parseInt(customer.id_idraulico) })
           // case 1
-          debugger
           this.form.get('offerta.users').setValue(customer)
           this.partner.setValue(idraulico[0])
           this.changeDetectorRef.detectChanges();
         })
-      });
+      }
 
     })
 
@@ -209,18 +216,13 @@ export class OffertaComponent {
         debounceTime(500),
         distinctUntilChanged(),
       ).subscribe((val) => {
-        this.filteredPartners = this.partners.filter((partner) => { return partner.nome.toLocaleLowerCase().includes(val.toLocaleLowerCase()) })
+        this.filteredPartners = this.partners.filter((partner) => {
+          if (typeof (val) == 'object') {
+            return partner.nome.toLocaleLowerCase().includes(val.nome.toLocaleLowerCase())
+          }
+          return partner.nome.toLocaleLowerCase().includes(val.toLocaleLowerCase())
+        })
       });
-
-    // autocomplete modelli
-    this.form.get('offerta.models').valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-      ).subscribe((val) => {
-        this.filteredModels = this.models.filter((model) => { return model.nome_offerta.toLocaleLowerCase().includes(val.toLocaleLowerCase()) })
-      });
-
 
   }
 
@@ -233,14 +235,44 @@ export class OffertaComponent {
       return state.name;
   }
 
-  nextBatch() {
+  dialogModels() {
 
-    /*
-    if (index + $itemsRenderAtTheMoment === this.items.length - 1) {
-      this.page++;
-      this.loadMore();
-    }
-    */
+    const dialogRef = this.dialog.open(ImportModalDialogComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
+      panelClass: 'full-screen-modal',
+      data: { dataSource: this.filteredModels, modelsChecked: this.modelsId }
+    });
+
+    dialogRef.afterClosed().subscribe(id => {
+      this.modelsId = id
+
+      let prodotti = <FormArray>this.form.get('offerta.prodotti');
+      for (let i = prodotti.controls.length - 1; i >= 0; i--) {
+        if (prodotti.at(i).get('id_offerta').value != null) {
+          prodotti.removeAt(i)
+        }
+      }
+      this.dataSource = new MatTableDataSource((this.form.get('offerta.prodotti') as FormArray).controls)
+      if (!id.length)
+        return
+      this.service.getModels(this.modelsId).subscribe((response) => {
+        for (let row of response) {
+          if (!this.modelsList.includes(row.id_offerta))
+            this.modelsList.push(row.id_offerta)
+
+          const el = this.fb.group(this.getProductGroup());
+
+          el.patchValue(row)
+          prodotti.push(el)
+        }
+        this.dataSource = new MatTableDataSource((this.form.get('offerta.prodotti') as FormArray).controls)
+      })
+
+    });
+
   }
 
   toggleList(i: number) {
@@ -298,7 +330,7 @@ export class OffertaComponent {
       prodotti.at(i).get('checkbox').setValue(event)
     }
   }
-
+  /*
   importModels(event) {
     let prodotti = <FormArray>this.form.get('offerta.prodotti');
     for (let i = prodotti.controls.length - 1; i >= 0; i--) {
@@ -310,21 +342,9 @@ export class OffertaComponent {
     if (!this.modelsControllers.value || !this.modelsControllers.value.length)
       return
     const id = this.modelsControllers.value.map((el) => { return el.id })
-    this.service.getModels(id).subscribe((response) => {
 
-      for (let row of response) {
-        if (!this.modelsList.includes(row.id_offerta))
-          this.modelsList.push(row.id_offerta)
-
-        const el = this.fb.group(this.getProductGroup());
-
-        el.patchValue(row)
-        prodotti.push(el)
-      }
-      this.dataSource = new MatTableDataSource((this.form.get('offerta.prodotti') as FormArray).controls)
-    })
   }
-
+  */
 
 
   getProductGroup() {
@@ -351,7 +371,7 @@ export class OffertaComponent {
     let request = this.form.value
     request.vatTotal = this.totalVat.net + this.totalVat.transport
     this.service.save(request).subscribe((res) => {
-
+      this.openSnackBar('L\'offerta è stato aggiornata', 'Conferma')
     })
   }
 
@@ -429,5 +449,9 @@ export class OffertaComponent {
 
   setOptionData2(e) {
     this.partner.setValue(e.option.value);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action);
   }
 }

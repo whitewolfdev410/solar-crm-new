@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, isDevMode } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,6 +33,7 @@ export class ListaPreventiviComponent implements OnInit {
   dettaglio: boolean = false;
   id_offerta: any;
   lista: boolean = false
+  isDev = isDevMode()
 
 
   constructor(public http: HttpClient, public fb: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private preventivi: PreventiviService, private Location: Location, public dialog: MatDialog) { }
