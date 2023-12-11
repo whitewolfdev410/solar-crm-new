@@ -59,6 +59,14 @@ export class OffertaService {
       )
   }
 
+  public getOfferta(id: number) {
+    // "SELECT * FROM tipo_materiali ORDER BY ordine ASC, nome ASC "
+    return this.httpClient.post<HttpApiResponse>('https://gestionalecero.it/api/offerta.php', { action: 'offerta', id: id })
+      .pipe(
+        catchError(handleError)
+      )
+  }
+
   public allPartner(assegnabile: string) {
 
     if (parseInt(assegnabile) > 0) {
@@ -126,6 +134,7 @@ export class OffertaService {
         catchError(handleError)
       )
   }
+
   public delete(data: Listino) {
     return this.httpClient.delete<HttpApiResponse>(GlobalComponent.global_api_url + `?action=delete&id=${data.id}&table=listino_installatori`)
       .pipe(

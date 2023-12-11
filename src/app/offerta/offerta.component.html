@@ -9,9 +9,6 @@
                 <div class="mat-elevation-z8">
                     <div class="col-12 row">
                         <h4 class="text-center">Intestazione offerta</h4>
-                        <ng-container *ngIf="isDev">
-                            <div>Sottotitolo dev</div>
-                        </ng-container>
                         <mat-divider class="m-4"></mat-divider>
                         <div class="col-6">
 
@@ -19,7 +16,7 @@
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>Anagrafica azienda</mat-label>
                                 <input type="text" placeholder="Seleziona" [autocomplete]="auto" matInput
-                                    [formControl]="form.get('offerta.anagrafica_azienda')" [value]="getPartnerLabel"
+                                    [formControl]="form.get('offerta.anagrafica_azienda[0]')" [value]="getPartnerLabel"
                                     [matAutocomplete]="auto2">
 
                                 <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
@@ -33,7 +30,6 @@
                             <div class="col-6">
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Cliente</mat-label>
-
                                     <input type="text" placeholder="Seleziona" [autocomplete]="auto" matInput
                                         [formControl]="form.get('offerta.users[0]')" [value]="getUserLabel"
                                         [matAutocomplete]="auto">
@@ -49,7 +45,6 @@
                             <div class="col-6">
                                 <mat-form-field class="example-full-width" appearance="fill">
                                     <mat-label>Partner</mat-label>
-
                                     <input type="text" placeholder="Seleziona" matInput [formControl]="partner[0]"
                                         [matAutocomplete]="autoIdraulico" [value]="getIdraulicoLabel">
 
@@ -101,7 +96,8 @@
                         <div class="col-3">
                             <mat-form-field class="example-full-width">
                                 <mat-label>Tipologia di materiale</mat-label>
-                                <mat-select [formControl]="form.get('offerta.material')" placeholder="Seleziona">
+                                <mat-select [compareWith]="compareObjects" [formControl]="form.get('offerta.material')"
+                                    placeholder="Seleziona">
                                     <ng-container *ngFor="let option of materials;let i = index">
                                         <mat-option [value]="option">
                                             {{option.nome}}

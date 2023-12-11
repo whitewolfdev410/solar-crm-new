@@ -60,6 +60,7 @@ const routes: Routes = [
   { path: 'offerte', component: PreventiviComponent, },
   { path: 'nuova-offerta', component: OffertaComponent, },
   { path: 'nuova-offerta/:id', component: OffertaComponent, },
+  { path: 'update-offerta/:offerta', component: OffertaComponent, },
   { path: 'fatture', component: ListaFattureComponent, },
   { path: 'campioni', component: CampioniComponent, },
   { path: 'webinar', component: WebinarComponent, },
