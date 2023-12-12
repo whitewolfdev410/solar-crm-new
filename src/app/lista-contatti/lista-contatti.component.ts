@@ -65,7 +65,10 @@ export class ListaContattiComponent implements OnInit {
   filterFormP = new FormGroup({
     fromDateP: new FormControl(),
     toDateP: new FormControl(),
-  });
+  });   
+
+
+  
   get fromDateP() { return this.filterFormP.get('fromDateP').value; }
   get toDateP() { return this.filterFormP.get('toDateP').value; }
 
