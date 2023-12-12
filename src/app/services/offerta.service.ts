@@ -23,8 +23,8 @@ export class OffertaService {
   }
 
   public getModels(id: number[]) {
-    //  return this.httpClient.post<any[]>('https://gestionalecero.it/api/nuova_offerta_da_modello.php', { modello: id })
-    return this.httpClient.post<any[]>('http://localhost/b/nuova_offerta_da_modello.php', { modello: id })
+    return this.httpClient.post<any[]>('https://gestionalecero.it/api/nuova_offerta_da_modello.php', { modello: id })
+      //return this.httpClient.post<any[]>('http://localhost/b/nuova_offerta_da_modello.php', { modello: id })
       .pipe(
         catchError(handleError)
       )
