@@ -1,6 +1,6 @@
-<div mat-dialog-title>Invia mail {{data.name_automazione}}</div>
+<div mat-dialog-title class="text-center">Invia mail {{data.name_automazione}} {{data.id_utente}}</div>
 <mat-dialog-content class="mat-typography">
- <app-send-mail [id_automazione]="data.id_automazione" [id_utente]="data.user" [name_automazione]="data.name_automazione"></app-send-mail>
+ <app-send-mail [id_automazione]="data.id_automazione" [id_utente]="data.id_utente" [name_automazione]="data.name_automazione"></app-send-mail>
 </mat-dialog-content>
 <!--<mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>

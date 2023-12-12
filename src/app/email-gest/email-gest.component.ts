@@ -55,6 +55,7 @@ export class EmailGestComponent implements OnInit {
   }
 
   openDialog(id_automazione, user, name_automazione) {
+    console.log(user);
     const dialogRef = this.dialog.open(TemplateEmail, {
       maxWidth: '100vw',
       maxHeight: '100vh',
