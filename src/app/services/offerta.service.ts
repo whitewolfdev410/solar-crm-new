@@ -23,7 +23,7 @@ export class OffertaService {
   }
 
   public getModels(id: number[]) {
-    return this.httpClient.post<any[]>('https://gestionalecero.it/api/nuova_offerta_da_modello.php', { modello: id })
+    return this.httpClient.post<any[]>(GlobalComponent.url_global + 'api/nuova_offerta_da_modello.php', { modello: id })
       //return this.httpClient.post<any[]>('http://localhost/b/nuova_offerta_da_modello.php', { modello: id })
       .pipe(
         catchError(handleError)
@@ -34,18 +34,18 @@ export class OffertaService {
     let partnerId = ""
     if (partner)
       partnerId = partner.id
-    return this.httpClient.post<any[]>('https://gestionalecero.it/api/offerta.php', { "action": "product", "name": term, "partnerId": partnerId })
+    return this.httpClient.post<any[]>(GlobalComponent.url_global + 'api/offerta.php', { "action": "product", "name": term, "partnerId": partnerId })
       .pipe(
         catchError(handleError)
       )
   }
 
   public getDocNumber() {
-    return this.httpClient.post<any>('https://gestionalecero.it/api/offerta.php', { "action": "number", "assegnabile": "0", "id_operatore": '0' })
+    return this.httpClient.post<any>(GlobalComponent.url_global + 'api/offerta.php', { "action": "number", "assegnabile": "0", "id_operatore": '0' })
   }
 
   public save(request: any) {
-    return this.httpClient.post<HttpApiResponse>('https://gestionalecero.it/api/offerta.php', { action: 'save', data: request })
+    return this.httpClient.post<HttpApiResponse>(GlobalComponent.url_global + 'api/offerta.php', { action: 'save', data: request })
       .pipe(
         catchError(handleError)
       )
@@ -53,7 +53,7 @@ export class OffertaService {
 
   public getMaterials() {
     // "SELECT * FROM tipo_materiali ORDER BY ordine ASC, nome ASC "
-    return this.httpClient.post<HttpApiResponse>('https://gestionalecero.it/api/offerta.php', { action: 'materials' })
+    return this.httpClient.post<HttpApiResponse>(GlobalComponent.url_global + 'api/offerta.php', { action: 'materials' })
       .pipe(
         catchError(handleError)
       )
@@ -61,7 +61,7 @@ export class OffertaService {
 
   public getOfferta(id: number) {
     // "SELECT * FROM tipo_materiali ORDER BY ordine ASC, nome ASC "
-    return this.httpClient.post<HttpApiResponse>('https://gestionalecero.it/api/offerta.php', { action: 'offerta', id: id })
+    return this.httpClient.post<HttpApiResponse>(GlobalComponent.url_global + 'api/offerta.php', { action: 'offerta', id: id })
       .pipe(
         catchError(handleError)
       )
@@ -70,12 +70,12 @@ export class OffertaService {
   public allPartner(assegnabile: string) {
 
     if (parseInt(assegnabile) > 0) {
-      return this.httpClient.get<HttpApiResponse>('https://gestionalecero.it/api/api.php' + `?action=all&table=dati_partner`)
+      return this.httpClient.get<HttpApiResponse>(GlobalComponent.url_global + 'api/api.php' + `?action=all&table=dati_partner`)
         .pipe(
           catchError(handleError)
         )
     } else {
-      return this.httpClient.get<HttpApiResponse>('https://gestionalecero.it/api/api.php' + `?action=all&table=azienda`)
+      return this.httpClient.get<HttpApiResponse>(GlobalComponent.url_global + 'api/api.php' + `?action=all&table=azienda`)
         .pipe(
           catchError(handleError)
         )
@@ -101,12 +101,12 @@ export class OffertaService {
       "offset": offset,
       "limit": limit
     }
-    // 'https://gestionalecero.it/api/offerta.php'
-    return this.httpClient.post<HttpApiResponse>('https://gestionalecero.it/api/offerta.php', request)
+    // GlobalComponent.url_global + 'api/offerta.php'
+    return this.httpClient.post<HttpApiResponse>(GlobalComponent.url_global + 'api/offerta.php', request)
   }
 
   public allModels() {
-    return this.httpClient.get<HttpApiResponse>('https://gestionalecero.it/api/api.php' + `?action=all&table=modello_offerta&orderBy=nome_offerta ASC`)
+    return this.httpClient.get<HttpApiResponse>(GlobalComponent.url_global + 'api/api.php' + `?action=all&table=modello_offerta&orderBy=nome_offerta ASC`)
       .pipe(
         catchError(handleError)
       )
