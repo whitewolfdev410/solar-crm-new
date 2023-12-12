@@ -1,16 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Input, Injector, OnInit, Inject, AfterViewInit, ViewChild, } from '@angular/core';
-import { FormControl, FormGroup, UntypedFormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { PreventiviService } from '../services/preventivi.service';
 import { DOCUMENT, DatePipe, Location } from '@angular/common';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GlobalComponent } from '../global-component';
-import { MatTableDataSource } from '@angular/material/table';
-import { Preventivo } from '../models/preventivo.model';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, UntypedFormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { User } from '../models/amministratore.model';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GlobalComponent } from '../global-component';
+import { Preventivo } from '../models/preventivo.model';
+import { PreventiviService } from '../services/preventivi.service';
 
 
 @Component({
@@ -175,23 +174,23 @@ export class PreventiviComponent implements OnInit {
     this.dataSource.filterPredicate = (data, filter) => {
       //console.log(this.dataSource.data);
       if (this.fromDate && this.toDate) {
-        console.log(this.fromDate+' - '+new Date(data['data_offerta'])+' - '+this.toDate);
+        console.log(this.fromDate + ' - ' + new Date(data['data_offerta']) + ' - ' + this.toDate);
         return new Date(data['data_offerta']) >= this.fromDate && new Date(data['data_offerta']) <= this.toDate;
       }
       return true;
     }
     this.dataSource.filter = '' + Math.random();
-   
+
   }
 
-  resetRan(){
+  resetRan() {
     this.dataSource.filterPredicate = (data, filter) => {
       if (this.fromDate && this.toDate) {
         // console.log(this.fromDate+' - '+new Date(data['data_offerta']));
         return new Date(data['data_offerta']) == this.fromDate && new Date(data['data_offerta']) <= this.toDate;
       }
       return true;
-    }  
+    }
   }
 
   preventivo = this.preventivilist;
@@ -200,6 +199,10 @@ export class PreventiviComponent implements OnInit {
   onSelect(contatto: Preventivo): void {
     this.selectedPreventivo = contatto;
     //console.log(contatto.id);
+  }
+
+  visualizzaOfferta(id: number) {
+    this.router.navigateByUrl("update-offerta/" + id)
   }
 
 
