@@ -6,6 +6,7 @@ import { ContattiService } from '../services/contatti.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { GlobalComponent } from '../global-component';
 
 @Component({
   selector: 'app-allegati-contatti',
@@ -54,7 +55,7 @@ export class AllegatiContattiComponent implements OnInit {
    // formData.append('file', this.files[0]);
     formData.append('request', "UPLOAD");
     formData.append('user', this.user);
-    this.http.post('https://gestionalecero.it/gest_2022/upload.php', formData, {
+    this.http.post(GlobalComponent.url_global +'/upload.php', formData, {
       reportProgress: true,
       observe: 'events'
     })

@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
       this.ruoloa = localStorage.getItem("ruolo");
       this.id_ruolo = localStorage.getItem("id_ruolo");
       this.assegnabile = localStorage.getItem("assegnabile");
-      this.http.post("https://gestionalecero.it/gest_2022/session/session.php", {
+      this.http.post(GlobalComponent.url_global +'/session/session.php', {
         request: "check"
       }).subscribe(res => {
         if (res[0] == "KO") {
@@ -169,7 +169,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
    // debugger
-    this.http.post("https://gestionalecero.it/gest_2022/session/session.php", {
+    this.http.post(GlobalComponent.url_global +'/session/session.php', {
       request: "logout"
     }).subscribe(res => {
       localStorage.removeItem('name');

@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { GlobalComponent } from '../global-component';
+
 @Injectable({
 
   providedIn: 'root'
@@ -13,7 +15,7 @@ import { Injectable } from '@angular/core';
 
 export class ProvinceService {
 
-  private url = 'https://gestionalecero.it/gest_2022/index.php?request=';
+  private url = GlobalComponent.url_global +'/index.php?request=';
 
   constructor(private httpClient: HttpClient) { }
 

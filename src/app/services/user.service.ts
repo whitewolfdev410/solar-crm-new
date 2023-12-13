@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { User } from '../models/user_test';
 import { map } from 'rxjs/operators';
+import { GlobalComponent } from '../global-component';
 
 @Injectable({
   providedIn: 'root',

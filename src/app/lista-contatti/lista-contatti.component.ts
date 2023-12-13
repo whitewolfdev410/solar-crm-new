@@ -193,7 +193,7 @@ export class ListaContattiComponent implements OnInit {
   }
 
   spegniContatto(id: number): void {
-    this.http.get('https://gestionalecero.it/gest_2022/index.php?request=spegni&id_contatto=' + id).subscribe(res_off => {
+    this.http.get(GlobalComponent.url_global +'/index.php?request=spegni&id_contatto=' + id).subscribe(res_off => {
       if (res_off[0] == "KO") {
         alert(res_off[1]);
       } else {
@@ -205,7 +205,7 @@ export class ListaContattiComponent implements OnInit {
 
   eliminaContatto(id: number): void {
     if (window.confirm('Sei sicuro ?')) {
-      this.http.get('https://gestionalecero.it/gest_2022/index.php?request=elimina&id_contatto=' + id).subscribe(res_off => {
+      this.http.get(GlobalComponent.url_global +'/index.php?request=elimina&id_contatto=' + id).subscribe(res_off => {
         if (res_off[0] == "KO") {
           alert(res_off[1]);
         } else {
@@ -224,7 +224,7 @@ export class ListaContattiComponent implements OnInit {
     this.operatore = localStorage.getItem("id");
     this.assegnabile = localStorage.getItem("assegnabile");
     console.log(this.assegnabile);
-    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/index.php?request=contacts&type=' + type + '&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo + '&assegnabile=' + this.assegnabile).subscribe({
+    this.http.get<Contact[]>(GlobalComponent.url_global +'/index.php?request=contacts&type=' + type + '&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo + '&assegnabile=' + this.assegnabile).subscribe({
       next: (res => {
         this.contacts = res;
         this.dataSource.data = res;
@@ -232,7 +232,7 @@ export class ListaContattiComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.idraulico_id = this.contacts.map(t => t.id_idraulico);
 console.log(this.contacts);
-        this.http.get('https://gestionalecero.it/gest_2022/index.php?request=getApps')
+        this.http.get(GlobalComponent.url_global +'/index.php?request=getApps')
           .subscribe(response => {
             this.getapps = response;
             this.start = this.getapps.map(t => t.start);
@@ -277,7 +277,7 @@ console.log(this.contacts);
     this.operatore = localStorage.getItem("id");
     this.assegnabile = localStorage.getItem("assegnabile");
     console.log(this.assegnabile);
-    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/index.php?request=partner&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo + '&assegnabile=' + this.assegnabile).subscribe({
+    this.http.get<Contact[]>(GlobalComponent.url_global +'/index.php?request=partner&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo + '&assegnabile=' + this.assegnabile).subscribe({
       next: (res => {
         this.partners = res;
         // console.log(this.partners);
@@ -286,7 +286,7 @@ console.log(this.contacts);
         //this.dataSourceP.sort = this.sortP;
         this.idraulico_id = this.partners.map(t => t.id_idraulico);
 
-        this.http.get('https://gestionalecero.it/gest_2022/index.php?request=getApps')
+        this.http.get(GlobalComponent.url_global +'/index.php?request=getApps')
           .subscribe(response => {
             this.getapps = response;
             this.start = this.getapps.map(t => t.start);
@@ -329,7 +329,7 @@ console.log(this.contacts);
 
   private getApps(value) {
     //console.log(id_utente);
-    this.http.get('https://gestionalecero.it/gest_2022/index.php?request=getApps&id_utenti=' + value)
+    this.http.get(GlobalComponent.url_global +'/index.php?request=getApps&id_utenti=' + value)
       .subscribe(response => {
         this.getapps = response;
         //  console.log(this.getapps);
@@ -349,7 +349,7 @@ console.log(this.contacts);
     this.loading = true;
     //console.log(this.loading);
     this.operatore = localStorage.getItem("id");
-    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/index.php?request=contactsfb&type=' + type + '&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo).subscribe({
+    this.http.get<Contact[]>(GlobalComponent.url_global +'/index.php?request=contactsfb&type=' + type + '&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo).subscribe({
       next: (res => {
         this.contacts = res;
         this.dataSource.data = res;

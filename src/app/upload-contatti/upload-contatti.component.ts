@@ -58,7 +58,7 @@ export class UploadContattiComponent implements OnInit {
       //console.log(this.data);
 
 
-      this.http.post('https://gestionalecero.it/gest_2022/upload_contatti_facebook.php?request=upload', this.data)
+      this.http.post(GlobalComponent.url_global +'/upload_contatti_facebook.php?request=upload', this.data)
         .subscribe(res => {
     console.log(res);
 
@@ -102,7 +102,7 @@ export class UploadContattiComponent implements OnInit {
       console.log(this.data);
 
 
-      this.http.post('https://gestionalecero.it/gest_2022/upload_contatti_generale.php?request=uploadGen', this.data)
+      this.http.post(GlobalComponent.url_global +'/upload_contatti_generale.php?request=uploadGen', this.data)
         .subscribe(res => {
     //console.log(res);
 
@@ -146,7 +146,7 @@ export class UploadContattiComponent implements OnInit {
       console.log(this.data);
 
 
-      this.http.post('https://gestionalecero.it/gest_2022/upload_contatti_facebook.php?request=SyncroFB', this.data)
+      this.http.post(GlobalComponent.url_global +'/upload_contatti_facebook.php?request=SyncroFB', this.data)
         .subscribe(res => {
     //console.log(res);
 
@@ -190,7 +190,7 @@ export class UploadContattiComponent implements OnInit {
       console.log(this.data);
 
 
-      this.http.post('https://gestionalecero.it/gest_2022/upload_contatti_generale.php?request=uploadCampioni', this.data)
+      this.http.post(GlobalComponent.url_global +'/upload_contatti_generale.php?request=uploadCampioni', this.data)
         .subscribe(res => {
     //console.log(res);
 

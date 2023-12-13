@@ -4,6 +4,8 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Conferma } from './../models/conferma.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,8 @@ import { Conferma } from './../models/conferma.model';
 export class ConfermeService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/conferma.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/conferma_post.php';
+  private url = GlobalComponent.url_global +'/conferma.php?request=';
+  private url_post = GlobalComponent.url_global +'/conferma_post.php';
   array_nota: any;
   array_chiamata: any;
   request: any;

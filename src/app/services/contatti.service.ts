@@ -10,6 +10,8 @@ import { chiamate } from './../models/chiamate.model';
 import { chiamata } from './../models/chiamata.model';
 import { allegati } from './../models/allegati.model';
 import { appunto } from './../models/appunto.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,9 @@ import { appunto } from './../models/appunto.model';
 export class ContattiService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/index.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/index.php?request=';
+  private url_post = GlobalComponent.url_global +'/post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_chiamata: any;
   array_appunto: any;

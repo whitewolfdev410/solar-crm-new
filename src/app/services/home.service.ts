@@ -4,6 +4,7 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Bolle } from './../models/bolle.model';
 import { Contact } from '../models/contact.model';
+import { GlobalComponent } from '../global-component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ import { Contact } from '../models/contact.model';
 export class HomeService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/home.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/home_post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/home.php?request=';
+  private url_post = GlobalComponent.url_global +'/home_post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_chiamata: any;
   request: any;

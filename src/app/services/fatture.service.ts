@@ -4,6 +4,8 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Fattura } from './../models/fattura.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +13,9 @@ import { Fattura } from './../models/fattura.model';
 export class FattureService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/fattura.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/fattura-post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/fattura.php?request=';
+  private url_post = GlobalComponent.url_global +'/fattura-post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_chiamata: any;
   request: any;

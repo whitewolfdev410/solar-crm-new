@@ -283,7 +283,7 @@ export class DettaglioContattiComponent implements OnInit {
   }
   eliminaContatto(id: number): void {
     if (window.confirm('Sei sicuro ?')) {
-      this.http.get('https://gestionalecero.it/gest_2022/index.php?request=elimina&id_contatto=' + id).subscribe(res_off => {
+      this.http.get(GlobalComponent.url_global +'/index.php?request=elimina&id_contatto=' + id).subscribe(res_off => {
         if (res_off[0] == "KO") {
           alert(res_off[1]);
         } else {
@@ -339,7 +339,7 @@ export class DettaglioContattiComponent implements OnInit {
   }
 
   spegniContatto(id: number): void {
-    this.http.get('https://gestionalecero.it/gest_2022/index.php?request=spegni&id_contatto=' + id).subscribe(res_off => {
+    this.http.get(GlobalComponent.url_global +'/index.php?request=spegni&id_contatto=' + id).subscribe(res_off => {
       if (res_off[0] == "KO") {
         alert(res_off[1]);
       } else {

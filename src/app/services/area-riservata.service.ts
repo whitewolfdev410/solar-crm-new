@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from './../models/contact.model';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
+import { GlobalComponent } from '../global-component';
+
 @Injectable({
 
   providedIn: 'root'
@@ -16,8 +18,8 @@ import { catchError, throwError } from 'rxjs';
 export class AreariservataService {
 
 
-  private urls = ('https://gestionalecero.it/gest_2022/area-riservata.php?request=');
-  private url_post = ('https://gestionalecero.it/gest_2022/area-riservata_post.php');
+  private urls = (GlobalComponent.url_global +'/area-riservata.php?request=');
+  private url_post = (GlobalComponent.url_global +'/area-riservata_post.php');
 
   constructor(private httpClient: HttpClient) { }
 

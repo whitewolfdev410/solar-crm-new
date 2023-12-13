@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
+import { GlobalComponent } from '../global-component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MagazzinoService {
 
-  private url = 'https://gestionalecero.it/api/api.php?action=gestione_magazzino';
+  private url = GlobalComponent.url_global +'/api/api.php?action=gestione_magazzino';
 
   array_info: any;
   array_chiamata: any;
@@ -38,14 +39,14 @@ export class MagazzinoService {
   }
 
   public getGiacenzaList(page, size) {
-    return this.httpClient.get<any[]>('https://gestionalecero.it/api/api.php?action=giacenza_magazzino' + `&page=${page}&size=${size}`)
+    return this.httpClient.get<any[]>(GlobalComponent.url_global +'/api/api.php?action=giacenza_magazzino' + `&page=${page}&size=${size}`)
       .pipe(
         catchError(this.handleError)
       )
   }
 
   public setQuantity(data: any) {
-    return this.httpClient.post<any[]>('https://gestionalecero.it/api/api.php?action=update_magazzino', data)
+    return this.httpClient.post<any[]>(GlobalComponent.url_global +'/api/api.php?action=update_magazzino', data)
       .pipe(
         catchError(this.handleError)
       )

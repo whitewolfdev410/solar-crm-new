@@ -122,7 +122,7 @@ export class DatiAziendaPartnerComponent implements OnInit {
     formData.append('user', this.operatore);
     formData.append('partner', "true");
     formData.append('logo', "1");
-    this.http.post('https://gestionalecero.it/gest_2022/upload.php', formData, {
+    this.http.post(GlobalComponent.url_global +'/upload.php', formData, {
       reportProgress: true,
       observe: 'events'
     })

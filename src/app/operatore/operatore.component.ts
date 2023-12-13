@@ -23,8 +23,8 @@ export class OperatoreComponent implements OnInit {
 
 
   loadAmministratori(): void {
-  //  console.log('https://gestionalecero.it/gest_2022/index.php?request=user&id=' + this.operatore);
-    this.http.get('https://gestionalecero.it/gest_2022/index.php?request=userDett&id=' + this.operatore).subscribe(res => {
+  //  console.log(GlobalComponent.url_global +'/index.php?request=user&id=' + this.operatore);
+    this.http.get(GlobalComponent.url_global +'/index.php?request=userDett&id=' + this.operatore).subscribe(res => {
       this.operatori = res;
     //console.log(this.operatori);
     });

@@ -3,6 +3,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Tags } from './../models/tag.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ import { Tags } from './../models/tag.model';
 export class TagsService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/tag.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/tag_post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/tag.php?request=';
+  private url_post = GlobalComponent.url_global +'/tag_post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_tags: any;
   request: any;

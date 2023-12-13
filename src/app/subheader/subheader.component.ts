@@ -196,7 +196,7 @@ export class SubheaderComponent implements OnInit {
       alert("compilare tutti i campi obbligatori!");
       return;
     }
-    this.http.post('https://gestionalecero.it/gest_2022/post.php', {
+    this.http.post(GlobalComponent.url_global +'/post.php', {
       request: 'createContact',
       nome: this.formAddContact.controls['nome'].value,
       cognome: this.formAddContact.controls['cognome'].value,

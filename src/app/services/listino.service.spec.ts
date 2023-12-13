@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ListinoService } from './listino.service';
+import { GlobalComponent } from '../global-component';
+
 
 describe('ListinoService', () => {
   let service: ListinoService;

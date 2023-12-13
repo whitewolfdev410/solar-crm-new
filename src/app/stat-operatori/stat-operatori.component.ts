@@ -106,7 +106,7 @@ export class StatOperatoriComponent implements OnInit {
     //console.log(this.loading);
     this.operatore = localStorage.getItem("id");
     this.assegnabile = localStorage.getItem("assegnabile");
-    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/marketing.php?request=LoadOperatori&start='+start+'&end='+end).subscribe({
+    this.http.get<Contact[]>(GlobalComponent.url_global +'/marketing.php?request=LoadOperatori&start='+start+'&end='+end).subscribe({
       next: (res => {
         this.operatori = res;
         this.dataSource.data = res;

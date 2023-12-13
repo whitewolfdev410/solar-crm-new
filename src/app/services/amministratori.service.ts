@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/amministratore.model';
+import { GlobalComponent } from '../global-component';
 @Injectable({
 
   providedIn: 'root'
@@ -11,10 +12,12 @@ import { User } from '../models/amministratore.model';
 
 export class AmministratoriService {
 
+  global_cartella = GlobalComponent.global_cartella;
 
-  private urls = ('https://gestionalecero.it/gest_2022/index.php?request=users&id=');
-  private urls_idraulici = ('https://gestionalecero.it/gest_2022/index.php?request=idraulici&id=');
-  private url = ('https://gestionalecero.it/gest_2022/index.php?request=user&id=');
+
+  private urls = (GlobalComponent.url_global +'/index.php?request=users&id=');
+  private urls_idraulici = (GlobalComponent.url_global +'/index.php?request=idraulici&id=');
+  private url = (GlobalComponent.url_global +'/index.php?request=user&id=');
 
   constructor(private httpClient: HttpClient) { }
 

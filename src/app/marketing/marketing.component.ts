@@ -100,7 +100,7 @@ export class MarketingComponent implements OnInit {
     this.operatore = localStorage.getItem("id");
     this.assegnabile = localStorage.getItem("assegnabile");
     console.log(this.assegnabile);
-    this.http.get<Contact[]>('https://gestionalecero.it/gest_2022/marketing.php?request=contacts&type=' + type + '&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo + '&assegnabile=' + this.assegnabile+'&anno='+this.anno_globale).subscribe({
+    this.http.get<Contact[]>(GlobalComponent.url_global +'/marketing.php?request=contacts&type=' + type + '&operatore=' + this.operatore + '&id_ruolo=' + this.id_ruolo + '&assegnabile=' + this.assegnabile+'&anno='+this.anno_globale).subscribe({
       next: (res => {
         this.contacts = res;
         this.dataSource.data = res;
@@ -108,7 +108,7 @@ export class MarketingComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.idraulico_id = this.contacts.map(t => t.id_idraulico);
         console.log(this.contacts);
-        this.http.get('https://gestionalecero.it/gest_2022/marketing.php?request=getApps')
+        this.http.get(GlobalComponent.url_global +'/marketing.php?request=getApps')
           .subscribe(response => {
             this.getapps = response;
             this.start = this.getapps.map(t => t.start);

@@ -10,6 +10,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Sondaggi } from '../services/sondaggi.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { GlobalComponent } from '../global-component';
+
 
 
 @Component({
@@ -68,7 +70,7 @@ export class AmministratoreComponent implements OnInit {
     this.loading = true;
 
     if(this.ruolo_operatore=='Amministratore'){
-      this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=users').subscribe(res => {
+      this.http.get<User[]>(GlobalComponent.url_global +'/index.php?request=users').subscribe(res => {
         this.users = res;
 
         this.dataSource.paginator = this.paginator;
@@ -78,7 +80,7 @@ export class AmministratoreComponent implements OnInit {
         this.loading = false;
       });
     }else{
-      this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=userDett&id='+this.operatore).subscribe(res => {
+      this.http.get<User[]>(GlobalComponent.url_global +'/index.php?request=userDett&id='+this.operatore).subscribe(res => {
         this.users = res;
     
         this.dataSource.paginator = this.paginator;
@@ -94,21 +96,21 @@ export class AmministratoreComponent implements OnInit {
 
 
   attiva(id) {
-    this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=attiva&amministratore=' + id).subscribe(res => {
+    this.http.get<User[]>(GlobalComponent.url_global +'/index.php?request=attiva&amministratore=' + id).subscribe(res => {
       this.users = res;
 
     });
 
   }
   disattiva(id) {
-    this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=disattiva&amministratore=' + id).subscribe(res => {
+    this.http.get<User[]>(GlobalComponent.url_global +'/index.php?request=disattiva&amministratore=' + id).subscribe(res => {
       this.users = res;
 
     });
 
   }
   eliminaUtente(id) {
-    this.http.get<User[]>('https://gestionalecero.it/gest_2022/index.php?request=eliminautente&amministratore=' + id).subscribe(res => {
+    this.http.get<User[]>(GlobalComponent.url_global +'/index.php?request=eliminautente&amministratore=' + id).subscribe(res => {
       this.users = res;
       this.loadAmministratori();
     });
@@ -121,7 +123,7 @@ export class AmministratoreComponent implements OnInit {
       this.loading = false;
       return;
     }
-    this.http.post('https://gestionalecero.it/gest_2022/post.php', {
+    this.http.post(GlobalComponent.url_global +'/post.php', {
       request: 'createUser',
       username: this.form.controls['username'].value,
       password: this.form.controls['password'].value,

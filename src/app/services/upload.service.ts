@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalComponent } from '../global-component';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private baseUrl = 'https://gestionalecero.it/gest_2022/upload.php';
+  private baseUrl = GlobalComponent.url_global +'/upload.php';
   constructor(private http: HttpClient) { }
   upload(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();

@@ -3,6 +3,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +12,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 export class ReportMailService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/report-mail.php?request=';
+  private url = GlobalComponent.url_global +'/report-mail.php?request=';
   array_info: any;
   array_chiamata: any;
   request: any;

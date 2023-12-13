@@ -3,6 +3,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Campioni } from './../models/campioni.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ import { Campioni } from './../models/campioni.model';
 export class CampioniService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/campione.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/campione_post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/campione.php?request=';
+  private url_post = GlobalComponent.url_global +'/campione_post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_chiamata: any;
   request: any;

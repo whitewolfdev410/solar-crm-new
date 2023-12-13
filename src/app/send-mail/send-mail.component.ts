@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ContattiService } from '../services/contatti.service';
 import { PreventiviService } from '../services/preventivi.service';
 import { Location } from '@angular/common';
+import { GlobalComponent } from '../global-component';
 
 @Component({
   selector: 'app-send-mail',
@@ -54,7 +55,7 @@ export class SendMailComponent implements OnInit {
         this.password = this.contatti.map(t=>t.password);
         this.username = this.contatti.map(t=>t.username);
         this.link='https://gestionalecero.it/area_riservata/login-home.php?id_dettaglio='+this.id_offerta+'&password='+this.password+'&username='+this.username
-//this.link='https://gestionalecero.it/gest_2022/area-riservata/'+this.id_utente+'/'+this.username+'/'+this.password+'';
+//this.link=GlobalComponent.url_global +'/area-riservata/'+this.id_utente+'/'+this.username+'/'+this.password+'';
       });
 
   }
@@ -63,7 +64,7 @@ export class SendMailComponent implements OnInit {
     ////console.log(this.sendMailPreventivo.value);
 
    
-    this.http.post('https://gestionalecero.it/gest_2022/mail.php', {
+    this.http.post(GlobalComponent.url_global +'/mail.php', {
       request: 'sendMail',
       template:'49486',
       link_custom_email: this.sendMailPreventivo.controls['link_custom_email'].value,

@@ -5,6 +5,8 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Contact } from '../models/contact.model';
 import { Fatturazione } from './../models/fatturazione.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +14,9 @@ import { Fatturazione } from './../models/fatturazione.model';
 export class FatturazioneService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/fatturazione.php?request=';
-  private url_post = 'https://gestionalecero.it/gest_2022/fatturazione_post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/fatturazione.php?request=';
+  private url_post = GlobalComponent.url_global +'/fatturazione_post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_chiamata: any;
   request: any;

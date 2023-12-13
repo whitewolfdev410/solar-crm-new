@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
+import { GlobalComponent } from '../global-component';
 
 @Injectable({
 
@@ -17,9 +18,9 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 export class Webinar {
 
 
-  private urls = ('https://gestionalecero.it/gest_2022/webinar.php?request=');
-  //private urls_idraulici = ('https://gestionalecero.it/gest_2022/index.php?request=idraulici&id=');
-  private url_post = ('https://gestionalecero.it/gest_2022/webinar_post.php');
+  private urls = (GlobalComponent.url_global +'/webinar.php?request=');
+  //private urls_idraulici = (GlobalComponent.url_global +'/index.php?request=idraulici&id=');
+  private url_post = (GlobalComponent.url_global +'/webinar_post.php');
 
   array_ruolo:any;
   id_ruolo:any=localStorage.getItem("id_ruolo");

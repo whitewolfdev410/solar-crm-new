@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Calendario } from './../models/calendario.model';
 import { catchError, Observable, retry, throwError } from 'rxjs';
+import { GlobalComponent } from '../global-component';
+
 @Injectable({
 
   providedIn: 'root'
@@ -14,8 +16,8 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 export class CalendarioService {
 
 
-  private urls = ('https://gestionalecero.it/gest_2022/calendario.php?request=');
-  private url_post = ('https://gestionalecero.it/gest_2022/calendario-post.php');
+  private urls = (GlobalComponent.url_global +'/calendario.php?request=');
+  private url_post = (GlobalComponent.url_global +'/calendario-post.php');
 
   constructor(private httpClient: HttpClient) { }
   // Http Options

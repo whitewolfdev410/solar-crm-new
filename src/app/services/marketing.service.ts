@@ -3,6 +3,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { chiamata } from './../models/chiamata.model';
+import { GlobalComponent } from '../global-component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,9 @@ import { chiamata } from './../models/chiamata.model';
 export class MarketingService {
 
 
-  private url = 'https://gestionalecero.it/gest_2022/marketing.php?request=';
-  //private url_post = 'https://gestionalecero.it/gest_2022/bolle_post.php';
-  //private url_post = 'https://gestionalecero.it/gest_2022/post.php';
+  private url = GlobalComponent.url_global +'/marketing.php?request=';
+  //private url_post = GlobalComponent.url_global +'/bolle_post.php';
+  //private url_post = GlobalComponent.url_global +'/post.php';
   array_info: any;
   array_chiamata: any;
   request: any;

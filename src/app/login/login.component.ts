@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.post("https://gestionalecero.it/gest_2022/session/session.php", {
+    this.http.post(GlobalComponent.url_global +'session/session.php', {
       request: "logout"
     }).subscribe(res => {
       localStorage.removeItem('name');
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     })
   }
   login() {
-    this.http.post("https://gestionalecero.it/gest_2022/session/session.php", {
+    this.http.post(GlobalComponent.url_global +'/session/session.php', {
       request: "login",
       username: this.loginForm.controls['username'].value,
       password: this.loginForm.controls['password'].value
@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
-    this.http.post("https://gestionalecero.it/gest_2022/session/session.php", {
+    this.http.post(GlobalComponent.url_global +'/session/session.php', {
       request: "logout"
     }).subscribe(res => {
       localStorage.removeItem('name');
