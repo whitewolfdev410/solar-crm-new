@@ -90,8 +90,12 @@ export class OffertaService {
       }
       else
         filter = filter.toLocaleLowerCase()
-      filterString = ` AND LOWER(CONCAT(nome, cognome)) LIKE '%${filter}%' OR id=${filter}`
-
+      let f = ''
+      if (Number.isInteger(filter)) {
+        f = 'OR id=${filter}'
+      }
+      filterString = ` AND LOWER(CONCAT(nome, cognome)) LIKE '%${filter}%' ${f}`
+      debugger
     }
     const request = {
       "action": "all-paged",
